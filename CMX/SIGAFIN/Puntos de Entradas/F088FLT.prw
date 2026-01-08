@@ -1,0 +1,25 @@
+#Include "Protheus.ch"
+#Include "Rwmake.ch"
+/*
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+11111111111111111111111111111111111111111111111111111111111111111111111111111
+11IMMMMMMMMMMQMMMMMMMMMMKMMMMMMMQMMMMMMMMMMMMMMMMMMMMKMMMMMMQMMMMMMMMMMMMM;11
+11:Programa  3 F088FLT  :Autor  3EDUAR ANDIA	    : Data 3  30/07/2019  :11
+11LMMMMMMMMMMXMMMMMMMMMMJMMMMMMMOMMMMMMMMMMMMMMMMMMMMJMMMMMMOMMMMMMMMMMMMM911
+11:Desc.     3 PE Filtro na rotina "Cancelar Recibos diversos""           :11
+11:Desc.     3 Pelo cliente												  :11
+11LMMMMMMMMMMXMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM911
+11:Uso       3 BOLIVIA\Unisn Agronegocios S.A.                            :11
+11HMMMMMMMMMMOMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM<11
+11111111111111111111111111111111111111111111111111111111111111111111111111111
+_____________________________________________________________________________
+*/
+
+User Function F088FLT
+Local cCond := ""
+
+If Type("mv_par08")=="C" .AND. Type("mv_par09")=="C" 
+	cCond := "EL_CLIENTE >= '" + mv_par08 + "' .AND. EL_CLIENTE <= '" + mv_par09 +"'" 
+Endif
+
+Return(cCond)

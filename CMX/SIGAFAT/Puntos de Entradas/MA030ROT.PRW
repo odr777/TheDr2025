@@ -1,0 +1,286 @@
+#include 'protheus.ch'
+#include 'parmtype.ch'
+#Include "TopConn.ch"
+/*
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ"±±
+±±ºPrograma  ³  PE  ºAutor  ³ERICK ETCHEVERRY	       Fecha 23/07/2019   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±Descripcion³ Programa para copia de cliente 	                       º±±
+±±º          ³                                                            º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ BASE BOLIVIA                                               º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+
+user function MA030ROT()
+	aRetorno := {}
+	AAdd( aRetorno, { "Copia", "u_a30copia()", 2, 0 } )
+Return( aRetorno )
+
+user function a30copia()
+	Local aAlias := SA1->(GetArea())
+	Local aCpos := {"A1_FILIAL","A1_COD","A1_LOJA","A1_NOME","A1_PESSOA","A1_END","A1_TIPO","A1_NREDUZ","A1_CGC","A1_EST","A1_ESTADO","A1_COD_MUN","A1_MUN","A1_DDD","A1_BAIRRO","A1_NATUREZ","A1_CEP","A1_DDI","A1_REGIAO","A1_UCELULA","A1_TEL","A1_TELEX","A1_FAX","A1_ENDCOB","A1_ENDREC","A1_PAIS","A1_ENDENT","A1_CONTATO","A1_INSCR","A1_INSCRM","A1_VEND","A1_COMIS","A1_CONTA","A1_UCTAANT","A1_CATPV","A1_BCO1","A1_BCO2","A1_BCO3","A1_BCO4","A1_BCO5","A1_TRANSP","A1_TPFRET","A1_COND","A1_DESC","A1_PRIOR","A1_RISCO","A1_LC","A1_VENCLC","A1_CLASSE","A1_LCFIN","A1_MOEDALC","A1_MSALDO","A1_MCOMPRA","A1_METR","A1_PRICOM","A1_ULTCOM","A1_NROCOM","A1_FORMVIS","A1_TEMVIS","A1_ULTVIS","A1_TMPVIS","A1_TMPSTD","A1_CLASVEN","A1_MENSAGE","A1_SALDUP","A1_RECISS","A1_SALPEDL","A1_NROPAG","A1_TRANSF","A1_SUFRAMA","A1_ATR","A1_VACUM","A1_SALPED","A1_TITPROT","A1_DTULTIT","A1_CHQDEVO","A1_DTULCHQ","A1_MATR","A1_MAIDUPL","A1_CXPOSTA","A1_TABELA","A1_INCISS","A1_SALTEMP","A1_SALDUPM","A1_PAGATR","A1_ATIVIDA","A1_CARGO1","A1_CARGO2","A1_CARGO3","A1_RTEC","A1_SUPER","A1_CALCSUF","A1_ALIQIR","A1_RG","A1_OBSERV","A1_DTNASC","A1_SALPEDB","A1_CLIFAT","A1_GRPTRIB","A1_BAIRROC","A1_CEPC","A1_MUNC","A1_ESTC","A1_CEPE","A1_BAIRROE","A1_MUNE","A1_ESTE","A1_SATIV1","A1_SATIV2","A1_TPESSOA","A1_SATIV3","A1_SATIV4","A1_SATIV5","A1_SATIV6","A1_SATIV7","A1_CODAGE","A1_SATIV8","A1_PERCIVA","A1_CODMARC","A1_COMAGE","A1_CODMUN","A1_CONFREM","A1_TIPCLI","A1_EMAIL","A1_DEST_1","A1_OBS","A1_DEST_2","A1_HPAGE","A1_CODHIST","A1_DEST_3","A1_CONDPAG","A1_DIASPAG","A1_AGREG","A1_AGENPER","A1_RECINSS","A1_RECCOFI","A1_RECCSLL","A1_RECPIS","A1_TIPPER","A1_CLICNV","A1_SALFIN","A1_SALFINM","A1_CONTAB","A1_B2B","A1_GRPVEN","A1_CLIPRI","A1_LOJPRI","A1_INSCRUR","A1_MSBLQL","A1_SITUA","A1_COMPLEM","A1_HRCAD","A1_DTCAD","A1_CODSEG","A1_NUMRA","A1_SUBCOD","A1_BLEMAIL","A1_CDRDES","A1_FILDEB","A1_CODFOR","A1_LOCCONS","A1_PERFIL","A1_ABICS","A1_TIPOCLI","A1_VINCULO","A1_DTINIV","A1_PRF_COD","A1_PRF_OBS","A1_SIMPLES","A1_DTFIMV","A1_RESERVE","A1_HRTRANS","A1_ORIGEM","A1_UNIDVEN","A1_TIPPRFL","A1_PRF_VLD","A1_CEINSS","A1_CTARE","A1_NIF","A1_CODFID","A1_MATFUN","A1_IENCONT","A1_ABATIMP","A1_TDA","A1_CONTRIB","A1_TIMEKEE","A1_OUTRMUN","A1_IMGUMOV","A1_RESFAT","A1_FILTRF","A1_ORIGCT","A1_TPCAMP","A1_CHVCAM","A1_INOVAUT","A1_TPNFSE","A1_ENTORI","A1_USERLGA","A1_USERLGI","A1_IDESTN","A1_NVESTN","A1_CODTER","A1_CODMEMB","A1_TPMEMB","A1_SIMPNAC","A1_EC05DB","A1_EC05CR","A1_UPROV","A1_UCANDIS","A1_DTMONMI"}
+	ROLLBACKSXE()
+	AxInclui("SA1", SA1->(Recno()), 3,,"u_carregaMenu()" ,aCpos,"u_tdoblz()", .F.,"u_utransact()" ,,,,,.T.,,,,,)
+	ROLLBACKSXE()
+return
+
+user function utransact()
+	ROLLBACKSXE()
+return
+
+user function tdoblz()
+	lRet := lDuoCli(M->A1_COD,M->A1_LOJA)
+	ROLLBACKSXE()
+return lRet
+
+user function carregaMenu()
+		M->A1_FILIAL   := SA1->A1_FILIAL
+		M->A1_COD      := SA1->A1_COD
+		M->A1_NOME     := SA1->A1_NOME
+		M->A1_PESSOA   := SA1->A1_PESSOA
+		M->A1_END      := SA1->A1_END
+		M->A1_TIPO     := SA1->A1_TIPO
+		M->A1_NREDUZ   := SA1->A1_NREDUZ
+		M->A1_CGC      := SA1->A1_CGC
+		M->A1_EST      := SA1->A1_EST
+		M->A1_ESTADO   := SA1->A1_ESTADO
+		M->A1_COD_MUN  := SA1->A1_COD_MUN
+		M->A1_MUN      := SA1->A1_MUN
+		M->A1_DDD      := SA1->A1_DDD
+		M->A1_BAIRRO   := SA1->A1_BAIRRO
+		M->A1_NATUREZ  := SA1->A1_NATUREZ
+		M->A1_CEP      := SA1->A1_CEP
+		M->A1_DDI      := SA1->A1_DDI
+		M->A1_REGIAO   := SA1->A1_REGIAO
+		M->A1_UCELULA  := SA1->A1_UCELULA
+		M->A1_TEL      := SA1->A1_TEL
+		M->A1_TELEX    := SA1->A1_TELEX
+		M->A1_FAX      := SA1->A1_FAX
+		M->A1_ENDCOB   := SA1->A1_ENDCOB
+		M->A1_ENDREC   := SA1->A1_ENDREC
+		M->A1_PAIS     := SA1->A1_PAIS
+		M->A1_ENDENT   := SA1->A1_ENDENT
+		M->A1_CONTATO  := SA1->A1_CONTATO
+		M->A1_INSCR    := SA1->A1_INSCR
+		M->A1_INSCRM   := SA1->A1_INSCRM
+		M->A1_VEND     := SA1->A1_VEND
+		M->A1_COMIS    := SA1->A1_COMIS
+		M->A1_CONTA    := SA1->A1_CONTA
+		M->A1_UCTAANT  := SA1->A1_UCTAANT
+		M->A1_CATPV    := SA1->A1_CATPV
+		M->A1_BCO1     := SA1->A1_BCO1
+		M->A1_BCO2     := SA1->A1_BCO2
+		M->A1_BCO3     := SA1->A1_BCO3
+		M->A1_BCO4     := SA1->A1_BCO4
+		M->A1_BCO5     := SA1->A1_BCO5
+		M->A1_TRANSP   := SA1->A1_TRANSP
+		M->A1_TPFRET   := SA1->A1_TPFRET
+		M->A1_COND     := SA1->A1_COND
+		M->A1_DESC     := SA1->A1_DESC
+		M->A1_PRIOR    := SA1->A1_PRIOR
+		M->A1_RISCO    := SA1->A1_RISCO
+		M->A1_LC       := SA1->A1_LC
+		M->A1_VENCLC   := SA1->A1_VENCLC
+		M->A1_CLASSE   := SA1->A1_CLASSE
+		M->A1_LCFIN    := SA1->A1_LCFIN
+		M->A1_MOEDALC  := SA1->A1_MOEDALC
+		M->A1_MSALDO   := SA1->A1_MSALDO
+		M->A1_MCOMPRA  := SA1->A1_MCOMPRA
+		M->A1_METR     := SA1->A1_METR
+		M->A1_PRICOM   := SA1->A1_PRICOM
+		M->A1_ULTCOM   := SA1->A1_ULTCOM
+		M->A1_NROCOM   := SA1->A1_NROCOM
+		M->A1_FORMVIS  := SA1->A1_FORMVIS
+		M->A1_TEMVIS   := SA1->A1_TEMVIS
+		M->A1_ULTVIS   := SA1->A1_ULTVIS
+		M->A1_TMPVIS   := SA1->A1_TMPVIS
+		M->A1_TMPSTD   := SA1->A1_TMPSTD
+		M->A1_CLASVEN  := SA1->A1_CLASVEN
+		M->A1_MENSAGE  := SA1->A1_MENSAGE
+		M->A1_SALDUP   := SA1->A1_SALDUP
+		M->A1_RECISS   := SA1->A1_RECISS
+		M->A1_SALPEDL  := SA1->A1_SALPEDL
+		M->A1_NROPAG   := SA1->A1_NROPAG
+		M->A1_TRANSF   := SA1->A1_TRANSF
+		M->A1_SUFRAMA  := SA1->A1_SUFRAMA
+		M->A1_ATR      := SA1->A1_ATR
+		M->A1_VACUM    := SA1->A1_VACUM
+		M->A1_SALPED   := SA1->A1_SALPED
+		M->A1_TITPROT  := SA1->A1_TITPROT
+		M->A1_DTULTIT  := SA1->A1_DTULTIT
+		M->A1_CHQDEVO  := SA1->A1_CHQDEVO
+		M->A1_DTULCHQ  := SA1->A1_DTULCHQ
+		M->A1_MATR     := SA1->A1_MATR
+		M->A1_MAIDUPL  := SA1->A1_MAIDUPL
+		M->A1_CXPOSTA  := SA1->A1_CXPOSTA
+		M->A1_TABELA   := SA1->A1_TABELA
+		M->A1_INCISS   := SA1->A1_INCISS
+		M->A1_SALTEMP  := SA1->A1_SALTEMP
+		M->A1_SALDUPM  := SA1->A1_SALDUPM
+		M->A1_PAGATR   := SA1->A1_PAGATR
+		M->A1_ATIVIDA  := SA1->A1_ATIVIDA
+		M->A1_CARGO1   := SA1->A1_CARGO1
+		M->A1_CARGO2   := SA1->A1_CARGO2
+		M->A1_CARGO3   := SA1->A1_CARGO3
+		M->A1_RTEC     := SA1->A1_RTEC
+		M->A1_SUPER    := SA1->A1_SUPER
+		M->A1_CALCSUF  := SA1->A1_CALCSUF
+		M->A1_ALIQIR   := SA1->A1_ALIQIR
+		M->A1_RG       := SA1->A1_RG
+		M->A1_OBSERV   := SA1->A1_OBSERV
+		M->A1_DTNASC   := SA1->A1_DTNASC
+		M->A1_SALPEDB  := SA1->A1_SALPEDB
+		M->A1_CLIFAT   := SA1->A1_CLIFAT
+		M->A1_GRPTRIB  := SA1->A1_GRPTRIB
+		M->A1_BAIRROC  := SA1->A1_BAIRROC
+		M->A1_CEPC     := SA1->A1_CEPC
+		M->A1_MUNC     := SA1->A1_MUNC
+		M->A1_ESTC     := SA1->A1_ESTC
+		M->A1_CEPE     := SA1->A1_CEPE
+		M->A1_BAIRROE  := SA1->A1_BAIRROE
+		M->A1_MUNE     := SA1->A1_MUNE
+		M->A1_ESTE     := SA1->A1_ESTE
+		M->A1_SATIV1   := SA1->A1_SATIV1
+		M->A1_SATIV2   := SA1->A1_SATIV2
+		M->A1_TPESSOA  := SA1->A1_TPESSOA
+		M->A1_SATIV3   := SA1->A1_SATIV3
+		M->A1_SATIV4   := SA1->A1_SATIV4
+		M->A1_SATIV5   := SA1->A1_SATIV5
+		M->A1_SATIV6   := SA1->A1_SATIV6
+		M->A1_SATIV7   := SA1->A1_SATIV7
+		M->A1_CODAGE   := SA1->A1_CODAGE
+		M->A1_SATIV8   := SA1->A1_SATIV8
+		M->A1_PERCIVA  := SA1->A1_PERCIVA
+		M->A1_CODMARC  := SA1->A1_CODMARC
+		M->A1_COMAGE   := SA1->A1_COMAGE
+		M->A1_CODMUN   := SA1->A1_CODMUN
+		M->A1_CONFREM  := SA1->A1_CONFREM
+		M->A1_TIPCLI   := SA1->A1_TIPCLI
+		M->A1_EMAIL    := SA1->A1_EMAIL
+		M->A1_DEST_1   := SA1->A1_DEST_1
+		M->A1_OBS      := SA1->A1_OBS
+		M->A1_DEST_2   := SA1->A1_DEST_2
+		M->A1_HPAGE    := SA1->A1_HPAGE
+		M->A1_CODHIST  := SA1->A1_CODHIST
+		M->A1_DEST_3   := SA1->A1_DEST_3
+		M->A1_CONDPAG  := SA1->A1_CONDPAG
+		M->A1_DIASPAG  := SA1->A1_DIASPAG
+		M->A1_AGREG    := SA1->A1_AGREG
+		M->A1_AGENPER  := SA1->A1_AGENPER
+		M->A1_RECINSS  := SA1->A1_RECINSS
+		M->A1_RECCOFI  := SA1->A1_RECCOFI
+		M->A1_RECCSLL  := SA1->A1_RECCSLL
+		M->A1_RECPIS   := SA1->A1_RECPIS
+		M->A1_TIPPER   := SA1->A1_TIPPER
+		M->A1_CLICNV   := SA1->A1_CLICNV
+		M->A1_SALFIN   := SA1->A1_SALFIN
+		M->A1_SALFINM  := SA1->A1_SALFINM
+		M->A1_CONTAB   := SA1->A1_CONTAB
+		M->A1_B2B      := SA1->A1_B2B
+		M->A1_GRPVEN   := SA1->A1_GRPVEN
+		M->A1_CLIPRI   := SA1->A1_CLIPRI
+		M->A1_LOJPRI   := SA1->A1_LOJPRI
+		M->A1_INSCRUR  := SA1->A1_INSCRUR
+		M->A1_MSBLQL   := SA1->A1_MSBLQL
+		M->A1_SITUA    := SA1->A1_SITUA
+		M->A1_COMPLEM  := SA1->A1_COMPLEM
+		M->A1_HRCAD    := SA1->A1_HRCAD
+		M->A1_DTCAD    := SA1->A1_DTCAD
+		M->A1_CODSEG   := SA1->A1_CODSEG
+		M->A1_NUMRA    := SA1->A1_NUMRA
+		M->A1_SUBCOD   := SA1->A1_SUBCOD
+		M->A1_BLEMAIL  := SA1->A1_BLEMAIL
+		M->A1_CDRDES   := SA1->A1_CDRDES
+		M->A1_FILDEB   := SA1->A1_FILDEB
+		M->A1_CODFOR   := SA1->A1_CODFOR
+		M->A1_LOCCONS  := SA1->A1_LOCCONS
+		M->A1_PERFIL   := SA1->A1_PERFIL
+		M->A1_ABICS    := SA1->A1_ABICS
+		M->A1_TIPOCLI  := SA1->A1_TIPOCLI
+		M->A1_VINCULO  := SA1->A1_VINCULO
+		M->A1_DTINIV   := SA1->A1_DTINIV
+		M->A1_PRF_COD  := SA1->A1_PRF_COD
+		M->A1_PRF_OBS  := SA1->A1_PRF_OBS
+		M->A1_SIMPLES  := SA1->A1_SIMPLES
+		M->A1_DTFIMV   := SA1->A1_DTFIMV
+		M->A1_RESERVE  := SA1->A1_RESERVE
+		M->A1_HRTRANS  := SA1->A1_HRTRANS
+		M->A1_ORIGEM   := SA1->A1_ORIGEM
+		M->A1_UNIDVEN  := SA1->A1_UNIDVEN
+		M->A1_TIPPRFL  := SA1->A1_TIPPRFL
+		M->A1_PRF_VLD  := SA1->A1_PRF_VLD
+		M->A1_CEINSS   := SA1->A1_CEINSS
+		M->A1_CTARE    := SA1->A1_CTARE
+		M->A1_NIF      := SA1->A1_NIF
+		M->A1_CODFID   := SA1->A1_CODFID
+		M->A1_MATFUN   := SA1->A1_MATFUN
+		M->A1_IENCONT  := SA1->A1_IENCONT
+		M->A1_ABATIMP  := SA1->A1_ABATIMP
+		M->A1_TDA      := SA1->A1_TDA
+		M->A1_CONTRIB  := SA1->A1_CONTRIB
+		M->A1_TIMEKEE  := SA1->A1_TIMEKEE
+		M->A1_OUTRMUN  := SA1->A1_OUTRMUN
+		M->A1_IMGUMOV  := SA1->A1_IMGUMOV
+		M->A1_RESFAT   := SA1->A1_RESFAT
+		M->A1_FILTRF   := SA1->A1_FILTRF
+		M->A1_ORIGCT   := SA1->A1_ORIGCT
+		M->A1_TPCAMP   := SA1->A1_TPCAMP
+		M->A1_CHVCAM   := SA1->A1_CHVCAM
+		M->A1_INOVAUT  := SA1->A1_INOVAUT
+		M->A1_TPNFSE   := SA1->A1_TPNFSE
+		M->A1_ENTORI   := SA1->A1_ENTORI
+		M->A1_USERLGA  := SA1->A1_USERLGA
+		M->A1_USERLGI  := SA1->A1_USERLGI
+		M->A1_IDESTN   := SA1->A1_IDESTN
+		M->A1_NVESTN   := SA1->A1_NVESTN
+		M->A1_CODTER   := SA1->A1_CODTER
+		M->A1_CODMEMB  := SA1->A1_CODMEMB
+		M->A1_TPMEMB   := SA1->A1_TPMEMB
+		M->A1_SIMPNAC  := SA1->A1_SIMPNAC
+		M->A1_EC05DB   := SA1->A1_EC05DB
+		M->A1_EC05CR   := SA1->A1_EC05CR
+		M->A1_UPROV    := SA1->A1_UPROV
+		M->A1_UCANDIS  := SA1->A1_UCANDIS
+		M->A1_DTMONMI  := SA1->A1_DTMONMI
+
+	ROLLBACKSXE()
+return
+
+static Function lDuoCli(cCod,cLoja)
+	Local aArea	:= GetArea()
+	Local cQuery	:= ""
+	Local lRet := .f.
+
+	If Select("QRY_SA1") > 0
+		StrSQL->(DbCloseArea())
+	Endif
+
+	cQuery := " SELECT "
+	cQuery += "  COUNT(*) data"
+	cQuery += " FROM "
+	cQuery += "   "+RetSQLName("SA1")+" SA1 "
+	cQuery += " WHERE "
+	cQuery += "   SA1.D_E_L_E_T_ = '' "
+	cQuery += "   AND A1_COD = '"+cCod+"'"
+	cQuery += "   AND A1_LOJA = '"+cLoja+"'"
+	cQuery := ChangeQuery(cQuery)
+
+	//Aviso("CLIENTE",cQuery,{'ok'},,,,,.t.)
+
+	TCQuery cQuery New Alias "QRY_SA1"
+
+	IF!QRY_SA1->(EoF())
+		if QRY_SA1->data > 0
+			lRet= .f.
+			Aviso("ALERTA","Duplicando la informacion tienda/codigo",{'ok'},,,,,.f.)
+		else
+			lRet= .t.
+		endif
+	ENDIF
+
+	QRY_SA1->(DbCloseArea())
+	RestArea(aArea)
+Return lRet
