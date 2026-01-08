@@ -1,0 +1,1061 @@
+#INCLUDE "FINA182.CH"
+#Include "PROTHEUS.ch"
+Static aIt_TpAprop := {}
+
+/*/
+эээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээ
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+╠╠зддддддддддбддддддддддбдддддддбдддддддддддддддддддддддбддддддбдддддддддд©╠╠
+╠╠ЁFun┤└o    Ё FINA182  Ё Autor Ё Eduardo Riera         Ё Data Ё 30/03/98 Ё╠╠
+╠╠цддддддддддеддддддддддадддддддадддддддддддддддддддддддаддддддадддддддддд╢╠╠
+╠╠ЁDescri┤└o Ё Apropriacao de Aplicacao / Emprestimo Financeiro           Ё╠╠
+╠╠цддддддддддедддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠ЁSintaxe   Ё FINA182()                                                  Ё╠╠
+╠╠цддддддддддедддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠Ё Uso      Ё Gen┌rico                                                   Ё╠╠
+╠╠юддддддддддадддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды╠╠
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+ъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъ
+/*/
+Function FinA182
+//здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+//Ё Parametros do Programa (AFI182)                              Ё
+//Ё                                                              Ё
+//Ё MV_PAR01 : Data de Apropriacao                               Ё
+//Ё MV_PAR02 : Recalcula                                         Ё
+//Ё MV_PAR03 : Mostra Lancamento Contabil                        Ё
+//Ё MV_PAR04 : Contabiliza On-Line?                              Ё
+//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+
+Local lPanelFin := IsPanelFin()
+PRIVATE aRotina := MenuDef()
+PRIVATE cCadastro := OemToAnsi(STR0005)  //"Apropriacao de Oper.Financeiras"
+//здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+//Ё Verifica o numero do Lote                                    Ё
+//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+PRIVATE cLote
+LoteCont( "FIN" )
+
+Fa182Apr()
+
+//здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+//Ё Recupera a Integridade dos dados                             Ё
+//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+SetKey( VK_F12 , Nil )
+
+If lPanelFin  //Chamado pelo Painel Financeiro			
+	dbSelectArea(FinWindow:cAliasFile)					
+	ReCreateBrow(FinWindow:cAliasFile,FinWindow)      		
+	INCLUI := .F.
+	ALTERA := .F.	
+Endif
+Return(.T.)
+
+
+/*/
+эээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээ
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+╠╠зддддддддддбддддддддддбдддддддбдддддддддддддддддддддддбддддддбдддддддддд©╠╠
+╠╠ЁFun┤└o    ЁFa182Apr  Ё Autor Ё Eduardo Riera         Ё Data Ё 02/04/98 Ё╠╠
+╠╠цддддддддддеддддддддддадддддддадддддддддддддддддддддддаддддддадддддддддд╢╠╠
+╠╠ЁDescri┤└o Ё Apropriacao de Aplicacao / Emprestimo Financeiro           Ё╠╠
+╠╠цддддддддддедддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠ЁSintaxe   Ё Fa182Apr( Void )                                           Ё╠╠
+╠╠цддддддддддедддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠Ё Uso      Ё FINA182                                                    Ё╠╠
+╠╠юддддддддддадддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды╠╠
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+ъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъ
+/*/
+Function Fa182Apr()
+
+Local lPanelFin := IsPanelFin()
+Local cPerg     := "AFI182"
+Local cCadastro := OemToAnsi(STR0005)  //"Apropriacao de Oper.Financeiras"
+Local aArea     := { Alias() , IndexOrd() , Recno() }
+Local nOpcA     := 0
+Local aSays:={}, aButtons:={}
+Local lFA182OK	:= ExistBlock("FA182OK")
+Local lOk		:= .T.
+
+Pergunte(cPerg,.F.)
+AADD(aSays,OemToAnsi( STR0006 ) ) //"Este programa realiza a Apropriacao das Operacoes Finan- "
+AADD(aSays,OemToAnsi( STR0007 ) ) //"ceiras (Aplicacao e Emprestimos), conforme os parametros "
+AADD(aSays,OemToAnsi( STR0008 ) ) //"solicitados."
+
+//здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+//Ё Inicializa o log de processamento                            Ё
+//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+ProcLogIni( aButtons )
+
+If lPanelFin  //Chamado pelo Painel Financeiro			
+	aButtonTxt := {}			
+	If Len(aButtons) > 0
+		AADD(aButtonTxt,{STR0014,STR0014,aButtons[1][3]}) // Visualizar			
+	Endif
+	AADD(aButtonTxt,{STR0013,STR0013, {||Pergunte(cPerg,.T. )}}) // Parametros						
+	FaMyFormBatch(aSays,aButtonTxt,{||nOpca :=1},{||nOpca:=0})	
+Else    
+	AADD(aButtons, { 5,.T.,{|| Pergunte(cPerg,.T. ) } } )
+	AADD(aButtons, { 1,.T.,{|o| nOpca:= 1,o:oWnd:End()}} )
+	AADD(aButtons, { 2,.T.,{|o| o:oWnd:End() }} )
+	FormBatch( cCadastro, aSays, aButtons ,,,390)
+Endif
+
+//здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+//Ё Ponto de entrada FA182OK para validar confirmacao 			 Ё
+//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+If nOpca == 1 .And. lFA182OK
+	lOk := ExecBlock( "FA182OK", .F., .F. )
+	If ValType( lOk ) == "L" .And. ! lOk
+		nOpca := 0
+	EndIf
+EndIf
+
+If nOpca == 1
+	Processa({|lEnd| Fa182ProcA()})
+Endif
+dbSelectArea(aArea[1])
+dbSetOrder(aArea[2])
+dbGoto(aArea[3])
+If lPanelFin  //Chamado pelo Painel Financeiro							
+	dbSelectArea(FinWindow:cAliasFile)					
+	FinVisual(FinWindow:cAliasFile,FinWindow,(FinWindow:cAliasFile)->(Recno()),.T.)	
+Endif
+Return(.T.)
+
+/*/
+эээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээ
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+╠╠зддддддддддбддддддддддбдддддддбдддддддддддддддддддддддбддддддбдддддддддд©╠╠
+╠╠ЁFun┤└o    ЁFa182ProcAЁ Autor Ё Eduardo Riera         Ё Data Ё 02/04/98 Ё╠╠
+╠╠цддддддддддеддддддддддадддддддадддддддддддддддддддддддаддддддадддддддддд╢╠╠
+╠╠ЁDescri┤└o Ё Apropriacao de Aplicacao / Emprestimo Financeiro           Ё╠╠
+╠╠цддддддддддедддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠ЁSintaxe   Ё Fa182Apr( Void )                                           Ё╠╠
+╠╠цддддддддддедддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠Ё Uso      Ё FINA182                                                    Ё╠╠
+╠╠юддддддддддадддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды╠╠
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+ъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъ
+/*/
+
+Function Fa182ProcA()
+
+Local lContinua := .F.
+Local dData     := LastDay(MV_PAR01)
+Local aCalculo  := {}
+Local cSequencia:= "00"
+LOCAL cPadrao    :="582"
+LOCAL lDigita    := If(MV_PAR03==1,.T.,.F.)
+LOCAL nHdlPrv    := 0
+LOCAL lPadrao    := VerPadrao(cPadrao)
+LOCAL nTotal     := 0
+LOCAL cArquivo   := ""
+LOCAL lContabil  := If(MV_PAR04==1,.T.,.F.)
+LOCAL dUltApr
+LOCAL cMvAplCal4 := GetMv("MV_APLCAL4")
+LOCAL cMvAplCal1 := GetMv("MV_APLCAL1")
+Local cLctPco    := ""
+Local aFlagCTB		:= {}
+Local lUsaFlag		:= SuperGetMV( "MV_CTBFLAG" , .T. /*lHelp*/, .F. /*cPadrao*/) 
+Local cA182Nat
+Local lResgApr	:= .F.
+Local lAprMonth	:= .F.
+
+ProcRegua(SEH->(LastRec()))
+
+//здддддддддддддддддддддддддддддддддддддддддддддддд©
+//Ё Lancamento Contabil                            Ё
+//юдддддддддддддддддддддддддддддддддддддддддддддддды
+If ( lPadrao .And. lContabil )
+	//здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+	//Ё Inicializa Lancamento Contabil                                   Ё
+	//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+		nHdlPrv := HeadProva( cLote,;
+		                      "FINA182" /*cPrograma*/,;
+		                      Substr( cUsuario, 7, 6 ),;
+		                      @cArquivo )
+EndIf
+dbSelectArea("SEH")
+dbSetOrder(1)
+MsSeek(xFilial("SEH"))
+
+//зддддддддддддддддддддддддддддддддддд©
+//Ё Atualiza o log de processamento   Ё
+//юддддддддддддддддддддддддддддддддддды
+ProcLogAtu("INICIO")
+
+
+While ( !Eof() .And. SEH->EH_FILIAL == xFilial("SEH") )
+
+	If ( SEH->EH_APLEMP=="APL" )
+		cA182Nat := &(GetMv("MV_NATRAPL"))
+	Else
+		cA182Nat := ""
+	EndIf
+	         
+	lContinua := .F.
+	cSequencia := "00"
+	dUltApr := Nil
+	cLctPco    := ""
+	If ( SEH->EH_SALDO > 0 ) .And. !SEH->EH_TIPO $ cMvAplCal4 .And. MV_PAR01 >= SEH->EH_DATA // Se nao estiver baixada e nao for por cotas
+		dbSelectArea("SEI")
+		dbSetOrder(2)
+		dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+;
+		SEH->EH_REVISAO+"APR"+Dtos(dData),.T.)
+		If (  SEI->EI_FILIAL  == xFilial("SEI")  .And.;
+			SEI->EI_APLEMP  == SEH->EH_APLEMP  .And.;
+			SEI->EI_NUMERO  == SEH->EH_NUMERO  .And.;
+			SEI->EI_REVISAO == SEH->EH_REVISAO .And.;
+			SEI->EI_MOTBX   == "APR" .And.;
+			Empty(SEI->EI_NATUREZ) )
+			dUltApr := SEI->EI_ULTAPR
+			If ( SEI->EI_DTDIGIT >= dData )
+				If ( SEI->EI_DTDIGIT == dData .And. ( Empty(SEI->EI_LA) .Or. ( SEI->EI_NATUREZ $ cA182Nat .And. Empty(SEI->EI_ULTAPR) )) )
+					lContinua := .T.
+				Else
+					lContinua := .F.
+					HELP(" ",1,"FINA182APR")
+					//зддддддддддддддддддддддддддддддддддддддддддддд©
+					//Ё Atualiza o log de processamento com o erro  Ё
+					//юддддддддддддддддддддддддддддддддддддддддддддды
+					ProcLogAtu("ERRO","FINA182APR",Ap5GetHelp("FINA182APR"))
+				EndIf
+			Else
+				lContinua := .F.
+				HELP("FINA182APR")
+				//зддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Atualiza o log de processamento com o erro  Ё
+				//юддддддддддддддддддддддддддддддддддддддддддддды
+				ProcLogAtu("ERRO","FINA182APR",Ap5GetHelp("FINA182APR"))
+			Endif
+		Else
+			lContinua := .T.
+		EndIf
+		dUltApr := If(Empty(dUltApr).and.(MV_PAR02 == 2),SEH->EH_ULTAPR,dUltApr)
+		If ( dUltApr == dData )
+			lResgApr	:= .T.
+		EndIf
+		If ( lContinua )
+			//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+			//Ё Inicializa a geraГao de lancamentos do SIGAPCO      Ё
+			//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+			PcoIniLan("000010")
+		
+			aCalculo := Fa171Calc(dData,,Iif(SEH->EH_TIPO $ cMvAplCal1,.T.,.F.),,dUltApr)
+			dbSelectArea("SEI")
+			dbSetOrder(1)
+			dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+SEH->EH_REVISAO)
+			While ( !Eof() .And. SEI->EI_FILIAL == xFilial("SEI") .And.;
+				SEI->EI_APLEMP == SEH->EH_APLEMP .And.;
+				SEI->EI_NUMERO == SEH->EH_NUMERO .And.;
+				SEI->EI_REVISAO== SEH->EH_REVISAO )
+				cSequencia := If(cSequencia>SEI->EI_SEQ,cSequencia,SEI->EI_SEQ)
+				dbSelectArea("SEI")
+				dbSkip()
+			EndDo
+			cSequencia := Soma1(cSequencia,2)
+			If ( Empty(cSequencia) )
+				cSequencia := "01"
+			EndIf
+			//здддддддддддддддддддддддддддддддддддддддддддддддд©
+			//Ё Inicia Transacao                               Ё
+			//юдддддддддддддддддддддддддддддддддддддддддддддддды
+			Begin Transaction
+			//здддддддддддддддддддддддддддддддддддддддддддддддд©
+			//Ё Posiciona registros para contabilizacao        Ё
+			//юдддддддддддддддддддддддддддддддддддддддддддддддды
+			dbSelectArea("SA6")
+			dbSetOrder(1)
+			MsSeek(xFilial("SA6")+SEH->EH_BANCO+SEH->EH_AGENCIA+SEH->EH_CONTA)
+			dbSelectArea("SED")
+			dbSetOrder(1)
+			MsSeek(xFilial("SED")+SEH->EH_NATUREZ)
+			dbSelectArea("SEH")
+			RecLock("SEH",.F.)
+			SEH->EH_VALIOF  := 0
+			SEH->EH_VALIRF  := 0
+			SEH->EH_VALSWAP := 0
+			SEH->EH_VALISWP := 0
+			SEH->EH_VALOUTR := 0
+			SEH->EH_VALJUR  := 0
+			SEH->EH_VALJUR2 := 0
+			SEH->EH_VALVCJR := 0
+			SEH->EH_VALVCCP := 0
+			SEH->EH_VALVCLP := 0
+			If ( dUltApr != Nil )
+				SEH->EH_ULTAPR := dUltApr
+			EndIf
+			If ( SEH->EH_APLEMP == "APL" )
+				dbSelectArea("SEI")
+				dbSetOrder(2)
+				If ( dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+;
+					SEH->EH_REVISAO+"APR"+Dtos(dData)+"I1",.F.) ) .And. Empty(SEI->EI_NATUREZ)
+					
+					//estorno do lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .T.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+										
+					If ( aCalculo[2] != 0 )
+						RecLock("SEI")
+					Else
+						RecLock("SEI")
+						dbDelete()
+					EndIf
+				Else
+					If ( aCalculo[2] != 0 )
+						RecLock("SEI",.T.)
+					EndIf
+				EndIf
+				//здддддддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Grava o Valor do IRF                               Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддддддды
+				If ( aCalculo[2] != 0 )
+					SEI->EI_FILIAL  := xFilial("SEI")
+					SEI->EI_NUMERO  := SEH->EH_NUMERO
+					SEI->EI_REVISAO := SEH->EH_REVISAO
+					SEI->EI_TIPODOC := "I1"
+					SEI->EI_DATA    := dData
+					SEI->EI_TIPO	 := SEH->EH_TIPO
+					SEI->EI_APLEMP  := SEH->EH_APLEMP
+					SEI->EI_VALOR   := aCalculo[2]
+					SEI->EI_DTDIGIT := dData
+					SEI->EI_NATUREZ := SEH->EH_NATUREZ
+					SEI->EI_BANCO   := SEH->EH_BANCO
+					SEI->EI_AGENCIA := SEH->EH_AGENCIA
+					SEI->EI_CONTA   :=  SEH->EH_CONTA
+					If ! lUsaFlag .and. lContabil
+						SEI->EI_LA := "S"
+					Else
+						aAdd( aFlagCTB, {"EI_LA", "S", "SEI", SEI->( Recno() ), 0, 0, 0} )
+					Endif
+					SEI->EI_SEQ     := cSequencia
+					SEI->EI_VLMOED2 := 0
+					SEI->EI_MOTBX   := "APR"
+					SEI->EI_HISTOR  := STR0012	//"Apropriacao Mensal"
+					SEI->EI_ULTAPR  := dData
+					SEI->EI_TXMOEDA := RecMoeda(dData,SEH->EH_MOEDA)
+					SEI->EI_TAXA 	 := SEH->EH_TAXA
+					//здддддддддддддддддддддддддддддддддддддддддддддддд©
+					//Ё Lancamento Contabil                            Ё
+					//юдддддддддддддддддддддддддддддддддддддддддддддддды
+					dbSelectArea("SEH")
+					RecLock("SEH",.F.)
+					SEH->EH_VALIRF := SEI->EI_VALOR
+
+					//lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .F.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+
+				EndIf
+				dbSelectArea("SEI")
+				dbSetOrder(2)
+				If ( dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+;
+					SEH->EH_REVISAO+"APR"+Dtos(dData)+"I2",.F.) ) .And. Empty(SEI->EI_NATUREZ)
+					If ( aCalculo[3] != 0 )
+						RecLock("SEI")
+					EndIf
+					//estorno do lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .T.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+				Else
+					If ( aCalculo[3] != 0 )
+						RecLock("SEI",.T.)
+					EndIf
+				EndIf
+				//здддддддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Grava o Valor do IOF                               Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддддддды
+				If ( aCalculo[3] != 0 )
+					SEI->EI_FILIAL  := xFilial("SEI")
+					SEI->EI_NUMERO  := SEH->EH_NUMERO
+					SEI->EI_REVISAO := SEH->EH_REVISAO
+					SEI->EI_TIPODOC := "I2"
+					SEI->EI_DATA    := dData
+					SEI->EI_TIPO	 := SEH->EH_TIPO
+					SEI->EI_APLEMP  := SEH->EH_APLEMP
+					SEI->EI_VALOR   := aCalculo[3]
+					SEI->EI_DTDIGIT := dData
+					SEI->EI_NATUREZ := SEH->EH_NATUREZ
+					SEI->EI_BANCO   := SEH->EH_BANCO
+					SEI->EI_AGENCIA := SEH->EH_AGENCIA
+					SEI->EI_CONTA   :=  SEH->EH_CONTA
+					If ! lUsaFlag .and. lContabil
+						SEI->EI_LA := "S"
+					Else
+						aAdd( aFlagCTB, {"EI_LA", "S", "SEI", SEI->( Recno() ), 0, 0, 0} )
+					Endif
+					SEI->EI_SEQ     := cSequencia
+					SEI->EI_VLMOED2 := 0
+					SEI->EI_MOTBX   := "APR"
+					SEI->EI_HISTOR  := STR0012	//"Apropriacao Mensal"
+					SEI->EI_ULTAPR  := dData
+					SEI->EI_TXMOEDA := RecMoeda(dData,SEH->EH_MOEDA)
+					SEI->EI_TAXA	 := SEH->EH_TAXA
+					//здддддддддддддддддддддддддддддддддддддддддддддддд©
+					//Ё Lancamento Contabil                            Ё
+					//юдддддддддддддддддддддддддддддддддддддддддддддддды
+					dbSelectArea("SEH")
+					RecLock("SEH",.F.)
+					SEH->EH_VALIOF := SEI->EI_VALOR
+					
+					//lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .F.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+					
+				EndIf
+				dbSelectArea("SEI")
+				dbSetOrder(2)
+				If ( dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+;
+					SEH->EH_REVISAO+"APR"+Dtos(dData)+"I4",.F.) ) .And. Empty(SEI->EI_NATUREZ)
+					If ( aCalculo[4] != 0 )
+						RecLock("SEI")
+					EndIf
+					//estorno do lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .T.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+				Else
+					If ( aCalculo[4] != 0 )
+						RecLock("SEI",.T.)
+					EndIf
+				EndIf
+				//здддддддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Grava o Valor das Taxas                            Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддддддды
+				If ( aCalculo[4] != 0 )
+					SEI->EI_FILIAL  := xFilial("SEI")
+					SEI->EI_NUMERO  := SEH->EH_NUMERO
+					SEI->EI_REVISAO := SEH->EH_REVISAO
+					SEI->EI_TIPODOC := "I4"
+					SEI->EI_DATA    := dData
+					SEI->EI_TIPO	 := SEH->EH_TIPO
+					SEI->EI_APLEMP  := SEH->EH_APLEMP
+					SEI->EI_VALOR   := aCalculo[4]
+					SEI->EI_DTDIGIT := dData
+					SEI->EI_NATUREZ := SEH->EH_NATUREZ
+					SEI->EI_BANCO   := SEH->EH_BANCO
+					SEI->EI_AGENCIA := SEH->EH_AGENCIA
+					SEI->EI_CONTA   :=  SEH->EH_CONTA
+					If ! lUsaFlag .and. lContabil
+						SEI->EI_LA := "S"
+					Else
+						aAdd( aFlagCTB, {"EI_LA", "S", "SEI", SEI->( Recno() ), 0, 0, 0} )
+					Endif
+					SEI->EI_SEQ     := cSequencia
+					SEI->EI_VLMOED2 := 0
+					SEI->EI_MOTBX   := "APR"
+					SEI->EI_HISTOR  := STR0012	//"Apropriacao Mensal"
+					SEI->EI_ULTAPR  := dData
+					SEI->EI_TXMOEDA := RecMoeda(dData,SEH->EH_MOEDA)
+					SEI->EI_TAXA	 := SEH->EH_TAXA
+					//здддддддддддддддддддддддддддддддддддддддддддддддд©
+					//Ё Lancamento Contabil                            Ё
+					//юдддддддддддддддддддддддддддддддддддддддддддддддды
+					dbSelectArea("SEH")
+					RecLock("SEH",.F.)
+					SEH->EH_VALOUTR := SEI->EI_VALOR
+
+					//lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .F.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+					
+				EndIf
+				dbSelectArea("SEI")
+				dbSetOrder(2)
+				If ( dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+;
+					SEH->EH_REVISAO+"APR"+Dtos(dData)+"JR",.F.) ) .And. Empty(SEI->EI_NATUREZ)
+					If ( aCalculo[5] != 0 )
+						RecLock("SEI")
+					EndIf
+					//estorno do lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .T.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+				Else
+					If ( aCalculo[5] != 0 )
+						RecLock("SEI",.T.)
+					EndIf
+				EndIf
+				//здддддддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Grava o Valor do Juros                             Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддддддды
+				If ( aCalculo[5] != 0 )
+					SEI->EI_FILIAL  := xFilial("SEI")
+					SEI->EI_NUMERO  := SEH->EH_NUMERO
+					SEI->EI_REVISAO := SEH->EH_REVISAO
+					SEI->EI_TIPODOC := "JR"
+					SEI->EI_DATA    := dData
+					SEI->EI_TIPO	 := SEH->EH_TIPO
+					SEI->EI_APLEMP  := SEH->EH_APLEMP
+					SEI->EI_VALOR   := aCalculo[5]
+					SEI->EI_DTDIGIT := dData
+					SEI->EI_NATUREZ := SEH->EH_NATUREZ
+					SEI->EI_BANCO   := SEH->EH_BANCO
+					SEI->EI_AGENCIA := SEH->EH_AGENCIA
+					SEI->EI_CONTA   :=  SEH->EH_CONTA
+					If ! lUsaFlag .and. lContabil
+						SEI->EI_LA := "S"
+					Else
+						aAdd( aFlagCTB, {"EI_LA", "S", "SEI", SEI->( Recno() ), 0, 0, 0} )
+					Endif
+					SEI->EI_SEQ     := cSequencia
+					SEI->EI_VLMOED2 := 0
+					SEI->EI_MOTBX   := "APR"
+					SEI->EI_HISTOR  := STR0012	//"Apropriacao Mensal"
+					SEI->EI_ULTAPR  := dData
+					SEI->EI_TXMOEDA := RecMoeda(dData,SEH->EH_MOEDA)
+					SEI->EI_TAXA	 := SEH->EH_TAXA
+					//здддддддддддддддддддддддддддддддддддддддддддддддд©
+					//Ё Lancamento Contabil                            Ё
+					//юдддддддддддддддддддддддддддддддддддддддддддддддды
+					dbSelectArea("SEH")
+					RecLock("SEH",.F.)
+					SEH->EH_VALJUR := SEI->EI_VALOR
+
+					//lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .F.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+					
+				EndIf
+			Else
+				dbSelectArea("SEI")
+				dbSetOrder(2)
+				
+				SEI->(dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+	SEH->EH_REVISAO+"APR"+Dtos(dData)+"JR",.F.))
+				
+				lAprMonth := .F.
+				While !SEI->(EOF()) .AND.;
+					SEI->EI_FILIAL  == xFilial("SEI") .AND.;
+					SEI->EI_APLEMP  == SEH->EH_APLEMP .AND.;
+					SEI->EI_NUMERO  == SEH->EH_NUMERO .AND.;
+					SEI->EI_REVISAO == SEH->EH_REVISAO .AND.;
+					SEI->EI_MOTBX   == "APR" .AND.;
+					SEI->EI_DATA    == dData .AND.;
+					SEI->EI_TIPODOC == "JR"
+					If (lAprMonth := Empty(SEI->EI_NATUREZ))
+						Exit
+					EndIf
+					SEI->(dbSkip())
+				EndDo
+				
+				If lAprMonth
+					//estorno do lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .T.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+
+					If ( aCalculo[1,6] != 0 ) .Or. lResgApr
+						RecLock("SEI")
+					Else
+						RecLock("SEI")
+						dbDelete()
+					EndIf
+				Else
+					If ( aCalculo[1,6] != 0 ) .Or. lResgApr
+						RecLock("SEI",.T.)
+					EndIf
+				EndIf
+				//здддддддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Grava o Valor do Juros                             Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддддддды
+				If ( aCalculo[1,6] != 0 ) .Or. lResgApr
+					SEI->EI_FILIAL  := xFilial("SEI")
+					SEI->EI_NUMERO  := SEH->EH_NUMERO
+					SEI->EI_REVISAO := SEH->EH_REVISAO
+					SEI->EI_TIPODOC := "JR"
+					SEI->EI_DATA    := dData
+					SEI->EI_TIPO	 := SEH->EH_TIPO
+					SEI->EI_APLEMP  := SEH->EH_APLEMP
+
+					// Possui ApropriaГЦo de final de mЙs por resgate
+					If lResgApr	
+						aCalculo[2,2] := 0
+					EndIf
+					SEI->EI_VALOR   := aCalculo[2,Iif(lResgApr,2,6)]
+
+					SEI->EI_VLMOED2 := If(SEH->EH_MOEDA!=1,aCalculo[1,6],0)
+					SEI->EI_DTDIGIT := dData
+					SEI->EI_NATUREZ := SEH->EH_NATUREZ
+					SEI->EI_BANCO   := SEH->EH_BANCO
+					SEI->EI_AGENCIA := SEH->EH_AGENCIA
+					SEI->EI_CONTA   :=  SEH->EH_CONTA
+					If ! lUsaFlag .and. lContabil
+						SEI->EI_LA := "S"
+					Else
+						aAdd( aFlagCTB, {"EI_LA", "S", "SEI", SEI->( Recno() ), 0, 0, 0} )
+					Endif
+					
+					If !lAprMonth
+						SEI->EI_SEQ     := cSequencia
+					EndIf
+					
+					SEI->EI_MOTBX   := "APR"
+					SEI->EI_HISTOR  := STR0012	//"Apropriacao Mensal"
+					SEI->EI_ULTAPR  := dData
+					SEI->EI_TXMOEDA := RecMoeda(dData,SEH->EH_MOEDA)
+					SEI->EI_TAXA	 := SEH->EH_TAXA
+					//здддддддддддддддддддддддддддддддддддддддддддддддд©
+					//Ё Lancamento Contabil                            Ё
+					//юдддддддддддддддддддддддддддддддддддддддддддддддды
+					dbSelectArea("SEH")
+					RecLock("SEH",.F.)
+					SEH->EH_VALJUR := SEI->EI_VALOR
+					SEH->EH_VALJUR2:= SEI->EI_VLMOED2
+
+					//lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .F.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+					
+				EndIf
+				dbSelectArea("SEI")
+				dbSetOrder(2)
+				If ( dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+;
+					SEH->EH_REVISAO+"APR"+Dtos(dData)+"V1",.F.) ) .And. Empty(SEI->EI_NATUREZ)
+
+					//estorno do lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .T.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+
+					If ( aCalculo[2,7] != 0 )
+						RecLock("SEI")
+					Else
+						RecLock("SEI")
+						dbDelete()
+					EndIf
+				Else
+					If ( aCalculo[2,7] != 0 )
+						RecLock("SEI",.T.)
+					EndIf
+				EndIf
+				//здддддддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Grava o Valor da Variacao Cambial a Longo Prazo    Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддддддды
+				If ( aCalculo[2,7] != 0 )
+					SEI->EI_FILIAL  := xFilial("SEI")
+					SEI->EI_NUMERO  := SEH->EH_NUMERO
+					SEI->EI_REVISAO := SEH->EH_REVISAO
+					SEI->EI_TIPODOC := "V1"
+					SEI->EI_DATA    := dData
+					SEI->EI_TIPO	 := SEH->EH_TIPO
+					SEI->EI_APLEMP  := SEH->EH_APLEMP
+					SEI->EI_VALOR   := aCalculo[2,7]
+					SEI->EI_DTDIGIT := dData
+					SEI->EI_NATUREZ := SEH->EH_NATUREZ
+					SEI->EI_BANCO   := SEH->EH_BANCO
+					SEI->EI_AGENCIA := SEH->EH_AGENCIA
+					SEI->EI_CONTA   :=  SEH->EH_CONTA
+					If ! lUsaFlag .and. lContabil
+						SEI->EI_LA := "S"
+					Else
+						aAdd( aFlagCTB, {"EI_LA", "S", "SEI", SEI->( Recno() ), 0, 0, 0} )
+					Endif
+					SEI->EI_SEQ     := cSequencia
+					SEI->EI_MOTBX   := "APR"
+					SEI->EI_HISTOR  := STR0012	//"Apropriacao Mensal"
+					SEI->EI_ULTAPR  := dData
+					SEI->EI_TXMOEDA := RecMoeda(dData,SEH->EH_MOEDA)
+					SEI->EI_TAXA	 := SEH->EH_TAXA
+					//здддддддддддддддддддддддддддддддддддддддддддддддд©
+					//Ё Lancamento Contabil                            Ё
+					//юдддддддддддддддддддддддддддддддддддддддддддддддды
+					dbSelectArea("SEH")
+					RecLock("SEH",.F.)
+					SEH->EH_VALVCLP := SEI->EI_VALOR
+					
+					//lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .F.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+					
+				EndIf
+				dbSelectArea("SEI")
+				dbSetOrder(2)
+				If ( dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+;
+					SEH->EH_REVISAO+"APR"+Dtos(dData)+"V2",.F.) ) .And. Empty(SEI->EI_NATUREZ)
+
+					//estorno do lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .T.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+
+					If ( aCalculo[2,8] != 0 )
+						RecLock("SEI")
+					Else
+						RecLock("SEI")
+						dbDelete()
+					EndIf
+				Else
+					If ( aCalculo[2,8] != 0 )
+						RecLock("SEI",.T.)
+					EndIf
+				EndIf
+				//здддддддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Grava o Valor da Variacao Cambial a Curto Prazo    Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддддддды
+				If ( aCalculo[2,8] != 0 )
+					SEI->EI_FILIAL  := xFilial("SEI")
+					SEI->EI_NUMERO  := SEH->EH_NUMERO
+					SEI->EI_REVISAO := SEH->EH_REVISAO
+					SEI->EI_TIPODOC := "V2"
+					SEI->EI_DATA    := dData
+					SEI->EI_TIPO	 := SEH->EH_TIPO
+					SEI->EI_APLEMP  := SEH->EH_APLEMP
+					SEI->EI_VALOR   := aCalculo[2,8]
+					SEI->EI_DTDIGIT := dData
+					SEI->EI_NATUREZ := SEH->EH_NATUREZ
+					SEI->EI_BANCO   := SEH->EH_BANCO
+					SEI->EI_AGENCIA := SEH->EH_AGENCIA
+					SEI->EI_CONTA   :=  SEH->EH_CONTA
+					If ! lUsaFlag .and. lContabil
+						SEI->EI_LA := "S"
+					Else
+						aAdd( aFlagCTB, {"EI_LA", "S", "SEI", SEI->( Recno() ), 0, 0, 0} )
+					Endif
+					SEI->EI_SEQ     := cSequencia
+					SEI->EI_MOTBX   := "APR"
+					SEI->EI_HISTOR  := STR0012	//"Apropriacao Mensal"
+					SEI->EI_ULTAPR  := dData
+					SEI->EI_TXMOEDA := RecMoeda(dData,SEH->EH_MOEDA)
+					SEI->EI_TAXA	 := SEH->EH_TAXA
+					//здддддддддддддддддддддддддддддддддддддддддддддддд©
+					//Ё Lancamento Contabil                            Ё
+					//юдддддддддддддддддддддддддддддддддддддддддддддддды
+					dbSelectArea("SEH")
+					RecLock("SEH",.F.)
+					SEH->EH_VALVCCP := SEI->EI_VALOR
+
+					//lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .F.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+					
+				EndIf
+				dbSelectArea("SEI")
+				dbSetOrder(2)
+				If ( dbSeek(xFilial("SEI")+SEH->EH_APLEMP+SEH->EH_NUMERO+;
+					SEH->EH_REVISAO+"APR"+Dtos(dData)+"V3",.F.) ) .And. Empty(SEI->EI_NATUREZ)
+
+					//estorno do lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .T.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+
+					If ( aCalculo[2,9] != 0 )
+						RecLock("SEI")
+					Else
+						RecLock("SEI")
+						dbDelete()
+					EndIf
+				Else
+					If ( aCalculo[2,9] != 0 )
+						RecLock("SEI",.T.)
+					EndIf
+				EndIf
+				//здддддддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Grava o Valor da Variacao Cambial dos Juros        Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддддддды
+				If ( aCalculo[2,9] != 0 )
+					SEI->EI_FILIAL  := xFilial("SEI")
+					SEI->EI_NUMERO  := SEH->EH_NUMERO
+					SEI->EI_REVISAO := SEH->EH_REVISAO
+					SEI->EI_TIPODOC := "V3"
+					SEI->EI_DATA    := dData
+					SEI->EI_TIPO	 := SEH->EH_TIPO
+					SEI->EI_APLEMP  := SEH->EH_APLEMP
+					SEI->EI_VALOR   := aCalculo[2,9]
+					SEI->EI_DTDIGIT := dData
+					SEI->EI_NATUREZ := SEH->EH_NATUREZ
+					SEI->EI_BANCO   := SEH->EH_BANCO
+					SEI->EI_AGENCIA := SEH->EH_AGENCIA
+					SEI->EI_CONTA   :=  SEH->EH_CONTA
+					If ! lUsaFlag .and. lContabil
+						SEI->EI_LA := "S"
+					Else
+						aAdd( aFlagCTB, {"EI_LA", "S", "SEI", SEI->( Recno() ), 0, 0, 0} )
+					Endif
+					SEI->EI_SEQ     := cSequencia
+					SEI->EI_MOTBX   := "APR"
+					SEI->EI_HISTOR  := STR0012	//"Apropriacao Mensal"
+					SEI->EI_ULTAPR  := dData
+					SEI->EI_TXMOEDA := RecMoeda(dData,SEH->EH_MOEDA)
+					SEI->EI_TAXA	 := SEH->EH_TAXA
+					//здддддддддддддддддддддддддддддддддддддддддддддддд©
+					//Ё Lancamento Contabil                            Ё
+					//юдддддддддддддддддддддддддддддддддддддддддддддддды
+					dbSelectArea("SEH")
+					RecLock("SEH",.F.)
+					SEH->EH_VALVCJR := SEI->EI_VALOR
+
+					//lancamento do  PCO
+					cLctPco    := PcoItApropr(SEI->EI_APLEMP, SEI->EI_TIPODOC, SEI->EI_MOTBX, .F.)
+					If !Empty(cLctPco)
+						//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+						//Ё Gera os lancamentos do SIGAPCO                      Ё
+						//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+						PcoDetLan("000010", cLctPco, "FINA182")
+					EndIf
+					
+				EndIf
+				//здддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Atualiza data de Ultima apropriacao.           Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддды
+			EndIf
+			
+			RecLock("SEH")
+			SEH->EH_ULTAPR  := dData
+			
+			If ExistBlock("FA182UPD")
+				ExecBlock("FA182UPD", .F., .F.)
+			EndIf
+
+			//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+			//Ё Gera os lancamentos do SIGAPCO  (referente SEH)     Ё
+			//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+			If SEH->EH_APLEMP == "EMP"  //emprestimo
+				PcoDetLan("000010","01","FINA182")
+			Else  //aplicacao
+				PcoDetLan("000010","16","FINA182")
+			EndIf
+
+			If ( lPadrao .And. lContabil )
+				//здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+				//Ё Prepara Lancamento Contabil                                      Ё
+				//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+					nTotal += DetProva( nHdlPrv,;
+					                    cPadrao,;
+					                    "fina182" /*cPrograma*/,;
+					                    cLote,;
+					                    /*nLinha*/,;
+					                    /*lExecuta*/,;
+					                    /*cCriterio*/,;
+					                    /*lRateio*/,;
+					                    /*cChaveBusca*/,;
+					                    /*aCT5*/,;
+					                    /*lPosiciona*/,;
+					                    @aFlagCTB,;
+					                    /*aTabRecOri*/,;
+					                    /*aDadosProva*/ )
+				
+			EndIf
+			//здддддддддддддддддддддддддддддддддддддддддддддддд©
+			//Ё Finaliza Transacao                             Ё
+			//юдддддддддддддддддддддддддддддддддддддддддддддддды
+			End Transaction
+
+			//зддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+			//Ё Finaliza a geraГao de lancamentos do SIGAPCO        Ё
+			//юддддддддддддддддддддддддддддддддддддддддддддддддддддды
+			PcoFinLan("000010")
+		Endif
+	EndIf
+	IncProc()
+	dbSelectArea("SEH")
+	dbSkip()
+EndDo
+
+//зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+//Ё AAF - Apropriacao de Juros p/ financiamentos originados no SIGAEFF    Ё
+//юддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+If GetMV("MV_EFF_FIN",,.F.) .AND. FindFunction("EX102AprJuros")
+   nTotal += EX102AprJuros(dData,nHdlPrv,cPadrao,aFlagCtb,lUsaFlag,cLote,dData)
+EndIf
+
+//здддддддддддддддддддддддддддддддддддддддддддддддд©
+//Ё Lancamento Contabil                            Ё
+//юдддддддддддддддддддддддддддддддддддддддддддддддды
+If ( lPadrao .And. lContabil )
+	//здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+	//Ё Efetiva Lan┤amento Contabil                                      Ё
+	//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+		RodaProva( nHdlPrv,;
+		           nTotal)
+
+		cA100Incl( cArquivo,;
+		           nHdlPrv,;
+		           3 /*nOpcx*/,;
+		           cLote,;
+		           lDigita,;
+		           .F. /*lAglut*/,;
+		           /*cOnLine*/,;
+		           /*dData*/,;
+		           /*dReproc*/,;
+		           @aFlagCTB,;
+		           /*aDadosProva*/,;
+		           /*aDiario*/ )
+		aFlagCTB := {}  // Limpa o coteudo apos a efetivacao do lancamento
+	
+EndIf
+
+//зддддддддддддддддддддддддддддддддддд©
+//Ё Atualiza o log de processamento   Ё
+//юддддддддддддддддддддддддддддддддддды
+ProcLogAtu("FIM")
+
+Return
+
+/*
+эээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээ
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+╠╠иммммммммммяммммммммммммкмммммммяммммммммммммммммммкммммммяммммммммммммм╩╠╠
+╠╠╨Programa  ЁPcoItApropr ╨Autor  ЁPaulo Carnelossi  ╨ Data Ё  13/11/06   ╨╠╠
+╠╠лммммммммммьммммммммммммймммммммоммммммммммммммммммйммммммоммммммммммммм╧╠╠
+╠╠╨Desc.     Ёretornar o item de lancamento do processo PCO  000010 -     ╨╠╠
+╠╠╨          ЁAPROPRIACAO DE APLICACOES/EMPRESTIMO para ser utilizado na  ╨╠╠
+╠╠╨          Ёfuncao PcoDetLan                                            ╨╠╠
+╠╠лммммммммммьмммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм╧╠╠
+╠╠╨Uso       Ё AP                                                         ╨╠╠
+╠╠хммммммммммомммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм╪╠╠
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+ъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъ
+*/
+Static Function PcoItApropr(cAplEmp, cTipoDoc, cNorApr, lCancela)
+Local cItLctoPco := "", nElemLct, nPos
+DEFAULT lCancela := .F.
+
+If lCancela   //cancelamento
+	nElemLct := 05
+Else		//lancto normal inclusao
+	nElemLct := 04
+EndIf
+
+If Len(aIt_TpAprop)==0  //se o array nao estiver preenchido popula
+	/*estrutura do array aIt_TpAprop
+	Coluna 1 - APL (APLICACAO) EMP (EMPRESTIMO
+	Coluna 2 - EI_TIPODOC (TIPO DO DOCUMENTO)
+	Coluna 3 - EI_MOTBX (NORMAL/APROPRIACAO)
+	Coluna 4 - Item do Lancamento modulo PCO INCLUSAO - 000010 -APROPRIACAO DE APLICACOES/EMPRESTIMO
+	Coluna 5 - Item do Lancamento modulo PCO CANCELTO - 000010 -APROPRIACAO DE APLICACOES/EMPRESTIMO
+	Coluna 6 - Descritivo do Item
+	*/	  
+	//EMPRESTIMO
+	aAdd(aIt_TpAprop,	{"EMP","I1","APR","02","09","Apropriacao do IRF"			}) 
+	aAdd(aIt_TpAprop,	{"EMP","I2","APR","03","10","Apropriacao do IOF"			}) 
+	aAdd(aIt_TpAprop,	{"EMP","I4","APR","04","11","Apropriacao de taxas"			}) 
+	aAdd(aIt_TpAprop,	{"EMP","JR","APR","05","12","Apropriacao dos Juros "		}) 
+	aAdd(aIt_TpAprop,	{"EMP","V1","APR","06","13","Apropriacao Var.Cambial a Longo Prazo"	}) 
+	aAdd(aIt_TpAprop,	{"EMP","V2","APR","07","14","Apropriacao Var.Cambial a Curto Prazo"	}) 
+	aAdd(aIt_TpAprop,	{"EMP","V3","APR","08","15","Apropriacao Var.Cambial dos Juros"		}) 
+	//APLICACAO
+	aAdd(aIt_TpAprop,	{"APL","I1","APR","17","24","Apropriacao do IRF"			}) 
+	aAdd(aIt_TpAprop,	{"APL","I2","APR","18","25","Apropriacao do IOF"			}) 
+	aAdd(aIt_TpAprop,	{"APL","I4","APR","19","26","Apropriacao de Taxas"			}) 
+	aAdd(aIt_TpAprop,	{"APL","JR","APR","20","27","Apropriacao dos Juros "		}) 
+	aAdd(aIt_TpAprop,	{"APL","V1","APR","21","28","Apropriacao Var.Cambial a Longo Prazo"	}) 
+	aAdd(aIt_TpAprop,	{"APL","V2","APR","22","29","Apropriacao Var.Cambial a Curto Prazo"	}) 
+	aAdd(aIt_TpAprop,	{"APL","V3","APR","23","30","Apropriacao Var.Cambial dos Juros"		}) 
+EndIf
+
+If (nPos := Ascan(aIt_TpAprop,{|aVal| 	aVal[1] == cAplEmp .And. ;
+										aVal[2] == cTipoDoc .And. ;
+										aVal[3] == cNorApr 			} )) > 0
+	cItLctoPco := aIt_TpAprop[nPos, nElemLct]
+EndIf	
+
+Return(cItLctoPco)
+
+/*/
+эээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээээ
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+╠╠зддддддддддбддддддддддбдддддддбдддддддддддддддддддддддбддддддбдддддддддд©╠╠
+╠╠ЁPrograma  ЁMenuDef   Ё Autor Ё Ana Paula N. Silva     Ё Data Ё23/11/06 Ё╠╠
+╠╠цддддддддддеддддддддддадддддддадддддддддддддддддддддддаддддддадддддддддд╢╠╠
+╠╠ЁDescri┤┘o Ё Utilizacao de menu Funcional                               Ё╠╠
+╠╠цддддддддддедддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠ЁRetorno   ЁArray com opcoes da rotina.                                 Ё╠╠
+╠╠цддддддддддедддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠ЁParametrosЁParametros do array a Rotina:                               Ё╠╠
+╠╠Ё          Ё1. Nome a aparecer no cabecalho                             Ё╠╠
+╠╠Ё          Ё2. Nome da Rotina associada                                 Ё╠╠
+╠╠Ё          Ё3. Reservado                                                Ё╠╠
+╠╠Ё          Ё4. Tipo de Transa┤└o a ser efetuada:                        Ё╠╠
+╠╠Ё          Ё		1 - Pesquisa e Posiciona em um Banco de Dados     Ё╠╠
+╠╠Ё          Ё    2 - Simplesmente Mostra os Campos                       Ё╠╠
+╠╠Ё          Ё    3 - Inclui registros no Bancos de Dados                 Ё╠╠
+╠╠Ё          Ё    4 - Altera o registro corrente                          Ё╠╠
+╠╠Ё          Ё    5 - Remove o registro corrente do Banco de Dados        Ё╠╠
+╠╠Ё          Ё5. Nivel de acesso                                          Ё╠╠
+╠╠Ё          Ё6. Habilita Menu Funcional                                  Ё╠╠
+╠╠цддддддддддедддддддддддддддбдддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠Ё   DATA   Ё Programador   ЁManutencao efetuada                         Ё╠╠
+╠╠цддддддддддедддддддддддддддедддддддддддддддддддддддддддддддддддддддддддд╢╠╠
+╠╠Ё          Ё               Ё                                            Ё╠╠
+╠╠юддддддддддадддддддддддддддадддддддддддддддддддддддддддддддддддддддддддды╠╠
+╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠╠
+ъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъъ
+/*/
+Static Function MenuDef()        
+Local aRotina :={  {OemToAnsi(STR0001),"AxPesqui" , 0 , 1},;  // "Pesquisar"
+	{OemToAnsi(STR0002),"AxVisual" , 0 , 2},;  // "Visualizar"
+	{OemToAnsi(STR0003),"Fa182Apr"  , 0 , 4},;  // "Apropriar"
+	{OemToAnsi(STR0004),"Fa182Cta"  , 0 , 5} }  // "Contabil"
+Return(aRotina)	

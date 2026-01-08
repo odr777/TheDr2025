@@ -1,0 +1,3331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.4.2.v201410272105 Build &lt;4.4.2.v20150217-1805></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="layoutPreference">fixed layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">120</property>
+    <data-sources>
+        <oda-data-source extensionID="com.totvs.tds.birt.oda.protheus" name="MP12DES" id="455">
+            <property name="com_totvs_tds_birt_connection_service">br.com.totvs.tds.birt.connection.rpc</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="com.totvs.tds.birt.oda.protheus.advpl" name="CabYTot" id="456">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">CODCL</property>
+                    <text-property name="displayName">CODCL</text-property>
+                    <text-property name="heading">CODCL</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">NOMBRECL</property>
+                    <text-property name="displayName">NOMBRECL</text-property>
+                    <text-property name="heading">NOMBRECL</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">LOCALIDAD</property>
+                    <text-property name="displayName">LOCALIDAD</text-property>
+                    <text-property name="heading">LOCALIDAD</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">DIRECCION</property>
+                    <text-property name="displayName">DIRECCION</text-property>
+                    <text-property name="heading">DIRECCION</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">NIT</property>
+                    <text-property name="displayName">NIT</text-property>
+                    <text-property name="heading">NIT</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">RECIBO</property>
+                    <text-property name="displayName">RECIBO</text-property>
+                    <text-property name="heading">RECIBO</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">MONEDA</property>
+                    <text-property name="displayName">MONEDA</text-property>
+                    <text-property name="heading">MONEDA</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">TASA</property>
+                    <text-property name="displayName">TASA</text-property>
+                    <text-property name="heading">TASA</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">TOTAL</property>
+                    <text-property name="displayName">TOTAL</text-property>
+                    <text-property name="heading">TOTAL</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CANCEL</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">CANCEL</text-property>
+                    <text-property name="heading">CANCEL</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">DIREMPR</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">TELEMPR</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">IMPRESION</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">FECHADIA</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">CODCL</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">NOMBRECL</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">LOCALIDAD</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">DIRECCION</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">NIT</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">RECIBO</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">MONEDA</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">TASA</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">TOTAL</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">TOTALDESC</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">TOTALBS</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">TCDOLAR</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">TCUFV</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">TCEURO</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">USUARIO</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">SALDO</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">CANCEL</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">MP12DES</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">DIREMPR</property>
+                    <property name="nativeName">DIREMPR</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">TELEMPR</property>
+                    <property name="nativeName">TELEMPR</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">IMPRESION</property>
+                    <property name="nativeName">IMPRESION</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">FECHADIA</property>
+                    <property name="nativeName">FECHADIA</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">CODCL</property>
+                    <property name="nativeName">CODCL</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">NOMBRECL</property>
+                    <property name="nativeName">NOMBRECL</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">LOCALIDAD</property>
+                    <property name="nativeName">LOCALIDAD</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">DIRECCION</property>
+                    <property name="nativeName">DIRECCION</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">NIT</property>
+                    <property name="nativeName">NIT</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">RECIBO</property>
+                    <property name="nativeName">RECIBO</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">MONEDA</property>
+                    <property name="nativeName">MONEDA</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">TASA</property>
+                    <property name="nativeName">TASA</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">TOTAL</property>
+                    <property name="nativeName">TOTAL</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">TOTALDESC</property>
+                    <property name="nativeName">TOTALDESC</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">TOTALBS</property>
+                    <property name="nativeName">TOTALBS</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">TCDOLAR</property>
+                    <property name="nativeName">TCDOLAR</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">TCUFV</property>
+                    <property name="nativeName">TCUFV</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">TCEURO</property>
+                    <property name="nativeName">TCEURO</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">USUARIO</property>
+                    <property name="nativeName">USUARIO</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">SALDO</property>
+                    <property name="nativeName">SALDO</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">CANCEL</property>
+                    <property name="nativeName">CANCEL</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[crecibcobr]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CODCL</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>CODCL</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CODCL</design:label>
+            <design:formattingHints>
+              <design:displaySize>6</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NOMBRECL</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>NOMBRECL</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NOMBRECL</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>LOCALIDAD</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>LOCALIDAD</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>LOCALIDAD</design:label>
+            <design:formattingHints>
+              <design:displaySize>15</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>DIRECCION</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>DIRECCION</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>DIRECCION</design:label>
+            <design:formattingHints>
+              <design:displaySize>40</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NIT</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>NIT</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NIT</design:label>
+            <design:formattingHints>
+              <design:displaySize>14</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>RECIBO</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>RECIBO</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>RECIBO</design:label>
+            <design:formattingHints>
+              <design:displaySize>6</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>MONEDA</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>MONEDA</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>MONEDA</design:label>
+            <design:formattingHints>
+              <design:displaySize>2</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TASA</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>6</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>TASA</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TASA</design:label>
+            <design:formattingHints>
+              <design:displaySize>11</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TOTAL</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>6</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>TOTAL</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TOTAL</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="com.totvs.tds.birt.oda.protheus.advpl" name="Detalle" id="557">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">SERIE</property>
+                    <text-property name="displayName">SERIE</text-property>
+                    <text-property name="heading">SERIE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">NUMERO</property>
+                    <text-property name="displayName">NUMERO</text-property>
+                    <text-property name="heading">NUMERO</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">TIENDA</property>
+                    <text-property name="displayName">TIENDA</text-property>
+                    <text-property name="heading">TIENDA</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">VENCTO</property>
+                    <text-property name="displayName">VENCTO</text-property>
+                    <text-property name="heading">VENCTO</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">VALOR</property>
+                    <text-property name="displayName">VALOR</text-property>
+                    <text-property name="heading">VALOR</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">MONEDA</property>
+                    <text-property name="displayName">MONEDA</text-property>
+                    <text-property name="heading">MONEDA</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">IMPORTESUS</property>
+                    <text-property name="displayName">IMPORTESUS</text-property>
+                    <text-property name="heading">IMPORTESUS</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">VALORCOB</property>
+                    <text-property name="displayName">VALORCOB</text-property>
+                    <text-property name="heading">VALORCOB</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SALDO</property>
+                    <text-property name="displayName">SALDO</text-property>
+                    <text-property name="heading">SALDO</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">SERIE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">NUMERO</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">TIENDA</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">VENCTO</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">VALOR</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">MONEDA</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">IMPORTESUS</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">VALORCOB</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">SALDO</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">MP12DES</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">SERIE</property>
+                    <property name="nativeName">SERIE</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">NUMERO</property>
+                    <property name="nativeName">NUMERO</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">TIENDA</property>
+                    <property name="nativeName">TIENDA</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">VENCTO</property>
+                    <property name="nativeName">VENCTO</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">VALOR</property>
+                    <property name="nativeName">VALOR</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">MONEDA</property>
+                    <property name="nativeName">MONEDA</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">IMPORTESUS</property>
+                    <property name="nativeName">IMPORTESUS</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">VALORCOB</property>
+                    <property name="nativeName">VALORCOB</property>
+                    <property name="dataType">float</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[drecibcobr]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SERIE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>SERIE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SERIE</design:label>
+            <design:formattingHints>
+              <design:displaySize>3</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NUMERO</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>NUMERO</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NUMERO</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>TIENDA</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>TIENDA</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>TIENDA</design:label>
+            <design:formattingHints>
+              <design:displaySize>2</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>VENCTO</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>VENCTO</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>VENCTO</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>VALOR</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>VALOR</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>VALOR</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>MONEDA</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>MONEDA</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>MONEDA</design:label>
+            <design:formattingHints>
+              <design:displaySize>5</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>IMPORTESUS</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>6</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>IMPORTESUS</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>IMPORTESUS</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>VALORCOB</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>6</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>VALORCOB</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>VALORCOB</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SALDO</design:name>
+              <design:position>9</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>6</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>SALDO</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SALDO</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="com.totvs.tds.birt.oda.protheus.advpl" name="MedioPago" id="643">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">VL</property>
+                    <text-property name="displayName">VL</text-property>
+                    <text-property name="heading">VL</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">NUMERO</property>
+                    <text-property name="displayName">NUMERO</text-property>
+                    <text-property name="heading">NUMERO</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">VALOR</property>
+                    <text-property name="displayName">VALOR</text-property>
+                    <text-property name="heading">VALOR</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">MONEDA</property>
+                    <text-property name="displayName">MONEDA</text-property>
+                    <text-property name="heading">MONEDA</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">BANCO</property>
+                    <text-property name="displayName">BANCO</text-property>
+                    <text-property name="heading">BANCO</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">SUCURSAL</property>
+                    <text-property name="displayName">SUCURSAL</text-property>
+                    <text-property name="heading">SUCURSAL</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">CUENTA</property>
+                    <text-property name="displayName">CUENTA</text-property>
+                    <text-property name="heading">CUENTA</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">FECHA</property>
+                    <text-property name="displayName">FECHA</text-property>
+                    <text-property name="heading">FECHA</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">VL</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">NUMERO</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">VALOR</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">MONEDA</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">BANCO</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">SUCURSAL</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">CUENTA</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">FECHA</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">MP12DES</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">VL</property>
+                    <property name="nativeName">VL</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">NUMERO</property>
+                    <property name="nativeName">NUMERO</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">VALOR</property>
+                    <property name="nativeName">VALOR</property>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">MONEDA</property>
+                    <property name="nativeName">MONEDA</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">BANCO</property>
+                    <property name="nativeName">BANCO</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">SUCURSAL</property>
+                    <property name="nativeName">SUCURSAL</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">CUENTA</property>
+                    <property name="nativeName">CUENTA</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">FECHA</property>
+                    <property name="nativeName">FECHA</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[recibcobmp]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>VL</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>VL</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>VL</design:label>
+            <design:formattingHints>
+              <design:displaySize>3</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NUMERO</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>NUMERO</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NUMERO</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>VALOR</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>6</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>VALOR</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>VALOR</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>MONEDA</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>MONEDA</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>MONEDA</design:label>
+            <design:formattingHints>
+              <design:displaySize>5</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>BANCO</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>BANCO</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>BANCO</design:label>
+            <design:formattingHints>
+              <design:displaySize>3</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SUCURSAL</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>SUCURSAL</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SUCURSAL</design:label>
+            <design:formattingHints>
+              <design:displaySize>4</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>CUENTA</design:name>
+              <design:position>7</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>CUENTA</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>CUENTA</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>FECHA</design:name>
+              <design:position>8</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>FECHA</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>FECHA</design:label>
+            <design:formattingHints>
+              <design:displaySize>10</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="com.totvs.tds.birt.oda.protheus.advpl" name="Detalle Ra" id="846">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">SERIE</property>
+                    <text-property name="displayName">SERIE</text-property>
+                    <text-property name="heading">SERIE</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">NUMERO</property>
+                    <text-property name="displayName">NUMERO</text-property>
+                    <text-property name="heading">NUMERO</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">VALOR</property>
+                    <text-property name="displayName">VALOR</text-property>
+                    <text-property name="heading">VALOR</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">MONEDA</property>
+                    <text-property name="displayName">MONEDA</text-property>
+                    <text-property name="heading">MONEDA</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">VALORCOB</property>
+                    <text-property name="displayName">VALORCOB</text-property>
+                    <text-property name="heading">VALORCOB</text-property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">SERIE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">NUMERO</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">VALOR</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">MONEDA</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">VALORCOB</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">MP12DES</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">SERIE</property>
+                    <property name="nativeName">SERIE</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">NUMERO</property>
+                    <property name="nativeName">NUMERO</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">VALOR</property>
+                    <property name="nativeName">VALOR</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">6</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">MONEDA</property>
+                    <property name="nativeName">MONEDA</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">1</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">VALORCOB</property>
+                    <property name="nativeName">VALORCOB</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">6</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[drarecibco]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>SERIE</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>SERIE</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>SERIE</design:label>
+            <design:formattingHints>
+              <design:displaySize>3</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>NUMERO</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>NUMERO</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>NUMERO</design:label>
+            <design:formattingHints>
+              <design:displaySize>13</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>VALOR</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>6</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>VALOR</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>VALOR</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>MONEDA</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>1</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>MONEDA</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>MONEDA</design:label>
+            <design:formattingHints>
+              <design:displaySize>5</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>VALORCOB</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>6</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+            <design:uiHints>
+              <design:displayName>VALORCOB</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>VALORCOB</design:label>
+            <design:formattingHints>
+              <design:displaySize>16</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="topMargin">0.15in</property>
+            <property name="leftMargin">0.58in</property>
+            <property name="rightMargin">0.58in</property>
+            <property name="headerHeight">0.2in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="7">
+            <property name="height">1.2in</property>
+            <property name="width">7.316666666666666in</property>
+            <column id="8">
+                <property name="width">2.033333333333333in</property>
+            </column>
+            <column id="9">
+                <property name="width">2.9166666666666665in</property>
+            </column>
+            <column id="10">
+                <property name="width">2.3666666666666667in</property>
+            </column>
+            <row id="11">
+                <property name="height">1.2in</property>
+                <cell id="12">
+                    <image id="26">
+                        <property name="height">0.6666666666666666in</property>
+                        <property name="width">1.6583333333333334in</property>
+                        <property name="source">embed</property>
+                        <property name="imageName">logo.png</property>
+                    </image>
+                    <grid id="247">
+                        <column id="248"/>
+                        <row id="250">
+                            <cell id="251">
+                                <data id="971">
+                                    <property name="fontSize">6pt</property>
+                                    <property name="dataSet">CabYTot</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">DIREMPR</property>
+                                            <text-property name="displayName">DIREMPR</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["DIREMPR"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">DIREMPR</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="253">
+                            <cell id="254">
+                                <data id="972">
+                                    <property name="fontSize">6pt</property>
+                                    <property name="dataSet">CabYTot</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">TELEMPR</property>
+                                            <text-property name="displayName">TELEMPR</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["TELEMPR"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">TELEMPR</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="13">
+                    <property name="colSpan">1</property>
+                    <property name="rowSpan">1</property>
+                    <property name="verticalAlign">middle</property>
+                    <label id="25">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">14pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="color">black</property>
+                        <property name="textUnderline">underline</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">RECIBO DE COBRANZA</text-property>
+                    </label>
+                    <data id="1002">
+                        <property name="fontFamily">"Arial"</property>
+                        <property name="fontSize">14pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="textUnderline">underline</property>
+                        <property name="textAlign">center</property>
+                        <property name="dataSet">CabYTot</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">CANCEL</property>
+                                <text-property name="displayName">CANCEL</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["CANCEL"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">CANCEL</property>
+                    </data>
+                </cell>
+                <cell id="93">
+                    <property name="verticalAlign">middle</property>
+                    <table id="230">
+                        <property name="width">2.3in</property>
+                        <property name="dataSet">CabYTot</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">FECHADIA</property>
+                                <text-property name="displayName">FECHADIA</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["FECHADIA"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">IMPRESION</property>
+                                <text-property name="displayName">IMPRESION</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["IMPRESION"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">RECIBO</property>
+                                <text-property name="displayName">RECIBO</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["RECIBO"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <column id="243">
+                            <property name="width">0.675in</property>
+                        </column>
+                        <column id="244">
+                            <property name="width">1.625in</property>
+                        </column>
+                        <detail>
+                            <row id="234">
+                                <cell id="235">
+                                    <text id="245">
+                                        <property name="fontSize">8pt</property>
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[Recibo Nro:]]></text-property>
+                                    </text>
+                                </cell>
+                                <cell id="236">
+                                    <data id="979">
+                                        <property name="fontSize">8pt</property>
+                                        <property name="resultSetColumn">RECIBO</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="237">
+                                <cell id="238">
+                                    <text id="246">
+                                        <property name="fontSize">8pt</property>
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[Fecha:]]></text-property>
+                                    </text>
+                                </cell>
+                                <cell id="239">
+                                    <data id="918">
+                                        <property name="fontSize">8pt</property>
+                                        <property name="resultSetColumn">FECHADIA</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="973">
+                                <cell id="974">
+                                    <text id="976">
+                                        <property name="fontSize">8pt</property>
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[Impresión:]]></text-property>
+                                    </text>
+                                </cell>
+                                <cell id="975">
+                                    <data id="978">
+                                        <property name="fontSize">8pt</property>
+                                        <property name="resultSetColumn">IMPRESION</property>
+                                    </data>
+                                </cell>
+                            </row>
+                        </detail>
+                    </table>
+                </cell>
+            </row>
+        </grid>
+        <grid id="450">
+            <property name="height">0.7666666666666667in</property>
+            <property name="width">7.291666666666667in</property>
+            <column id="451">
+                <property name="width">7.291666666666667in</property>
+            </column>
+            <row id="452">
+                <property name="height">0.7666666666666667in</property>
+                <cell id="453">
+                    <grid id="487">
+                        <property name="height">0.6416666666666667in</property>
+                        <property name="width">7.9in</property>
+                        <column id="488">
+                            <property name="width">3.45in</property>
+                        </column>
+                        <column id="489">
+                            <property name="width">1.9166666666666667in</property>
+                        </column>
+                        <column id="490">
+                            <property name="width">2.533333333333333in</property>
+                        </column>
+                        <row id="491">
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">thin</property>
+                            <property name="height">0.18in</property>
+                            <cell id="492">
+                                <property name="colSpan">2</property>
+                                <property name="rowSpan">1</property>
+                                <grid id="503">
+                                    <property name="width">5.325in</property>
+                                    <column id="504">
+                                        <property name="width">1.4333333333333333in</property>
+                                    </column>
+                                    <column id="505">
+                                        <property name="width">3.8916666666666666in</property>
+                                    </column>
+                                    <row id="506">
+                                        <cell id="507">
+                                            <text id="539">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="contentType">auto</property>
+                                                <text-property name="content"><![CDATA[Recibimos de los señores:]]></text-property>
+                                            </text>
+                                        </cell>
+                                        <cell id="508">
+                                            <data id="631">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="dataSet">CabYTot</property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">NOMBRECL</property>
+                                                        <text-property name="displayName">NOMBRECL</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["NOMBRECL"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <property name="resultSetColumn">NOMBRECL</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </grid>
+                            </cell>
+                            <cell id="494">
+                                <grid id="521">
+                                    <property name="width">1.8333333333333333in</property>
+                                    <column id="522">
+                                        <property name="width">0.6333333333333333in</property>
+                                    </column>
+                                    <column id="523">
+                                        <property name="width">1.2in</property>
+                                    </column>
+                                    <row id="524">
+                                        <cell id="525">
+                                            <text id="544">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="textAlign">right</property>
+                                                <property name="contentType">auto</property>
+                                                <text-property name="content"><![CDATA[Cliente:]]></text-property>
+                                            </text>
+                                        </cell>
+                                        <cell id="526">
+                                            <data id="636">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="dataSet">CabYTot</property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">CODCL</property>
+                                                        <text-property name="displayName">CODCL</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["CODCL"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <property name="resultSetColumn">CODCL</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </grid>
+                            </cell>
+                        </row>
+                        <row id="495">
+                            <property name="height">0.18in</property>
+                            <cell id="496">
+                                <grid id="509">
+                                    <property name="width">3.3833333333333333in</property>
+                                    <column id="510">
+                                        <property name="width">0.65in</property>
+                                    </column>
+                                    <column id="511">
+                                        <property name="width">2.7333333333333334in</property>
+                                    </column>
+                                    <row id="512">
+                                        <cell id="513">
+                                            <text id="540">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="contentType">auto</property>
+                                                <text-property name="content"><![CDATA[Dirección:]]></text-property>
+                                            </text>
+                                        </cell>
+                                        <cell id="514">
+                                            <data id="632">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="dataSet">CabYTot</property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">DIRECCION</property>
+                                                        <text-property name="displayName">DIRECCION</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["DIRECCION"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <property name="resultSetColumn">DIRECCION</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </grid>
+                            </cell>
+                            <cell id="497">
+                                <grid id="533">
+                                    <property name="width">1.8916666666666666in</property>
+                                    <column id="534">
+                                        <property name="width">0.6583333333333333in</property>
+                                    </column>
+                                    <column id="535">
+                                        <property name="width">1.2333333333333334in</property>
+                                    </column>
+                                    <row id="536">
+                                        <cell id="537">
+                                            <text id="542">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="textAlign">right</property>
+                                                <property name="contentType">auto</property>
+                                                <text-property name="content"><![CDATA[Localidad:]]></text-property>
+                                            </text>
+                                        </cell>
+                                        <cell id="538">
+                                            <data id="634">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="dataSet">CabYTot</property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">LOCALIDAD</property>
+                                                        <text-property name="displayName">LOCALIDAD</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["LOCALIDAD"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <property name="resultSetColumn">LOCALIDAD</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </grid>
+                            </cell>
+                            <cell id="498">
+                                <grid id="527">
+                                    <property name="width">1.8333333333333333in</property>
+                                    <column id="528">
+                                        <property name="width">0.6333333333333333in</property>
+                                    </column>
+                                    <column id="529">
+                                        <property name="width">1.2in</property>
+                                    </column>
+                                    <row id="530">
+                                        <cell id="531">
+                                            <text id="543">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="textAlign">right</property>
+                                                <property name="contentType">auto</property>
+                                                <text-property name="content"><![CDATA[Nit:]]></text-property>
+                                            </text>
+                                        </cell>
+                                        <cell id="532">
+                                            <data id="635">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="dataSet">CabYTot</property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">NIT</property>
+                                                        <text-property name="displayName">NIT</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["NIT"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <property name="resultSetColumn">NIT</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </grid>
+                            </cell>
+                        </row>
+                        <row id="499">
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">thin</property>
+                            <property name="height">0.18in</property>
+                            <cell id="500">
+                                <property name="colSpan">2</property>
+                                <property name="rowSpan">1</property>
+                                <grid id="515">
+                                    <property name="width">5.316666666666666in</property>
+                                    <column id="516">
+                                        <property name="width">0.7166666666666667in</property>
+                                    </column>
+                                    <column id="517">
+                                        <property name="width">4.6in</property>
+                                    </column>
+                                    <row id="518">
+                                        <cell id="519">
+                                            <text id="541">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="contentType">auto</property>
+                                                <text-property name="content"><![CDATA[La suma de:]]></text-property>
+                                            </text>
+                                        </cell>
+                                        <cell id="520">
+                                            <data id="633">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="dataSet">CabYTot</property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">TOTALDESC</property>
+                                                        <text-property name="displayName">TOTALDESC</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["TOTALDESC"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <property name="resultSetColumn">TOTALDESC</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </grid>
+                            </cell>
+                            <cell id="502">
+                                <grid id="834">
+                                    <property name="textAlign">right</property>
+                                    <property name="width">1.8333333333333333in</property>
+                                    <column id="835">
+                                        <property name="width">0.6333333333333333in</property>
+                                    </column>
+                                    <column id="836">
+                                        <property name="width">1.2in</property>
+                                    </column>
+                                    <row id="837">
+                                        <cell id="838">
+                                            <text id="842">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="textAlign">right</property>
+                                                <property name="contentType">auto</property>
+                                                <text-property name="content"><![CDATA[$US]]></text-property>
+                                            </text>
+                                        </cell>
+                                        <cell id="839">
+                                            <data id="841">
+                                                <property name="fontSize">8pt</property>
+                                                <property name="textAlign">left</property>
+                                                <property name="dataSet">CabYTot</property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">TOTAL</property>
+                                                        <text-property name="displayName">TOTAL</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["TOTAL"]</expression>
+                                                        <property name="dataType">float</property>
+                                                    </structure>
+                                                </list-property>
+                                                <property name="resultSetColumn">TOTAL</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </grid>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+        <text id="454">
+            <property name="fontSize">8pt</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">thin</property>
+            <property name="marginTop">15pt</property>
+            <property name="contentType">auto</property>
+            <text-property name="content"><![CDATA[EN CONCEPTO DE PAGO POR LOS SIGUIENTES TITULOS]]></text-property>
+        </text>
+        <table id="558">
+            <property name="width">7.066666666666666in</property>
+            <property name="dataSet">Detalle</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">NUMERO</property>
+                    <text-property name="displayName">NUMERO</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["NUMERO"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">TIENDA</property>
+                    <text-property name="displayName">TIENDA</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["TIENDA"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">MONEDA</property>
+                    <text-property name="displayName">MONEDA</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["MONEDA"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">VALOR</property>
+                    <text-property name="displayName">VALOR</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["VALOR"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">IMPORTESUS</property>
+                    <text-property name="displayName">IMPORTESUS</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["IMPORTESUS"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">VALORCOB</property>
+                    <text-property name="displayName">VALORCOB</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["VALORCOB"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">SALDO</property>
+                    <text-property name="displayName">SALDO</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["SALDO"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">VENCTO</property>
+                    <text-property name="displayName">VENCTO</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["VENCTO"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">SERIE</property>
+                    <text-property name="displayName">SERIE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["SERIE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="607">
+                <property name="width">0.4166666666666667in</property>
+            </column>
+            <column id="608">
+                <property name="width">1.2833333333333334in</property>
+            </column>
+            <column id="609">
+                <property name="width">0.3in</property>
+            </column>
+            <column id="610">
+                <property name="width">0.725in</property>
+            </column>
+            <column id="611">
+                <property name="width">0.75in</property>
+            </column>
+            <column id="612">
+                <property name="width">0.5666666666666667in</property>
+            </column>
+            <column id="613">
+                <property name="width">0.95in</property>
+            </column>
+            <column id="614">
+                <property name="width">1.1083333333333334in</property>
+            </column>
+            <column id="615">
+                <property name="width">0.9666666666666667in</property>
+            </column>
+            <header>
+                <row id="559">
+                    <property name="fontSize">8pt</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
+                    <property name="height">0.225in</property>
+                    <cell id="560">
+                        <property name="textAlign">left</property>
+                        <label id="561">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">SERIE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="562">
+                        <property name="textAlign">left</property>
+                        <label id="563">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">NUMERO</text-property>
+                        </label>
+                    </cell>
+                    <cell id="564">
+                        <property name="textAlign">left</property>
+                        <label id="565">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">TDA</text-property>
+                        </label>
+                    </cell>
+                    <cell id="566">
+                        <property name="textAlign">left</property>
+                        <label id="567">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">VENCTO</text-property>
+                        </label>
+                    </cell>
+                    <cell id="568">
+                        <property name="textAlign">left</property>
+                        <label id="569">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">VALOR</text-property>
+                        </label>
+                    </cell>
+                    <cell id="570">
+                        <property name="textAlign">left</property>
+                        <label id="571">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">MONEDA</text-property>
+                        </label>
+                    </cell>
+                    <cell id="572">
+                        <property name="textAlign">left</property>
+                        <label id="573">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">IMPORTE $US</text-property>
+                        </label>
+                    </cell>
+                    <cell id="574">
+                        <property name="textAlign">left</property>
+                        <label id="575">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Valor Cobrado $US</text-property>
+                        </label>
+                    </cell>
+                    <cell id="576">
+                        <property name="textAlign">left</property>
+                        <label id="577">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">SALDO $US</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="578">
+                    <property name="fontSize">8pt</property>
+                    <property name="verticalAlign">middle</property>
+                    <property name="height">0.2in</property>
+                    <cell id="579">
+                        <property name="textAlign">left</property>
+                        <data id="843">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">SERIE</property>
+                        </data>
+                    </cell>
+                    <cell id="581">
+                        <property name="textAlign">left</property>
+                        <data id="582">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">NUMERO</property>
+                        </data>
+                    </cell>
+                    <cell id="583">
+                        <property name="textAlign">left</property>
+                        <data id="584">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">TIENDA</property>
+                        </data>
+                    </cell>
+                    <cell id="585">
+                        <property name="textAlign">left</property>
+                        <data id="749">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">VENCTO</property>
+                        </data>
+                    </cell>
+                    <cell id="587">
+                        <property name="textAlign">left</property>
+                        <data id="618">
+                            <property name="fontSize">8pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">VALOR</property>
+                        </data>
+                    </cell>
+                    <cell id="589">
+                        <property name="textAlign">left</property>
+                        <data id="590">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">MONEDA</property>
+                        </data>
+                    </cell>
+                    <cell id="591">
+                        <property name="textAlign">left</property>
+                        <data id="628">
+                            <property name="fontSize">8pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">IMPORTESUS</property>
+                        </data>
+                    </cell>
+                    <cell id="593">
+                        <property name="textAlign">left</property>
+                        <data id="629">
+                            <property name="fontSize">8pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">VALORCOB</property>
+                        </data>
+                    </cell>
+                    <cell id="595">
+                        <property name="textAlign">left</property>
+                        <data id="630">
+                            <property name="fontSize">8pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">SALDO</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <text id="881">
+            <property name="fontSize">8pt</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">thin</property>
+            <property name="marginTop">15pt</property>
+            <property name="contentType">auto</property>
+            <text-property name="content"><![CDATA[EN CONCEPTO DE RECIBO ANTICIPADO DE TITULOS]]></text-property>
+        </text>
+        <table id="847">
+            <property name="width">7.066666666666666in</property>
+            <property name="dataSet">Detalle Ra</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">SERIE</property>
+                    <text-property name="displayName">SERIE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["SERIE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">NUMERO</property>
+                    <text-property name="displayName">NUMERO</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["NUMERO"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">VALOR</property>
+                    <text-property name="displayName">VALOR</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["VALOR"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">MONEDA</property>
+                    <text-property name="displayName">MONEDA</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["MONEDA"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">VALORCOB</property>
+                    <text-property name="displayName">VALORCOB</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["VALORCOB"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+            </list-property>
+            <column id="876">
+                <property name="width">0.8333333333333334in</property>
+            </column>
+            <column id="877">
+                <property name="width">1.5333333333333334in</property>
+            </column>
+            <column id="878">
+                <property name="width">1.3666666666666667in</property>
+            </column>
+            <column id="879">
+                <property name="width">0.925in</property>
+            </column>
+            <column id="880">
+                <property name="width">2.408333333333333in</property>
+            </column>
+            <header>
+                <row id="848">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
+                    <property name="height">0.225in</property>
+                    <cell id="849">
+                        <property name="textAlign">left</property>
+                        <label id="850">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">SERIE</text-property>
+                        </label>
+                    </cell>
+                    <cell id="851">
+                        <property name="textAlign">left</property>
+                        <label id="852">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">NUMERO</text-property>
+                        </label>
+                    </cell>
+                    <cell id="853">
+                        <property name="textAlign">left</property>
+                        <label id="854">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">VALOR</text-property>
+                        </label>
+                    </cell>
+                    <cell id="855">
+                        <property name="textAlign">left</property>
+                        <label id="856">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">MONEDA</text-property>
+                        </label>
+                    </cell>
+                    <cell id="857">
+                        <property name="textAlign">left</property>
+                        <label id="858">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Valor Cobrado $US</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="859">
+                    <property name="fontSize">8pt</property>
+                    <property name="verticalAlign">middle</property>
+                    <property name="height">0.2in</property>
+                    <cell id="860">
+                        <property name="textAlign">left</property>
+                        <data id="861">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">SERIE</property>
+                        </data>
+                    </cell>
+                    <cell id="862">
+                        <property name="textAlign">left</property>
+                        <data id="863">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">NUMERO</property>
+                        </data>
+                    </cell>
+                    <cell id="864">
+                        <property name="textAlign">left</property>
+                        <data id="865">
+                            <property name="fontSize">8pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">VALOR</property>
+                        </data>
+                    </cell>
+                    <cell id="866">
+                        <property name="textAlign">left</property>
+                        <data id="867">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">MONEDA</property>
+                        </data>
+                    </cell>
+                    <cell id="868">
+                        <property name="textAlign">left</property>
+                        <data id="869">
+                            <property name="fontSize">8pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">VALORCOB</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <table id="415">
+            <property name="marginTop">3pt</property>
+            <property name="width">7.333333333333333in</property>
+            <property name="dataSet">CabYTot</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">TASA</property>
+                    <text-property name="displayName">TASA</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["TASA"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">TOTAL</property>
+                    <text-property name="displayName">TOTAL</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["TOTAL"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">TOTALBS</property>
+                    <text-property name="displayName">TOTALBS</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["TOTALBS"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+            </list-property>
+            <column id="432">
+                <property name="width">3.8916666666666666in</property>
+            </column>
+            <column id="433">
+                <property name="width">1.0333333333333334in</property>
+            </column>
+            <column id="434">
+                <property name="width">2.408333333333333in</property>
+            </column>
+            <detail>
+                <row id="420">
+                    <property name="height">0.25833333333333336in</property>
+                    <cell id="421"/>
+                    <cell id="422">
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text id="435">
+                            <property name="fontSize">8pt</property>
+                            <property name="contentType">auto</property>
+                            <text-property name="content"><![CDATA[Totales:]]></text-property>
+                        </text>
+                    </cell>
+                    <cell id="423">
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <grid id="816">
+                            <column id="817"/>
+                            <column id="818"/>
+                            <row id="819">
+                                <cell id="820">
+                                    <text id="828">
+                                        <property name="fontSize">8pt</property>
+                                        <property name="textAlign">right</property>
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[$US]]></text-property>
+                                    </text>
+                                </cell>
+                                <cell id="821">
+                                    <data id="830">
+                                        <property name="fontSize">8pt</property>
+                                        <structure name="numberFormat">
+                                            <property name="category">Currency</property>
+                                            <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                                        </structure>
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">TOTAL</property>
+                                    </data>
+                                </cell>
+                            </row>
+                        </grid>
+                    </cell>
+                </row>
+                <row id="424">
+                    <property name="height">0.2833333333333333in</property>
+                    <cell id="425"/>
+                    <cell id="426">
+                        <table id="437">
+                            <column id="447"/>
+                            <column id="448"/>
+                            <detail>
+                                <row id="441">
+                                    <cell id="442">
+                                        <text id="449">
+                                            <property name="fontSize">8pt</property>
+                                            <property name="contentType">auto</property>
+                                            <text-property name="content"><![CDATA[T/C:]]></text-property>
+                                        </text>
+                                    </cell>
+                                    <cell id="443">
+                                        <data id="641">
+                                            <property name="fontSize">8pt</property>
+                                            <property name="resultSetColumn">TASA</property>
+                                        </data>
+                                    </cell>
+                                </row>
+                            </detail>
+                        </table>
+                    </cell>
+                    <cell id="427">
+                        <grid id="822">
+                            <column id="823"/>
+                            <column id="824"/>
+                            <row id="825">
+                                <cell id="826">
+                                    <text id="829">
+                                        <property name="fontSize">8pt</property>
+                                        <property name="textAlign">right</property>
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[Bs.]]></text-property>
+                                    </text>
+                                </cell>
+                                <cell id="827">
+                                    <data id="831">
+                                        <property name="fontSize">8pt</property>
+                                        <structure name="numberFormat">
+                                            <property name="category">Currency</property>
+                                            <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                                        </structure>
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">TOTALBS</property>
+                                    </data>
+                                </cell>
+                            </row>
+                        </grid>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <text id="748">
+            <property name="fontSize">8pt</property>
+            <property name="marginTop">15pt</property>
+            <property name="contentType">auto</property>
+            <text-property name="content"><![CDATA[MEDIO DE PAGO]]></text-property>
+        </text>
+        <table id="696">
+            <property name="width">7.325in</property>
+            <property name="dataSet">MedioPago</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">VL</property>
+                    <text-property name="displayName">VL</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["VL"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">NUMERO</property>
+                    <text-property name="displayName">NUMERO</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["NUMERO"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">VALOR</property>
+                    <text-property name="displayName">VALOR</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["VALOR"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">MONEDA</property>
+                    <text-property name="displayName">MONEDA</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["MONEDA"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">BANCO</property>
+                    <text-property name="displayName">BANCO</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["BANCO"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">SUCURSAL</property>
+                    <text-property name="displayName">SUCURSAL</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["SUCURSAL"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">CUENTA</property>
+                    <text-property name="displayName">CUENTA</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["CUENTA"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">FECHA</property>
+                    <text-property name="displayName">FECHA</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["FECHA"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="740">
+                <property name="width">0.875in</property>
+            </column>
+            <column id="741">
+                <property name="width">0.8583333333333333in</property>
+            </column>
+            <column id="742">
+                <property name="width">0.925in</property>
+            </column>
+            <column id="743">
+                <property name="width">0.95in</property>
+            </column>
+            <column id="744">
+                <property name="width">0.6in</property>
+            </column>
+            <column id="745">
+                <property name="width">0.7833333333333333in</property>
+            </column>
+            <column id="746">
+                <property name="width">1.3833333333333333in</property>
+            </column>
+            <column id="747">
+                <property name="width">0.95in</property>
+            </column>
+            <header>
+                <row id="697">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <property name="height">0.225in</property>
+                    <cell id="698">
+                        <property name="textAlign">left</property>
+                        <label id="699">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">VL</text-property>
+                        </label>
+                    </cell>
+                    <cell id="700">
+                        <property name="textAlign">left</property>
+                        <label id="701">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">NUMERO</text-property>
+                        </label>
+                    </cell>
+                    <cell id="702">
+                        <property name="textAlign">left</property>
+                        <label id="703">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">VALOR</text-property>
+                        </label>
+                    </cell>
+                    <cell id="704">
+                        <property name="textAlign">left</property>
+                        <label id="705">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">MONEDA</text-property>
+                        </label>
+                    </cell>
+                    <cell id="706">
+                        <property name="textAlign">left</property>
+                        <label id="707">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">BANCO</text-property>
+                        </label>
+                    </cell>
+                    <cell id="708">
+                        <property name="textAlign">left</property>
+                        <label id="709">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">SUCURSAL</text-property>
+                        </label>
+                    </cell>
+                    <cell id="710">
+                        <property name="textAlign">left</property>
+                        <label id="711">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">CUENTA</text-property>
+                        </label>
+                    </cell>
+                    <cell id="712">
+                        <property name="textAlign">left</property>
+                        <label id="713">
+                            <property name="fontSize">8pt</property>
+                            <text-property name="text">FECHA</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="714">
+                    <property name="fontSize">8pt</property>
+                    <property name="verticalAlign">middle</property>
+                    <property name="height">0.2in</property>
+                    <cell id="715">
+                        <property name="textAlign">left</property>
+                        <data id="716">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">VL</property>
+                        </data>
+                    </cell>
+                    <cell id="717">
+                        <property name="textAlign">left</property>
+                        <data id="718">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">NUMERO</property>
+                        </data>
+                    </cell>
+                    <cell id="719">
+                        <property name="textAlign">left</property>
+                        <data id="720">
+                            <property name="fontSize">8pt</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">VALOR</property>
+                        </data>
+                    </cell>
+                    <cell id="721">
+                        <property name="textAlign">left</property>
+                        <data id="722">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">MONEDA</property>
+                        </data>
+                    </cell>
+                    <cell id="723">
+                        <property name="textAlign">left</property>
+                        <data id="724">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">BANCO</property>
+                        </data>
+                    </cell>
+                    <cell id="725">
+                        <property name="textAlign">left</property>
+                        <data id="726">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">SUCURSAL</property>
+                        </data>
+                    </cell>
+                    <cell id="727">
+                        <property name="textAlign">left</property>
+                        <data id="728">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">CUENTA</property>
+                        </data>
+                    </cell>
+                    <cell id="729">
+                        <property name="textAlign">left</property>
+                        <data id="730">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">FECHA</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <grid id="770">
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">thin</property>
+            <property name="marginTop">10pt</property>
+            <property name="height">0.2916666666666667in</property>
+            <property name="width">7.3in</property>
+            <column id="771">
+                <property name="width">1.4166666666666667in</property>
+            </column>
+            <column id="772">
+                <property name="width">1.3in</property>
+            </column>
+            <column id="773">
+                <property name="width">1.5916666666666666in</property>
+            </column>
+            <column id="774">
+                <property name="width">1.3583333333333334in</property>
+            </column>
+            <column id="983">
+                <property name="width">1.6333333333333333in</property>
+            </column>
+            <row id="775">
+                <property name="height">0.2916666666666667in</property>
+                <cell id="776">
+                    <grid id="780">
+                        <column id="781"/>
+                        <column id="782"/>
+                        <row id="783">
+                            <cell id="784">
+                                <text id="786">
+                                    <property name="fontSize">8pt</property>
+                                    <property name="contentType">auto</property>
+                                    <text-property name="content"><![CDATA[Tasas al:]]></text-property>
+                                </text>
+                            </cell>
+                            <cell id="785">
+                                <data id="920">
+                                    <property name="fontSize">8pt</property>
+                                    <property name="textAlign">left</property>
+                                    <property name="dataSet">CabYTot</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">FECHADIA</property>
+                                            <text-property name="displayName">FECHADIA</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["FECHADIA"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">FECHADIA</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="777">
+                    <grid id="787">
+                        <column id="788"/>
+                        <column id="789"/>
+                        <row id="790">
+                            <cell id="791">
+                                <text id="792">
+                                    <property name="fontSize">8pt</property>
+                                    <property name="textAlign">right</property>
+                                    <property name="contentType">auto</property>
+                                    <text-property name="content"><![CDATA[$US:]]></text-property>
+                                </text>
+                            </cell>
+                            <cell id="793">
+                                <data id="924">
+                                    <property name="fontSize">8pt</property>
+                                    <structure name="numberFormat">
+                                        <property name="category">Currency</property>
+                                        <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                                    </structure>
+                                    <property name="textAlign">left</property>
+                                    <property name="dataSet">CabYTot</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">TCDOLAR</property>
+                                            <text-property name="displayName">TCDOLAR</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["TCDOLAR"]</expression>
+                                            <property name="dataType">float</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">TCDOLAR</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="778">
+                    <grid id="794">
+                        <property name="width">1.5416666666666667in</property>
+                        <column id="795">
+                            <property name="width">0.475in</property>
+                        </column>
+                        <column id="796">
+                            <property name="width">1.0666666666666667in</property>
+                        </column>
+                        <row id="797">
+                            <cell id="798">
+                                <text id="799">
+                                    <property name="fontSize">8pt</property>
+                                    <property name="textAlign">right</property>
+                                    <property name="contentType">auto</property>
+                                    <text-property name="content"><![CDATA[UFV:]]></text-property>
+                                </text>
+                            </cell>
+                            <cell id="800">
+                                <data id="925">
+                                    <property name="fontSize">8pt</property>
+                                    <structure name="numberFormat">
+                                        <property name="category">Currency</property>
+                                        <property name="pattern">#,##0.00000;(#,##0.00000){RoundingMode=HALF_UP}</property>
+                                    </structure>
+                                    <property name="textAlign">left</property>
+                                    <property name="dataSet">CabYTot</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">TCUFV</property>
+                                            <text-property name="displayName">TCUFV</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["TCUFV"]</expression>
+                                            <property name="dataType">float</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">TCUFV</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="779">
+                    <grid id="801">
+                        <property name="width">1.3083333333333333in</property>
+                        <column id="802">
+                            <property name="width">0.5333333333333333in</property>
+                        </column>
+                        <column id="803">
+                            <property name="width">0.775in</property>
+                        </column>
+                        <row id="804">
+                            <cell id="805">
+                                <text id="806">
+                                    <property name="fontSize">8pt</property>
+                                    <property name="textAlign">right</property>
+                                    <property name="contentType">auto</property>
+                                    <text-property name="content"><![CDATA[E:]]></text-property>
+                                </text>
+                            </cell>
+                            <cell id="807">
+                                <data id="926">
+                                    <property name="fontSize">8pt</property>
+                                    <structure name="numberFormat">
+                                        <property name="category">Currency</property>
+                                        <property name="pattern">#,##0.00000;(#,##0.00000){RoundingMode=HALF_UP}</property>
+                                    </structure>
+                                    <property name="textAlign">left</property>
+                                    <property name="dataSet">CabYTot</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">TCEURO</property>
+                                            <text-property name="displayName">TCEURO</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["TCEURO"]</expression>
+                                            <property name="dataType">float</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">TCEURO</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+                <cell id="982">
+                    <grid id="992">
+                        <property name="width">1.5833333333333333in</property>
+                        <column id="993">
+                            <property name="width">0.7in</property>
+                        </column>
+                        <column id="994">
+                            <property name="width">0.8833333333333333in</property>
+                        </column>
+                        <row id="995">
+                            <cell id="996">
+                                <text id="998">
+                                    <property name="fontSize">8pt</property>
+                                    <property name="textAlign">right</property>
+                                    <property name="contentType">auto</property>
+                                    <text-property name="content"><![CDATA[Saldo $US:]]></text-property>
+                                </text>
+                            </cell>
+                            <cell id="997">
+                                <data id="999">
+                                    <property name="fontSize">8pt</property>
+                                    <structure name="numberFormat">
+                                        <property name="category">Currency</property>
+                                        <property name="pattern">#,##0.00;(#,##0.00){RoundingMode=HALF_UP}</property>
+                                    </structure>
+                                    <property name="dataSet">CabYTot</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">SALDO</property>
+                                            <text-property name="displayName">SALDO</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["SALDO"]</expression>
+                                            <property name="dataType">float</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">SALDO</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+        <grid id="882">
+            <property name="marginTop">100pt</property>
+            <property name="height">0.85in</property>
+            <property name="width">7.291666666666667in</property>
+            <column id="883">
+                <property name="width">2.716666666666667in</property>
+            </column>
+            <column id="884">
+                <property name="width">1.8583333333333334in</property>
+            </column>
+            <column id="885">
+                <property name="width">2.716666666666667in</property>
+            </column>
+            <row id="886">
+                <property name="height">0.14166666666666666in</property>
+                <cell id="887">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                </cell>
+                <cell id="888"/>
+                <cell id="889">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                </cell>
+            </row>
+            <row id="890">
+                <property name="height">0.21666666666666667in</property>
+                <cell id="891">
+                    <text id="898">
+                        <property name="fontSize">8pt</property>
+                        <property name="textAlign">center</property>
+                        <property name="contentType">auto</property>
+                        <text-property name="content"><![CDATA[Recibí Conforme]]></text-property>
+                    </text>
+                </cell>
+                <cell id="892"/>
+                <cell id="893">
+                    <text id="899">
+                        <property name="fontSize">8pt</property>
+                        <property name="textAlign">center</property>
+                        <property name="contentType">auto</property>
+                        <text-property name="content"><![CDATA[Entregué Conforme]]></text-property>
+                    </text>
+                </cell>
+            </row>
+            <row id="894">
+                <property name="height">0.21666666666666667in</property>
+                <cell id="895">
+                    <data id="914">
+                        <property name="fontSize">8pt</property>
+                        <property name="textAlign">center</property>
+                        <property name="dataSet">CabYTot</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">USUARIO</property>
+                                <text-property name="displayName">USUARIO</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["USUARIO"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">USUARIO</property>
+                    </data>
+                </cell>
+                <cell id="896"/>
+                <cell id="897">
+                    <data id="904">
+                        <property name="fontSize">8pt</property>
+                        <property name="textAlign">center</property>
+                        <property name="dataSet">CabYTot</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">NOMBRECL</property>
+                                <text-property name="displayName">NOMBRECL</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["NOMBRECL"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">NOMBRECL</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="900">
+                <property name="height">0.275in</property>
+                <cell id="901"/>
+                <cell id="902"/>
+                <cell id="903">
+                    <grid id="907">
+                        <column id="908"/>
+                        <column id="909"/>
+                        <row id="910">
+                            <cell id="911">
+                                <text id="913">
+                                    <property name="fontSize">8pt</property>
+                                    <property name="textAlign">right</property>
+                                    <property name="contentType">auto</property>
+                                    <text-property name="content"><![CDATA[NIT:]]></text-property>
+                                </text>
+                            </cell>
+                            <cell id="912">
+                                <data id="915">
+                                    <property name="fontSize">8pt</property>
+                                    <property name="textAlign">left</property>
+                                    <property name="dataSet">CabYTot</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">NIT</property>
+                                            <text-property name="displayName">NIT</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["NIT"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">NIT</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+    </body>
+    <list-property name="images">
+        <structure>
+            <property name="name">logo_trans.png</property>
+            <property name="type">image/png</property>
+            <property name="data">
+                iVBORw0KGgoAAAANSUhEUgAAAKIAAACWCAYAAABdGVOgAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7O
+                HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZiS0dEAP8A/wD/
+                oL2nkwAAAAlwSFlzAAAASAAAAEgARslrPgAAIexJREFUeAHtwQl83HWBOOznO1fa6V1a2lLKDYVSYLjE
+                UgRSUM4iijDeILrCiwcr6uu17nq73rge6IoHKrs7oKLcCjSAXAqUESwtR0sp0JaWQs9JMknm9//5yew/
+                b96mbdImk6TkeQwZMmTIkCFDBpJgSI+EXF5VCmmkkUEaKSQQEKGCNrSgGS1oQRuiqFgwpF0wZDMhl1eV
+                wRhMxGRMxW6Ygl0wHqORRQZpJBG0a0MLymjEOryCNViBF/ACVmA11qEsFhULXk2CV7mQy6tKYhz2xIGY
+                gQOxFyZhDIYjqfe0oQlrsRLPYBH+joVYhvWoRMWCnVnwKhRyebGAMdgXR+IYHIo9MRZp/aeMNViC+bgf
+                87EMjWJRsWBnErxKhFxeLGACDsOJOA4HYRckDVwtWI5HMA9340k0ikXFgsEu2ImFXF7VaORwKk7CQRhl
+                cKpgJf6CG9GAZWiLigWDVbATCrm8WBJ74RScjaMwzs6lBYtxC36L+WgUi4oFg0mwEwm5vFgGOZyHudgX
+                STu/lzAPv8ZdWC8WFQsGg2CQC7m8qmE4BufjNExC8OqzEXfhZ7gNG8SiYsFAFgxiIZcXS+MYvA9nYhdD
+                /mEj5uFHuBONYlGxYCAKBqGQy4slMAMX4TzsakhX1uJ6/BAPozUqFgw0wSAScnlVu+LduAj7IhiyLS/g
+                KvwES8WiYsFAEQwSIZcXS2MOPoHjkDakJyoo4nJch41iUbGgvwUDXMjlVU3Bh/BPmGDIjijhD/gGioii
+                YkF/CgawkMuLJTAbn8MJSNo+bdiEtXgZr2AtNqCEFkRIYRhGYQzGYhzGYhTqEOwcFuPb+DXWR8WC/hIM
+                UCGXF8vifHwK0/RMCS9gERZgEZZiBdaihDLaUEGkXUBAEikMx0hMxG7YB9MxHftgEoYbvJpwHb6MBWJR
+                saDWggEm5PKqJuHTeC9G2LYKXsJjuBf3YxFeRKNYVCzYUSGXFwsYick4AEfhNTgYU5Ax+Pwdn8cf0BIV
+                C2opGEBCLq/qAHwNc5G0dWsxH7fiTizCRkRRsaArDZmsqoAEEgjaRYgQoYJIrL5c0pWQy6vKYhqOwomY
+                hX0xzODxCv4D38UrYlGxoBaCASLk8qqOwuWYbcvasBg34w94BOvEomLBPzRksmIJZDEWu2ISJmNXjMdo
+                jMQwpBEQoYwmbMR6vIxVeBGrsBqvoIQ2sfpyyT+EXF4sid1wNE7FCdgbaQNfC67Bv2CpWFQs6GvBABBy
+                eVWvw/dwmK41Yz4KuBFL0Tbv8RtUpTEJ++FgHIz9sTt2wUhkkNRzbShjE17GcizGQizEU1iOEqL6cknI
+                5cVS2AMn4o2YjV0MbBEa8BE8KhYVC/pS0M9CLq/qRPwQB9lcI+7HVbg1CslVZ7+82KUrHhMbjQMwC8fi
+                EEzDSCT0vQiNeBFP4SE8gEexHC2X7P06TwwfIxJG4HCci7OwJ4KB6yF8AH8Vi4oFfSXoRyGXVzUb/4kZ
+                OmvGfbgStw7fuOrln654zJSW0vCIg/B6nIzDsAsSBoZGLMNfcTvuw7NomTNjrlgK0/F2vBV7IxiYHsFF
+                eFAsKhb0haCfhFxeVQ4/xRE6tOJh/Cf+sHfT+jU3PXFLWJnO7oo5OAezMQnBwNaCZ3E3bsC9gZc+uues
+                aP6ICQnMwIV4GyYbmO7HhVgkFhULelvQT0IuL7Y3fop67SI8gSvxXx9fdPOKfEtjWJ/M7Ik34a04FMMM
+                TiU8it/h+gRPf2O3w9puGrtHGq/BpTgDWQPP7/B+rImKBb0tqR+EXF5sHL6Js7R7ET/B/xslMzdGj/zX
+                hnQiNa05kbwI/463YxpSBq80dsdJOC1i6rEbXlx1weonVj0xbOyzz9eNvBVLsC92RTBw7I8NuDdMnhlZ
+                uUBvCmos5PJiaXwGn0ELbsXluP+TLzzS8oZ1z4/FObgEhyFp5xThOVyDn2crrYte01quJHL5A/AxvA0j
+                DRzL8CbMj4oFvSmphkIur+pN+BKexmfx1ddtWPHkLxbfGfZtXv86fAMfwjQk7LwCxmAWTmkJiRFLk+kl
+                Tw4bu/S5ulG3B5ZiBiYYGMZgOe4Kk2eycoHeEtRIyOVVHYjv4jH8AM9c98QfjWkrT8RFuARTvDq14S/4
+                ViKKbj6+pbEpkcsfhn/DmUjrXytxAf4oFhULektSjYTJM8VSeC0a8LMjNr205uqn7zAsajsKl+O9GOPV
+                K4FpODUKYcrSZHrRouHjFj2fGXF7oIxDMVz/aMaXcDWiqFjQm4IaCbm8WAIZNN286GbDKm1pnIvPYX+D
+                W4QIkXYBAcH2ifAQPj+xpfHWmUe8IxHaWs7GF3Cg2orwM3wEG6JiQW8L+kFDJis2CpfiMowzOFSwAavw
+                Ap7HSqzGOjSiDQEpZDEOE7EbdsNUTMAIBNu2Gt9MiK54TblxQzaXPwJfweuRUBt34EIsE4uKBb0tqKGG
+                TFbVRHwO70WdgW0DluBhPIgFeA5r0IhWsfpySVcaMlmxgBRGYAL2xME4Ajnsg5EIutaMX+Jz1+6yz/Ir
+                Jh28Gz6FC5HVt/6G9+ARsahY0BeCGmnIZFXthm8gj6SBqRGP43bcgcfwElrF6sslO6Ihk1WVwgQcjBMw
+                B4dgtM1VcBM+evuYqU99ZeoRWVyIT2E3feNpXIR5YlGxoK8ENdCQyaqaiu/gHCQMPC9hHq7FPXgRUX25
+                pC81ZLJiAeNwBN6I07A3EjprwAefqRv1+IX71ieC6GR8GUfpXUvxQdwkFhUL+lLQxxoyWVWT8F2ch2Bg
+                WYXr8Us8hEax+nJJrTVksmJJ7Idz8XZMR0KHu3FxOSQXnnXgKcohuT8+i3MxzI57Cv+MWxBFxYK+FvSx
+                hkxWbCy+ifcgYeDYgBtxBf6Cslh9uaS/NWSyYgH74UKcjyk6/Anvx7MnzThTJIzGBbgMe9p+f8XH8Gex
+                qFhQC0EfashkxYbhX/ExpA0MFTyEb+EmbBKrL5cMNA2ZrFgKr8Un8AZktPtvfBAvz5kxVyyBo/BxnI6s
+                7mvEb/BFPCUWFQtqJegjDZmsWMD78U2MNDCsxc/wXSwTqy+XDGQNmayq8Xg/PowpaMXX8AWU58yYq2oU
+                zsT7cAxG2LIWFPFD/BYbomJBrQV9oCGTVXUSfoHdDQyP4/P4Pcr15ZLBpCGTFUviRPwbjsN6XISCWH25
+                JOTyqsbjOJyGIzEFw9CGNViAW/BHLBeLigX9IegDDZms2F64GsfqfxXcik/jb2L15ZLBqCGTVbU7PooL
+                sQznYpFYfbnkf4VcXiyJcZiI4WjFGryEZrGoWNCfgl7WkMmKDcO3cIn+V8ZV+DesEKsvlwx2DZmsWB1O
+                xycwH5ehqb5cMtgEvaghk1X1VvwnRulfjfgu/h3rxOrLJTuLhkxW1TSchQY8LlZfLhlMgl7UkMmK7YNr
+                cYT+VcLX8Q2U6sslO6uGTFYsiRSaxerLJYNJSi9pyGTFUrgYh+tfTfgWvo7G+nLJzqy+XBJrQ5tBKqEX
+                NGSyql6LdyHoP624Al9HY325ZMjAl9B7srgEk/Wva/FlbKwvlwwZHBJ2UEMmq6oep+tf9+BfsMaQQSWh
+                d4zEhRij/yzDZ7BErL5cMmTwSNgBDZmsquNwkv7ThG/gz2L15ZIhg0vCjqvDOzBG//k9rkJUXy4ZMvgk
+                7LjDcLL+swRfx4b6csmQwSlhOzVksqrOxmT9oxU/wiOGDGoJO2Z3nK7//AW/EqsvlwwZvBK2Q0Mmq+o4
+                HKh/NOHHWGnIoJew/dI4HXX6x724Say+XDJkcEvZfnvhWP2jGb/Ey3omoA4p7VpQRmRIv0rpoYZMVtVr
+                sYf+8Tf8Say+XNIN43Acjsf+GKPdWizEPNyHkq07EWfpELAOP8JKmxuO92FfVHStDaswH3/FBh2m4CKM
+                QYQEHsMvMAoXYxIi3ZfAPFyvQwJvw9GoaJfAYlyJRpvbFRdjHCIk8Ch+iVY9lLJ9kjgBaf3j91ipe16L
+                z+JEZG3ubFyCa/F5PK9rw3AJztVZGU/j1zZXh/NwnG3bgOvxaSzTbgIuwmQdrscvMRIXYLqea8P1OkzF
+                J3CIzlbgXsy3ufF4H6bpcD2uRqseStg+k3C0/rEct+ie1+KnOB1ZWzYG78XXMFbXDsJsm8tgLup0LdI9
+                o/AOfBIZ7SJEOot0iGyfSGevw3Sbm4JTdV9kOyX0QEMmq2o69tI/7scisfpyyVaMw79ihs7W4C40YJUO
+                AW9BXtdOwW66NhsH6Z5X8HN8Hzdjk87OxH62LUITmlFCCU2IdNaGRpRQQhktOtRhLjK6dhp20cdSts8R
+                GK322nA7mmzb8ThBZwvxUdyDCMfgcszULoU34Gps1GE8TtehCeuxq3ZT8QYUbdsqfA7LMBLfxEU6TMAe
+                eNyWBazBpRipXQX74MsYq8O9+CZaERCwWIfpOE6HdYgwVrvDcDRu1YdSei6Fw/WPVbhfrL5csg0nIqtD
+                Cy7HLTrcga/grXgMj2IBmnR2NA7TYSHm4SNIaHcGrsTLum8jFuksIGXrAppwt84ORbPOluMWtOraKZiq
+                w+1ow3najcKZuA1t+khKz43FdP1jIZbYtuE4QGcv4V6b+w2uQ5OuJXAmRutwP36L8zFBuxyOxG22Lo09
+                kMYBeJvONmKV3hV0bRzOQNCugj+iBecgqd3J2APP6CMpPTcFU/WPh7HBtqUxVmfrsNbmWtBiy/bEyTqU
+                8Wf8HY/jeO1GYy7uQMWWTcN/IcI4jNLZw3hCbRyFw3V4EQ+gFSuwu3b74kQ8o48kdFNDJqtqGsaqvVYU
+                dU9AQmcRIj13AvbV4Tk8iA24S2cnYZqtS2Ma9sAonT2Nr2OdvpfAmRitQxGLsRTzdUhhLobrIwk9tyeG
+                qb21eEqsvlyyDS1Yr7MRyNrcFJyDgzBcZ8NxFtI6PIsxOBAr0aTD/jjB1rVhLdZgDV7E33El3okGtTEN
+                J+vsGeyFvfCszmbhYH0kpeemIqi9VViue5qwWGfjsR+e1tmp+D5eQhG34ddYixmYpbNjcL12aWR0SGMu
+                rkGTrj2PD2AFAspYg9VoUTsnYH+dvQ1v1C6rs8k4BQ/pAyk9EzBJ/1iBdbqngj/jQtRpNxIXooiV2k3H
+                +5DFHtgDe+M6rMVpmKyzERhhy2bjIDyia014DMv0n2GYi7TOxmGcLTsdP8ZLujYcu6Oss4AKVqNZF1J6
+                Jo3x+sdKNOq+O/AATtDhTZiCB5DGCThMZ7fgBUzAaTprQ6vOAtII2k3BKXgEkYFpBmbrrAUVnSWQ1uFQ
+                vAY369qxuAWRzgI24X14WBdSeiaNUfrHS2jTfavwVeyHqdqlcByO07X5+Kl2x+BQnf0cNyChXYRd8G/Y
+                Q4cz8GO0GZhOxRQdSvgqHkVCuwoOxmcwQruROBM3I7K5kdhf1zZguC1I6Zkkhukfa/XcbbgMX8J+CLoW
+                4WFchieRwhsxUoe1+BXu1lkdTsEeOhyGY3Avgs4Cgu4JCDoLtiwg6CzobALO1NkS/ALP6+xhvA2H6HAy
+                9kGkZwKCLUjpmQSS+kdJz1VwLR7HeZiN3ZFFQBOewzz8FxZrNwZJ3I0KEngKf7e5ZvwOu+oQMBUVzEcF
+                FQQsQ5Pu2Yh7MQEREngMFV3biHuwCyIksAAVHaZgDe7ULoHbsdLmXkQBr6CiXQt2x2LcjyWIbFsJa21B
+                0E0NmazYGNyE2WrvI7hcrL5csh0CRmIcsghoxMvYgEiHBIYj6NCGRl1LYZjOWtGMYUjqUEEjItuWwHAE
+                HVrRpGsJDEfQoRVNOqRRp7MyyrqWQUZnZbRiOILuidCENl1I6ZkKWgxOETZgg22rYJPua8VGXWu0/SrY
+                pPsq2GTrWtCi+8oo69omvSShZ1rRqH/UGbLTSumZFqzTP0bacSmMQBplbEKb7gkIiBDZsoBgcxEiW5fQ
+                rqJ7AoLuqehaAlnUoYISmtVYSs+0YrX+Mc72m4BT8Hrsjyw2YiH+gHlotGUB78Ab8Dy+hTW6diLeiYCg
+                QwUb8BQasAgVHSbj49p9Dats3Rh8DNMQ2bpmfA8LdEjjWLwRh2EsWvEC7sHvsUSNpPTccv1jV6TRomdm
+                4Qs4Ac14HpuwG47BW/FzfAFrdG0iPoTXoISH8VtdOwjvQQXNOgRkkMBifAbXItJuDPLaXYFVti6LN+Fg
+                NKFiy0q4Bgu0y+DD+ATGYRXWIYUDcTbeictwpxpI6bmlaEFabU3BCKzVfUfiP3EgfocfYyGaMBpz8Cl8
+                EE34F7TY3GzMwL04DG/BjWi2uQgB8/AVtGmXxC44Fe/Cl7AAC7SLECHovgglfAQLkNS1Njyuw4n4NBrx
+                EdyGtUhhb/w/eCu+inPxvD6W0nPPYAPGq60pGI+1umcUPoWZuBIfx1odXsHPsRpX4b24CXfrLI03Iomf
+                4CLMwUw8bMtW4c9o09ltmIS5OBELbL+AVjyCB3VPwOkYh2/hezp7Hk9jDxyLOfilPpbQTfXlkqrnsELt
+                TcQ03XcMTsEz+A7W6tpt+G88hdE2tz/m4GnchtuxK+baPuvxd+3G2XEBQfclMUG7F3RtBX6FO9GiBhJ6
+                bg0Wqr1ROFisIZPVDSdgJO7BU7asGZ/F6bjF5l6PabgNy/FHrMUbsZueG4WDUMYCOy7SM61YpN27cCTq
+                bO4XmItr1UBKzzXjr3iL2go4Ekm02bo0DtTuMbTYuld0bQzOwkbcpN2jeACvRz2u1rVJOAFtCAgYjzNw
+                Ev4b8+y4FA5EC5K69hKW6nAtzsIcXI/7cT+KeBIr0YxmNZKyff6CtRirto7ERKy0dWmM1e5F2+9IHI2H
+                MF+7DbgBp+IcXIeSziLU41gdAjJI4lFcgXV2TIQsvo9WXUvhKlyKinZP4J/wcbwBb8Y5KOFZPITf40/Y
+                qAZSeqC+XNKQyYotwELMUlv74BCsbMhk1ZdLtqJixyRwFkbhRqzV4Q48g+ORw306C1iKP6OCgIBROAAH
+                4Ae4DHfbMW14CC8j2FwCi2zub/gnzMCxOAaHYm8chHNwNT6D1fpYyvZZg3mYpbZG4WTcZuvKeFm7ibbP
+                HngD2vA67ImgXRop7II34n5EOvsL3o82HZKYhI/jw/g8zsVLtk9ACZ/BA0jqWoSKzTXiYTyMH2ECDsTp
+                eBfehxfwBUT6UML2uxVr1N7JmGLrWrFQuxlI2rpZ+AxmI6HdidgPjZiFtyGPt+LNGI4IZ2IPm4tQQQUV
+                VNCC5/EfWIyjcLAd14YIrWhFK1rRila06bArzsaJSOjQghVowCfwaZRxBnbRxxJ6qL5cUlXE/WpvBo4X
+                a8hkbcU92IDjsJctS+Hd+BLept1wvBFJfB5zcBJOxkk4CWdjPg7E6/XMOqxDHUaqrQPxC3wZ43Stgnuw
+                GmOR1ccStt9GXINmtTUM5yFr6x7CXTgAlyCra3PwJqzHTahgJmZjMX6HBXgUj+JRPIZ78Qck8GaM0n2H
+                YE+8jBd0FiHSfZGeeQbP4wjMRdC1AzEey7FOH0vZDvXlkoZMVuxPmI9ZautEzMIdtmw9voPDcQmy+Ame
+                RgvG4PX4NCbhh2jQ7gxMxHV41pbdgg/gWByFBh3GYibatAsYhhn4EHbBr/CEzjKYjjokdBawBst1SGIf
+                bEBS1wLWYDmewy/wFXwFU/EHLEcbRuM4fAopXIN1+ljKjnkRv8RRSKud8XgP7mvIZBvryyVbcCc+gi/j
+                YrwZi1HCZOyHCD/DF9GEKZiLMm5Bmy1bgHtwDt6CBgREOBmv0Vkao1DBrfgKGrULiLArfoVWBJ0l8TN8
+                XIcR+CFaEHQtiZ/gk9r9BJPxfnwRH8RylDEBe6AF38ev1UDKdqovlzRksmLX4R04Tm2djhNwa0Mmq75c
+                0oUKfoNFOA/HYSoy2IjrcR1uxAbtJuJpPIj7bF0jrkIGrRiDJbgeCR0CIjTjBTyAO7Bah424DRO1C4h0
+                CEjgGe2aMA/PIEJApGtJLNVhHT6LBpyNQ7ELEliPa/Fb/BElNRDsgIZMVtXb8RNk1dbNeCdeqS+XbEPA
+                SIxGCs14Bc06SyKFClpsWwIp7VqQQFLXIrQisrmAtG2roBUBKQTdU0GrzaUwGiOQQCPWoqyGgh3UkMmK
+                jcJPca7aasZHcIVYfblkyOCU0Ds24Nt4Tm3V4VIcasiglrCD6sslVX/BD9CitqbjUxjTkMkaMjgl9IL6
+                ckkswpW4We29Ge9HsiGTNWTwSehda/BFPKm2MvgozhBryGQNGVwSekl9uaTqYXwea9XWJHwFR4k1ZLKG
+                DB4Jvai+XFL1G3wXZbV1ML6NA8QaMllDBoeEXlZfLomV8R38GpHaeh2+g73EGjJZQwa+oBeEXF7VMJRR
+                mff4DWJT8SOcqbYi3IAP41mx+nLJkIEr6AUhl1d1OCr42z5N61255C6x/fETnKC2ItyIf8YSsfpyyatF
+                yOVVBe0isahYMBAFvSTk8mIH4DJ8Gc/97sk/GdvaLHYIfoxZau82/DMeF6svl+yMQi6vahQOQg77Yhza
+                sBpP4lEsxiaxqFgwEAS9JOTyYhlciTb8M9bNe/wGVYfjChyj9v6Cy3CfWH25ZGcRcnlV43Am3o6jMB4J
+                nbViNR7Cb3ELVolFxYL+lNRLwuSZYm1I4xMYhvuumji95fzVT4qtxIM4FNPU1u44Hivw5AXJdOWqthaD
+                XcjlxRKYjW/jUhyILILNJTAK03EaZqOEpWHyzBYrF+gvQS8KubzYJPwBh+Mr+Doa5z1+g6qDcTlOVnsv
+                4Tv4IdaK1ZdLBqOQy4uNwnvwMUyzfTbiN/h3PCEWFQtqLakXhckzxTZhBE7DMUjgwasmTm85f/WTYqtx
+                L6ZhOoLayeJ1OABPYNUFybSr2loMFiGXFybPFNsfX8Ol2MX2yyCH2XgOi8PkmZGVC9RSUm9auUCYPFNs
+                OU7EHjgGI/DgVROnN52/+kmxV3AXRuMQpNROEgfjJLTg6QuS6aYLkmlXtbUYyEIuL5bEafgBTkFa75iC
+                OViLv4fJM9usXKBWgl4WcnlVl+BypNGC/8ZnsUxs3uM3iI3Gh/FRjFV7Tbgd38PdaBKrL5cMJCGXVzUG
+                F+My7KpvrMMX8X00R8WCWkjqbSsXCJNnij2Do7APkjgUh2ERXrhq4nTnr36yGQ9gGXIYp7ZSOABn4ECs
+                w4sXJNMtFyTTrmpr0d9CLq9qOr6OSzBG3xmGWWjCQ2HyzDYrF+hrSX0gTJ4pVsJqnIYsAvbGiXgFT1w1
+                cXrb+aufbMNjeBD7YE8EtTUch+EsHIkU1l6QTG+6IJmOrmpr0R9CLi+Wwun4Pt6AlL5Xh2PwMh4Jk2dG
+                Vi7Ql4I+EnJ5sTS+jI8h6LAeP8O38dzsDSt98bkHxabiY7gQo/WfZjyNu9GAIl5AI6L6cklfC7m82C64
+                BB/CRLW3Ch/Ab8SiYkFfCfpIyOVV7Y6rcbzOKngAX8WfUJ73+A1idTgbn8RhCPpXM5bjCTyGhXgGK7EW
+                JZTRigiRDgEJpJBGHUZgjGRieCU7/DGRTSe9vNr/Crm8WMCR+CxOQ1r/eQrvxgNiUbGgLwR9KOTyqubg
+                l5hqcy/j1/g+nn7zy89EH1z5d7H9cCnejvEGjjZswnqsxStYhxKa0IIKksigDlmMwmiMwmghlKNhw87T
+                1nrfnI3rhFxe1Ri8E5dhHwPDPLwbL4hFxYLeFvSxkMuLJXAJvoaszUV4HD/ENXjphkW3GFFprcMcXIoT
+                UWfnsFGwJEpnPhbK5dvmzJgrlsTR+BjOwDADR4TL8Sk0R8WC3hbUQMjlxbL4Kj6ApK6VcS9+hFuHVdrW
+                //6JW2WiynicjffjCKQNLm14EY/iz7gfT4xQWX10uaklkctPw4V4H3Y3MK3Fe/E7sahY0JuCGgm5vNgk
+                /BBvtnWbcCd+hjumlEvrlos0PD1vCs7GO3EEhhm4yngeD6IB92EJNt098QCfHzZGNGrKLkRvwsXIIWlg
+                ewDn4vmoWNCbghoJubyq/XAlTrBtm3Avfo3bovSwF6MHr4ruTg+fWAnhZJyH2ZiAoP9txBI8gDvxIJ5D
+                s9icGXNVTcCpeC9moc7gUMEn8E2xqFjQW4IaCrm8qhyuxJG6pxmP4jrcGKXqnnj38w+XL1v91PC1ydRh
+                EafiZByMMQhqo4yVWIgHcB8ewyq01ZdL/iHk8mIJ7I7T8XYcjWEGl034EH4uFhULektQYyGXVzULP8Yh
+                uq+CF3A3bohC4l7Z8cuje39QKSbTY9cnU4dUhGMxCzMwGSOQsONasREvYjH+hvn4O57DJrH6csk/hFxe
+                1QgcgrMwF9ORNvi04XJ8Fo1RsaA3Bf0g5PKqjsMVmKnnmrEYd+OOKJF8yMhdnz9/6X2t31z218ySVGZy
+                YyK5XyQchAOwJyZjHEagDmkktaugBc1owjqswXI8i6exBMvwEhoR1ZdL/lfI5VUNwz44AafjtdgFweBV
+                wAfxUlQs6G1BPwm5vKpj8QPkbL9mLMMjuD8SHpLKPGXKPi9lH1vQtmnptZpIPZ1IjlyXTI9qC2FkRRiB
+                YUhp14ZmbEIJm7AJTWgTqy+X/H+FXF5VAqOwD2ZhDo7GVCQNfn/ExVgqFhULelvQj0Iur+pI/AeOteMq
+                WI/nsBCPYWEkPCORWCkzcq3dDmuyZknFXd/SXSGXV5XEcIzDVEzH4Tgc0zEBSTuPu3AxFolFxYK+EPSz
+                kMurOgjfwqkIelcZ67AaK7ACK/AiXsF6bEITWhEhiTpkMRrjMAm7YXdMxa4Yg6Sd0124BI+LRcWCvhIM
+                ACGXV7U7voS3I602KmhFK9oQaReQQBJpJL16RPgTLsUTYlGxoC8lDQQrFwiTZ4qtx52oIIc6fS8giTTq
+                UIc61CGDFBJePdpwLS7FYrGoWNDXkgaKlQtYuUCYPLMJ9+F5HIZxhtRKCVfg01guFhULaiEYgEIuLxZw
+                LL6E45EwpC+txFdxJUpRsaCWkgailQuEyTPFnsMdyGAG6gzpbREewqUooBwVC2otGOBCLi82DG/BpzDD
+                kN6yCf+Dr2KxWFQs6A/BIBByeVUz8AmcgxGG7IiF+AauwaaoWNCfgkEk5PJiI3AOPopDEAzpiXW4Bpfj
+                cbGoWNDfkgaTlQuEyTNb8DfcjjbshxGGbEsL7sEn8T2sEIuKBQNBMEiFXF4sjePwYbwBWUP+/yp4HD/B
+                /2CVWFQsGEiCQSzk8qpG40xcjGOQMaSCp3A1rsYziKJiwUAU7ARCLq9qIt6EC3E4Ml59WrEI/4NrsBiV
+                qFgwkAU7kZDLq5qMuXgXjsJwO78SHsY1uBHPIoqKBYNBsBMKubyqCTgJb8PrMN7OpQ0v4E78DvdgjVhU
+                LBhMgp1YyOVVjcAReBNOwX7IGJwqeAnzcQvuwFMoi0XFgsEoeJUIubxYElNxPE7DLOyOtIGtBSvwN9yF
+                u7AIG8WiYsFgF7zKhFxeVQZ74bU4AUdhL4xC0L9asAZLMB8PYD6WolEsKhbsTIJXuZDLi6UwEdORQw4H
+                YjeMw3Ak9b4KmrEOL2IJFuIxLMQyrEMlKhbszIIh/1fI5VWlMBq7YndMwzTshkkYjzHIog51SCGBBCJU
+                0IIWNKER6/EyVmMFnsNzeB4vYi2axaJiwatJMGSbQi6vKiCN4RiGYRiGOqSRRAIVVNCCMhrRhCY0oYyK
+                WFQsGDJkyJAhQzr8H7/CHljh4MPSAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE4LTEwLTE5VDIwOjAzOjIy
+                KzAwOjAwI2Pu7gAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOC0xMC0xOVQyMDowMzoyMiswMDowMFI+VlIA
+                AAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAAAElFTkSuQmCC
+</property>
+        </structure>
+        <structure>
+            <property name="name">logo.png</property>
+            <property name="type">image/png</property>
+            <property name="data">
+                iVBORw0KGgoAAAANSUhEUgAAASwAAACBCAYAAAB6iIfxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFn
+                ZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/
+                IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6
+                bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8w
+                Mi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9y
+                Zy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIg
+                eG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDov
+                L25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20v
+                eGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9w
+                IENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1MkQ5QkUyMEIzNjgxMUU3
+                OTdCQTg3NDQzQjMxMDVFQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1MkQ5QkUyMUIzNjgxMUU3
+                OTdCQTg3NDQzQjMxMDVFQyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAu
+                aWlkOjUyRDlCRTFFQjM2ODExRTc5N0JBODc0NDNCMzEwNUVDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAu
+                ZGlkOjUyRDlCRTFGQjM2ODExRTc5N0JBODc0NDNCMzEwNUVDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8
+                L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+z1hYrQAAIslJREFUeNrsXQe4
+                FEXWrUcSBHyKCiIIT1dE3R9ZxYQBURYlGMDFsKCAyKprWAUDurgiBswru2LARDYHwLAsrq5rAAEBs0gQ
+                JJkwEAQkvf8c5ravGbt6eqZ7ZvrN3PN99c17M93V1RVO3Xvr1q2S8vJyo1AoFJUBVbQKFAqFEpZCoVAo
+                YSkUCiUshUKhUMJSKBQKJSyFQqGEpVAoFEpYCoVCoYSlUCiUsBQKhUIJS6FQKJSwFApFQaOa348lJSVF
+                UxFfNGnFl70O6WikLk0Xz1yj3UOhyA9sQRlK/KI1FAthgay2x8cIpNPlq+lInUFaK7TrKBRKWHEiqxr4
+                mIp0UNJPHyOdANJapt1HoYgHYakNy5jtPciK+C1Se60ehSI+qFasLw7Jaid8nI/0gHYDhaJyoCglLJDV
+                bvh4gypfgGt3QOqhXUWhUMLKB1mV4eMtpP9DqhOwjkbjvq7aXRQKJaxcktV+Qla/ka+qp1FPT+L+jtpl
+                FAolrFyQVStRAxtlmAXJ7Vnkc6x2G4VCCSvbeAFpl5B51EIaD9I6TLuOQqGElU1sH1E+OyD9C6TVQruP
+                QqGEVRlAl4hHtBoUCiWsyoIaWgUKhRKWQqFQKGEpFAolLIVCoVDCUigUCiUshUKhhKVQKBRKWAqFQqGE
+                pVAolLAUCoVCCUuhUBQzqmkVKBTb4osmrUrxcShSc6SmSE2QdjWJEEN15bKfkdYhrUbiQSVfIC1Cmo00
+                t+nimVu0JpWwKlvH5zmHfUJkMRgdf0SMynMeyjM54LNexsf+IYt8AJ63KgftRCJqg9QF6XikfUJmuQZ5
+                TjOJkEYT8Q4Lc/AODEzZOMPbNyF1RDnnxaQ8RJkSVu5RT2boTHE3Gn5yhEeNhS1POiF6dg/5rKybLFC3
+                DOZ4EdKfTPhYaW4w9HY7SUPxnCn4HIb0LNpyQ5Zep3HI+n6IwSlRvvKYlCf3HUIRGlRN9FSf6IlqV6T7
+                RYW7JmKy8sIRSI8hLcBzeyHFcdwdg3Rh3NtOCSv+OFFP7YmUrC7AB1WfC/KgYVDqGIk0A+U4IIbVcwvK
+                1UQJSxEW/6RUoNUQiqjqIT2PP+8XyTWf4MG901Gei2NWTVxQeFgJSxEWtD3dp9WQMVntTYIwCaN6XLAd
+                0j0o2wikqjEqV3uUp7cSliIsuqEjnarVkDZZ8fzJt03F0W5xA8nheZQzTgtgXChoqISlCIv70JF21moI
+                TFa0x0xCqh/zop6E9AjKWxKT8pSK6qyEpQiFBkh/12oIRFY8km2CyfwcylyjJ9IVMSrPKajDM5WwFKE7
+                NjpSZ62GlLgF6XeVrMxD0LYHxqg898RtsUcJq3LifnSkHbQarNJVW3z8pRIWnXasMSh/XE5kon/aP5Ww
+                FGGxB9JdWg2eZMU+fS9SSSV9hd+ahI9YXHAm6jQ2q6tKWJUXfbmVQqvhVzjbhN/DmIz3RcWkA+9xSKx3
+                rthehTQRKertNteibevEqE652LNjXERQReXFo1y2b7p45k9aFb9IV9dFmOUbSFegfmf4XHMHnVLxeSnS
+                AJPwrwoL2o3OM/FZYKGLw1CTcMFQCUuRMcqQbtZq+AWMtLBXRHkNRGqbgqy2Atd8jzTIJDzYP4/o+efH
+                yM2B4B7I45WwFGHxF3SkI7UatiIq288lIKAh6UYuwPWf4OPoiEhrH8krTngYfa2uEpYiDDgL0+mwZpGr
+                g7Xx0TGCrEaCeIZlejPuXW4SW4B+jqAscdvZwMWeW5WwFGHByJiDi7wO2iOFdQdYiXR52IKAtD400azi
+                dophPV8obiNKWIpQuBwd6eAifv8TIsjjPtqjIioPCWtdyDyaoU3LYljXDPa3fT4erIRVOOCO/xES7rcY
+                cVgEeUQWjlqI77kIsjoohnXN6Bc3KWEpwoKRCQYW20uDpOlK0CJkNnOijGkueCGCPFrFtNovRb0fnuuH
+                VgvRSeiXcanXT2j4MqPIFwaibZ5BG3xURO+8vwnvU/hWFsr1RkSTUBxBYYd+gAeir/2cy4cqCgscuCNj
+                Fl8p24higpwddaEwkL/Ex4qQ2TSOcb3vZ6J11FXCKlJQjbi8iN43ihAyc7NUtrD5No553Q/A5JizqBhK
+                WIWLwehI+xbJu0YxqJdkqWzLQ94f9+CDVUWiz8liT+zUBtkPxhNF6OXLnesMbcu9VdwMyk2ma6Vz0UD6
+                LtKbInoXIrhHsHaG99IQTc/kNkVwCnHtCPL4Pktl+z6CMVE7y/tFNyJtMZnvg2xpEhvBs75NLDaEhUah
+                GnMO0ulCUKlUHve9PGX3cZPwUl5ZQAOR9oHbZRbLBNyyw7hQQwucsKLYLvJDlsq2LoI8si29UAhgNIow
+                XuzXYRyOx/j7uKBVQu6DQ3pFpKWLApCVFw6TQbkMed2KtFOBDMRZSLeFzOMm1MeeBU5YoQPeYaBtivH7
+                5SJYIx1dZ4Zsg0eyfQJQ3ghLzokbbRLLyb+PUDVgiI95yLtngQzGG5A+C1knj8Zs53827CiFjPXZfoAQ
+                NjWcMMRNweGygiMsDB7apz4wiWBr2QBPlhmF5zyV793lEXQk+rj0FhtDpmiL1LeAB/S6CPpktsZCFJvS
+                N+Sor3EPZFg71I2oy2bZKmO1FI34nsfXy/FinUJ0jO4mcVx3LlYVTjMJ571hlXk0or7fQb3dY7wdddMR
+                +V8pUMLaGEEejKiZDcN7FOaJdTmsSxJWN5NY8MoEPK2Ip0dnRaJPZXRvaWnYTMnqXBP8KGzOKlORaFCf
+                j/QtEuMTUWLa3ST2WNGonGpJe02BDMq/Ip1oMj8QlPVWqAexfheRVB5HwlqXS09yPGujnPz8TghVu01e
+                JKyI1cCu+HgwwKWfIt2N9FSqFT/aZb7asrHtblWqs4J7FLItA3WxFu/7J/z5mlFkg7DofDovC2VrEoN3
+                S7evvYu+xvDMV8atoXNiwxKddrTf87agYX4s33w+RVFU2EMkq0aldY9GaupTseWnrl543BEr507Gv3zG
+                y4U8KvG+/8XHA8pPv+5iEeSxdxb6Pft7WchsluSpTulS81ncGjrrEpYscz5hEo6fNryKlu3eadUCxow+
+                HyT1b5lZuMw6Cf9TH/5Q1MSNoiL+yyQiIP4ZaSkGM7cHdMbz+sigLtQwK1wF7SzvrkggipDE2TjAlJNo
+                2EMpFuVpclwvEv3/TIyOTMuFhEXfKmtMn7mbf55x8urPL4KUtEFIiGrg2/JJ717aqObKTDMH6SuTMApy
+                Vn1EKnO9q6IfxUc7pFUFKmXxvf6kHLUN2C/KQ+ZxVBbKFUWMro/z2NfexMc9RaMSytlqfru5n73wpyX9
+                VmzZdJvYD7iz/TGTOFaIpNUb6VqkMUgPL1u5mpLTUNGtLzYJD10esTTDo6K7mmhWj+JIWpRARylP/VIf
+                a0z4TcYHoL9GLbVGEQX1wzxX78B8SXn5kLAoXe1s+Y0njPSa9+PKt0FEXUTVWSu/3Yc03SSWSJ+iLo1r
+                voVqyLzou3WJSew3bCmk1Aa/VUvqxDRO9y/gcUoHva+Vrn7B2xHk0TvCyZoOuydHkNU7MZgMYuPDlzXC
+                Es9q24tSfD/H2dAJsrlZ1DvGiX5RdP8ZogbSC74Lrvm7qIEMY0s7VXcpf3Uhr7M8nnOv6OCFKFX8aOJ1
+                pHm+EcXq6UURnrjMPho2L0ZB/SYGfe1VE9wdqdJKWK2NfeVlNCphupDVhSbhY+TgR/nsYBI+VOOQ/obU
+                z1Tsyv9SOgO9v5fJd2cir7pJFV2OtLCAVaHxIoEqEvbPsPsBG5gITh8C6e0ipowo3ikuYHy15fkuRDYJ
+                q4PPb7cKWVGlc0cSoEGdK2DcrPukSXjE00bV0HUNHUiruspfT+wXJMg3inCg0pa3whQ55NCHVyPIqj8I
+                54wQZMVNwGNNNHGsnotR/XKx57xCJqy2lu+n4uXnyN93mm3dD+qLWshy0QBalnQvyWpxUmeoJddRBd0R
+                JLhjkQ1U1smlRkEMjyifMbKkny5ZMaoCpd4ojO101Xg7Zn3tJdF4CpKwbMHzXxLpajfz6ygN3IJA/yuu
+                giVHWygXkdQr1AZnNe63Yp6XFdsoRUfiyuoE5SszUSa0sOAk+iAI6HmkfQIQVRWkM/EnD/7oGNG78IzE
+                8hjWMSfHvC32ZMVxFI3HmFa2PVRvyqfXBur3kQ41CWP7eR73ce+gbftEfSG0y0CG9y9bubrYVtAuEqm2
+                tIjVws3oewzHE5WBmKvXpyBPmhommYRPFPvYZpOwp+5lEr5WvK5RhK/yQ4TSYtR1/B3qg6v0ebGdZkvC
+                8lPLHH+Zzknf03F0lZSJaqF7XyBXE2vKd7RV2Pyr6kp6MdkAXwSDlYsP/VTI2uqf9mmE+dHUcIxJROSk
+                BMdAkzxhh3HcRstE0Sjid7hZ3Ani2teexsezhURYfjG2vwaZ0FA+Oel7rg5+K38n+25NEclrpkgRNnbn
+                KtFSkwiNMdBDzDcezywkjDSFG0Im6GBiH6jM7h6071aGcEgXm+zFwc85YW3y6VDlUNf4otPkKyd0xgqR
+                pIxIWG5sls/euHejkJGbbLg1Z43cR0mMhvi+IMbjRUWt7pGnI9Vlis0xHKy0efR11WOxklZljYHGPtUn
+                l+FkQtQxV/Rzbi9ORVhe4V1qpbinuvHZxwfycIjDUeu+dIne/HudSEhfyffl0pCzQVZbTzPGJx1IDxIx
+                nUbWeVIubjSt75LSbhHjfnNLcZYEeB+btLg6ph2J9TFANcOt27feq2RlvhbtN7USTQzcMpfTCCmpCMtr
+                UDq2IVsUxLpCPDYpyzkQYalLsjJCKlzKpWGTp+IscBFaHRexGSGthUh0OD1DSM0rFhZtDdzu08JSls+N
+                vzfyT8Z+IkucT+fh1qZi9ElzDyZK3V1cZoa4gyu9t1XCqr4gl5N3KsLy0lFrSZyfVT6EVcdFOMloKYSz
+                Ushpi3SqKiLt/EekrYZJxDHfKzPk845IW1xVXGa2NcjPwO8sZ2tLWXgqTVOf91/lQ2g/xHiwOqrhOlPE
+                QD1QEm8X88mFeMEktqqVV8I6ppaSs1PGUxGWzYWgifH3rt7P2Ddtun2vnhP1z9kHxm06Y+RvLhlTl28g
+                ov3jUO/qW0hrM9JDIlnMkuu5DO04uXWw2AumSFltoE/YHmnWTVw6Esv3t2LXC+VghWNcJoa4gTs6uqGc
+                GypxNdON5PU4EJYt4mBz4x+N8FCRlLxwKiQ05yQRbnjm307ESG5iZtzyJ+T/7UTV48pJdZCS70ZQ/D4E
+                6XCkA5E6Iq3Bs1gWr1M8pkgIZr+YRXN8CG1OJehI3PY0TUlr5vvSzjNiVCxqFgy99MdKTlaORN/HVERb
+                yRthzfWRoD7yuY9S1IumYgXQDTo29haCIVEx4B6D9M2W328yie0NbsdPivXvZviO/XxmNidvL3whvjD7
+                plk3cepIlCJ58McGU+SQxQgeLzfE5H+Fl+aNY1GmGyujGmipXwYZGJhvwrLNzkfKZlObWkQSYEM8b/n9
+                atdq4bUisjuboLnK2FqIxrGTdTcZhATGMyixnebxE207j+P3w01iO48XHJX2CI/fWK5PKklHop3wBqPY
+                esYjEgcV7agv5aEIlOgHIbUQ14tCwz/FzJIfwpJNyss8fmorhvdJlltrClHcbstaGs6ImkcpgBtGb5Xf
+                eRgFDfHtRZIhiT3aqLRu4FNxUD5uOxpuvFcPRwnh9vbJYjLyKDPex2q9KdJLZQHb4X2lrAoSR6LpgecA
+                ML5atr3KuSLOFe3f4Lk3yApmIdbrFhnLWfMjC+I4+rrHd4z3c6APYRH9ZZCMt/x+JQihs5DWv0WimSFS
+                GQnvcZGE2KkYo4iuCXek8W4kxMM9vmdnGSIxi86y3Fsu7/b7NOokzh1po5DzZqNw18v7SH1EymZI7YdN
+                dIspH4nWwDP6muI5t3AfXhHUKYWc67OVf5DNzwwi1sPje353lUn4RzX0+J12ri6i2lF6SnbQpOvCkyCO
+                dnjJaSCteySY3zVic6F/FY+1Ohm/XY/fGIrmdHx2xv8vpZCuehh7ALU7uBSLayjN2ZxCJ+Oa5bjGRmhB
+                neXoWxPGeXFOhB3pPbwPN5zvHiKbWWlcS4NyvZDFXpujQfaTTKzjpf9wMmO0EdovKWU3kndhpJC6SZMf
+                zQPfyTigKw/3Mc5MdaZmFnCFyTzCadQ2To7V5SYLO2lKysvtNr+SkhLnIImvPAb3N9KQg822EUPdWCgN
+                T5+gf1iuoTh+Ghp4q7QGQuogkhbJYohcQ8/te0FUKQ2UKC/tXSON995BznoHm4SRn7Yd2xFM3WRweh0f
+                9R7KeqBRKAoEtWrV3HXduvWxcrC18VJKBpSVMq9YS/VFjB5mXMdsJYFe7YOQB41xz1iuISG+DKKhmlYT
+                pETi2oDPf8gMR78s+hONBZnt6kNU1ZFuNAnfKy+y4ix6pswmw33IaoG87/mW38dqF1cUCFHVQaIp5ht8
+                foBUL+5lDiqyjbB8/1eRvvxOI74KRMKgZr1MRSws46EeUhX8GNeePaV0n60e2iCtJUgXCHFRPbwapHVU
+                clRR3MNNztN81EAaA8+QFTOWuZ1PeQcJiV7s8dtGUfMUikIAbciOHyJtxKfFvcApVUIXKTC0i9eBqJSy
+                GBvoMx+bBVfkaHzkagm3IRydoly0B9BPisb4qcn2AFkB3B+JREUV0E9Fo6G5F/IYh/tOMQnvehtRzxaV
+                cZDxPk/xYeSjh5gqCkXCaiXmF2egHwvV8PU4q4TpEBbtOk97XEY7D7fX0Eg+0qcMdI9oK6Q1QtSzoKC9
+                jIZNbqimdMXtOjUC3LdKJKtJKP9xJuF7U9OH2A4xibA1lMSSFwlYUfsgr/na1RUFRFqUsrgY81+Q1TNx
+                KVcUhEWp5EORbJLBCInX4hpKTyf6lIPe651w7Sxcy83KdxvvOFVRgDNHdxIMnkVRd2wKkrsJ1/4N13IF
+                0Csu9+P4vXuIjnG0SKNUb2tLXVCCfAwdZV0G+ZWIhMnDOrn1qK5MClzVHYc814fsyDWQx4YUz+cCCaXW
+                5qJGc2KZIu+0MJNnyuBpIhPHq8hnWZp57CeTJ11aaPNcI/2W7jKvIb/yNPKqJvXLQV0mk9hC0RKeRl6b
+                M3hH+vX1kPLRDsxIB1xZHI/8JmeQHyfZ003CGZarm9zj+56Ub0YWCI7tfoK0+77S79juU6XdF6SZH+uY
+                i3ff4d41kRGWkFYn4+0hvEHUPEof3EKzp08Zafy+EIN/tBwNflfEuvNKUefuk/8Hi32sxOeeV4SkePDF
+                ox6/0xFuv0zOOESDcEWSoXSPtVzCLSMM7O8EQ5uEhrs1QKcfa7z9zIhFSFcj/Vn+fwZ5DrPkxX2b9EP6
+                SgYSl8cZs/s/uKe35R4ezDBO1Gcv0NbHg28H+g1q5EM7YTf5d6ikpkn5DEIetwSo5+3k/vN8VH6aLnoG
+                IVMhgtHGvjXrA3nHc+T/YX4SipAx2/UvxtuZ2QjZ90A+iwKUj2cmcMP/H3wuo0Z0HvL70SefX9of152Z
+                4pl7Sb+zRT+hBsTFsquR16YAxDdAxuYOouHQPvxn3PtTJIQlpDXBeB/BzUqmTswB+qbxPt3GDdqo+ou/
+                E10frpLOWytDolosJDWcpyIjT844D/gMagfzxfBIlp9uURmvR56DMyCrZlIXDVJcusU1yEbZiELy5HYj
+                2hl28lBpbQPhH8jzMkt+i4QkqKrPcrWtZzlwPe2FXAAp9XkHB5REutpIC3kNNRVHlH1l7Nuk+iKPR3zq
+                pKZMOkd5DKBkX0NKIMcgv0988qPkOsGjL/jVcT/kOdSHrLi3tn2A/Gj6OBp5fepTvl2E3JoFyI++fEci
+                v+9TtP8XuKbM55kcozxFvV6AZ1LKP9mPtJBffxFWkkEprUfGbg0euNh4xxcqE4b8VEToVGoOxfbPQCw0
+                cC8DIfQUEflskzhI4HOxG9mwQQjmLrGN7Yk8GABtJ+RJt4WZAchqiUg+rPBnLWT1kanYMpQOWW0nA7aB
+                y4ZHr+pd0CAl0tluFimiSsA860jHd8hqgagDdZAnB+ZeUtZMPNobu8iKPjlzPZ5fKu/kkNU8eX5tPJ91
+                SMnvdiEv4iST2MweBLvJhNNZJF33VqKbZdDbMMxFVpSGuVq8B8pUXdr0Lde1pebX512637GJSCZOX5gt
+                0ndNqWPaa9M9ledOF1mxvbm3s6nkR5WKPodOxBJGyn0J5fCbuJ9ykRXjsvEgjF0lv/oixTlSFSXEp0X1
+                ylQNrC39ziGrhWKDruvqd0NMRdDOjgHGzADXRDdW3oP9biOeZ92Cl7aEJVJWD2P3RxonpEMiGG/sETuT
+                1cQxkqY6O9jxnFqiXu4qNpJNci2lgaVy4IATs72DPPdUn1kwWSJsL/o3Q+EcYiHFQyU8SbqN3E9UBmdg
+                c9b82uO6tmLLqpFKwsK1JPfrXSpJW1z7g8d1J0rdV01DwnJAVfIur9kR195oKlxHaCc51kvdwHXu1VgO
+                0L1x3eIUEhbViNtcv9G2SR8hJ1rsUfj9bY88WgqplAhZ/R7XvSW/VRW1rruLLLrh94k+7TbKVJyJSZvS
+                KV72QFxHd5v7U0lYoj5/Im3B53fGda94XMc+/oZLBb3GyzQgdTveJY21xnXzLLa8/0rdjBWzwM+ZSFi4
+                hm1+o/zLBak2XhIbrqPJaKK8K/tPc1z3ucd1HNfOLoapuOYIfMeJ/RvHxhilhEVn0nGiP3uhh8yU/5NZ
+                b2mALMng7ADskF+CgJ5AukxIb5MMeP42TVQ/ktdJuOYapBel4SaKLSwIWU0X6etrafxDLNddmglZCdwG
+                +j5eZEXIMvLfA+bp3ip0thdZSZ4vumx46eB+koaPKO88v1ye/6Pl+RNMhW9edZedyg/TkvJYm9THbHbR
+                P7rsk7e7yKp6BmS1ncsmtFbsXest7/iASJupcIarTw71IivJj9JFL0v/sfWBK7zISvKjptMYnx2RxnmR
+                VRpwb83rYVMv8T0XrO6Rf6vZbNOyyLRE/m2Neqfda1WQBZEwe30uMfajtC8QGxXVCgbQey2NfBtII98t
+                Bv7PRJ36QRJF5w9lBh8iKkQ6ZxA+JERYIqRqM4Y/CLJ6IEMRmnk7vmFfOIPIB48FyJPvuLcjXSHPD1Lc
+                8ngGRR+SwsjrzMDv4/kfpcjLfaT5wRn2MXescJtK4/bBG+OyGT3rGvQcIB39yEqwj6nYgvYf2yTjwhMB
+                3uEgS514DeTppiIUeAuLGtzKZZ97MkV+m0xIiDTkSH0fIc9UE/gYy7snw+3nSBX2U9EMskNYchRRF2OJ
+                tS4z1asyuzDqAU8xyWdYDc5gXVFuriJRXJ5q7A6nk8QukClKXbPqkjQHpg3usxqXB7g+XVeJr9EZl6Z4
+                JwdBjoNfbrk3auzi+nuZDPJnxH7m1MOJeLdX06zjIO4UQTZn75RmvS1LUW+OHWllJu4wIes3SJjpLz3K
+                6kWmI0X1dqR0qqUvoP2uzJaERdJaIRLK55ZLjhDj6Um49k4hilw7p20SaY1GyglQIS8XsrIZXqn3/8Gx
+                j2UCUZWc+8sC3LJjgGvc4aGbBLg+3Z37qSaTHwKoZ9t0D9ff2Txw071plyu9E1xkRcfhTmiP1zLIq2mA
+                64NI9ivSrLcyS50nl3FHDO4dcjB+3HUSJIimu29+l2KcUBprLqq7g9vxXq2zQlhCWpyVj/GRtOoJUVAc
+                3ojrqdeyQM8b/1XAsFgvdhT6T/WXjkAXgzuN9+ZoIxLhibg+irAmjtNeY1km90PPACTIMn0s/+6PPA8L
+                m2eaJLzSVKwcthA/JT+cY7NPRQx33mzfDi6yOt691STAAOf7OSvg7XB9KtI6O0D5prv+PjeF+tXWRZQz
+                LSqdk1/VVG0cBaGJDc8xPzRHnkemuKVvOu2O/Glo7yUaWMp6jSRejZDWESK52EB7whwQF0PUzsE9p4pu
+                PMRHQssE9CWi8yODptFxcgOeea9JuDn4VTZXUjpFRFYmadYYgYbe09KpThIdPgjcm9DH4d7dLXl2T+o4
+                UWGUu77wnIaW55OsernUpmxK1ZwIHTeOBklkNc1Vpr3FTjKfq52yKpc8eDaaitVvGuCfEFcOr3fkamr7
+                AOWjncnZMXAB7jvdkl/TpPodZclvpOvvW23SiHy/FJ/vsazimhBVuze2PLOnq9+R6J7yIdO6SWV32wMb
+                ZpWwhLQoOh5n7JEdHDWFfjmLJIDeBomxzc50sBDNhIB2HyMddb50Wm5Kbob8WiHRN6sRnjFCfr/Q2FcP
+                6QdCp9WeEZ9eQl8dJ3gfieVdNNDl9FJHojh/MBKJdLwJtrJJ0N/IMXbT52kWvcWRymgURzoU6UGpj5Ik
+                tTgK3O2Ssmigno3nXUIHWRIA0lFIJGr3boEbQARZO2ILebM8Qz1IYjXKsjPSvkgDROLdXeqtg7GfqznY
+                ZX/jSvJM3N8LqZHk1waJBv1bPEwPXuXjItFtrvH2JO4fjnQ4HUDp9sB+IROqo05Rohluye8VU3FWAkno
+                NdxPP7UDGB4G6XdIQ8S0QZW1pbxHmImY/e4Tl8rKftdPys534ErfI0nEdrNtWxWuHSu2qyn4+2yZPNwH
+                WFgFmIz8sFIBRNFLXjKIHYUraFwl+xcIY5ErD65O0CHN8cFyVolo7OeeI67gLJTwv85eR3qB02mNS7/7
+                B3g2jaBnIY83szGY0BB7iJqSSrXY6FJTU3m6M8/XTMWKoZ9K7Dg/covMEEt+i0wAT2fX9bQFvm6CRS4l
+                cfW1LVcn+WH9KlIAfu/tmgDPEUOtVz5VRYrrEqBM8+RZy3ze0Qn/XT9FXj+birhqXO5/zJJfFZlEgmz4
+                J8G18fJbc+XH8UDfwcMC5Eet5wTktzpM+3NSNIlV9SD201HSXrZ2P9fYnW9J/C3Xrl33SVYlrCRpiwX+
+                rfGP+e6Avlr0GVoI0qHkNVbURjqh1ZIGnCaDhImOcFyJ4OrLGbh2MNJzQmCzRcVMRVblYt9qkS2yktmQ
+                kmIrYz89yIhdqkuaeR4iZGDzaB9jKlZfHDU5qneaJ9KwX5ho2oH649pz09lsHKJMrAf6el1n/BcPKHkd
+                lmpDNX5nPzrIeAeudPrPfUk22Fk++W0RkwjVyJ98Hs1+crAfWUl+nLDbShk2+2gf9Ik6zkZWadbxIul3
+                430uWyNa0jkp2p1990HLxN3Hb9tUViSsJGmLg/GOABJBrkDfsctAVO/m8qGYVeixzWgN+4koT9Klh/tE
+                kYQc58r5Nr8tmam5KvtHUVuGi3rTTPJcKjMv6/xaF3k04oZSS57dRIJdk254EZFEuop6yMllhdTvBOT1
+                XYD7D3VNLpOSVUexOzlbbt7C7/MD5OkcKMG8d5ZBxEmB0RA+DnB/DalTEswb0kYdRbLYTqTyF6V+z3K1
+                WbOAdUY3AdpvW0v52C6fSp1lsqNiT3lftkWptDcJ97mAm6jTbn+qnaYiWgP73bciybGOV6RR9nZSFzuL
+                GjhSVHwT2ebnDEmrmjTuNdK580VUNzmx4ysjJETN6y7JmCrSAK60yO8kDdprBrluG4LfBxpF0DrubrZ1
+                8OSq8o2ow1XyO11QaH91h9A+H78/qLUXHfJKWC7iqiKzF21cJxt7ML2o8L2oASNAVDMKZEAl73KnukHP
+                fxpVuaPe7RvEJfBjwsbGKkLSoirlDpG9QeqYatYBSf2WEnJXUfsUhURYSeRVKuLgCaLm1I8o6wUihVBs
+                fznilb+4DCgujXP/1W4+9guqi1eK/5Yivfplx+dOh5uM3Ut/vZg6bohiC4wi5oSVRF58EI30h4jK2Fw+
+                S0ViKE0ajLRL0KhMOwn3GlLvZdyfKSCoxUUyqGqK7YKuJFw5rCE2JEpVT8tyuiJcHdPxko7OPI+goaji
+                TlTVJ+N2NFbRE5ZCoVDECVW0ChQKhRKWQqFQKGEpFAolLIVCoVDCUigUCiUshUKhhKVQKBRKWAqFQqGE
+                pVAolLAUCoUiVvh/AQYASDep/YVRbE4AAAAASUVORK5CYII=
+</property>
+        </structure>
+    </list-property>
+</report>
