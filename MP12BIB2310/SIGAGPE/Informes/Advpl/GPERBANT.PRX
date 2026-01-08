@@ -1,0 +1,427 @@
+#INCLUDE "GPER1030.CH"
+#INCLUDE "PROTHEUS.CH"
+#IFNDEF CRLF
+#DEFINE CRLF ( chr(13)+chr(10) )
+#ENDIF
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³ GPERBANT  ³ Autor ³ Denar Terrazas       ³ Data ³ 24/07/2019    ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Emision de Recibo de Anticipo                              	   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ GPERBANT()                                             	   	   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                               		   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±ÀÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ±±*/
+
+User Function GPERBANT()
+	Local cPerg			:= "GPERBANT"
+	Private cTitulo		:= "BOLETA DE ANTICIPOS"
+	Private oPrint		:= NIL
+	Private oArial08	:= TFont():New("Courier New",08,08,,.F.,,,,.T.,.F.)//Normal
+	Private oArial08N	:= TFont():New("Courier New",08,08,,.T.,,,,.T.,.F.)//Negrito
+	Private oArial09N	:= TFont():New("Courier New",09,09,,.T.,,,,.T.,.F.)//Negrito
+	Private oArial10	:= TFont():New("Courier New",10,10,,.F.,,,,.T.,.F.)//Normal
+	Private oArial10N	:= TFont():New("Courier New",10,10,,.T.,,,,.T.,.F.)//Negriot
+	Private cPict1		:= "@E 999,999,999.99"
+	Private cPict3 		:= "@E 999,999.99"
+	Private OrdenConsul	:= GetNextAlias()
+	Private cConceptos	:= ""
+
+	CriaSX1(cPerg)
+	PERGUNTE(cPerg, .T.)
+
+	oPrint := TMSPrinter():New(cTitulo)
+	oPrint:Setup()
+	oPrint:SetCurrentPrinterInUse()
+	oPrint:SetPortrait()
+	oPrint:setPaperSize(DMPAPER_LETTER)
+
+	fCabecBol()
+
+Return
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³fCabecBolºAutor  ³Erika               º Data ³  19/03/08   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³ Impressao do Cabecalho - Bolivia                           º±±
+±±º          ³ Zebrado                                                    º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ AP6                                                        º±±
+±±ÈÍÍÍÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+Static Function fCabecBol()
+	Local cStartPath	:= GetSrvProfString("Startpath","")
+	Local cPds:= TRIM(MV_PAR11)
+	If !Empty(cPds)
+		For nReg:=1 to Len(cPds)
+			cConceptos += "'"+Subs(cPds,nReg,3)+"'"
+			If ( nReg+3 ) <= Len(cPds)
+				cConceptos += ","
+			Endif
+			nReg+=2
+		Next nReg
+		cConceptos := "% (" + cConceptos + ") %"
+	Else
+		cConceptos := "% ('') %"
+	EndIf
+
+	cFLogo := cStartPath + "lgrl" + TRIM(SM0->M0_CODFIL) + ".bmp"
+
+	BeginSql Alias OrdenConsul
+
+		SELECT RA_FILIAL, RA_ADMISSA, RA_MAT, RA_CIC, RA_NATURAL, RA_NOMECMP, RA_SALARIO, RA_CODFUNC, RJ_DESC, RA_CC, CTT_DESC01
+		FROM SRA010 SRA
+		JOIN CTT010 CTT ON CTT.CTT_CUSTO = SRA.RA_CC
+		JOIN SRJ010 SRJ ON SRJ.RJ_FUNCAO = SRA.RA_CODFUNC
+		WHERE SRA.RA_FILIAL BETWEEN %exp:MV_PAR01% AND %exp:MV_PAR02%
+		AND SRA.RA_MAT BETWEEN %exp:MV_PAR03% AND %exp:MV_PAR04%
+		AND SRA.RA_CC BETWEEN %exp:MV_PAR05% AND %exp:MV_PAR06%
+		AND SRA.RA_DEPTO BETWEEN %exp:MV_PAR07% AND %exp:MV_PAR08%
+		AND SRA.%notdel%
+		AND CTT.%notdel%
+		AND SRJ.%notdel%
+		AND SRA.RA_MAT IN
+		(SELECT RC_MAT FROM SRC010 SRC
+		WHERE SRC.RC_PERIODO = %exp:MV_PAR09%
+		AND SRC.RC_MAT = SRA.RA_MAT
+		AND SRC.RC_SEMANA = %exp:MV_PAR10%
+		AND SRC.RC_ROTEIR IN ('FOL', 'ANT')
+		AND SRC.RC_PD IN %exp:cConceptos%
+		AND SRC.%notdel%
+		UNION
+		SELECT RD_MAT FROM SRD010 SRD
+		WHERE SRD.RD_PERIODO = %exp:MV_PAR09%
+		AND SRD.RD_MAT = SRA.RA_MAT
+		AND SRD.RD_SEMANA = %exp:MV_PAR10%
+		AND SRD.RD_ROTEIR IN ('FOL', 'ANT')
+		AND SRD.RD_PD IN %exp:cConceptos%
+		AND SRD.%notdel%)
+		ORDER BY RA_FILIAL, RA_MAT
+
+	EndSql
+
+	DbSelectArea(OrdenConsul) // seleccionar area Area
+
+	While !(OrdenConsul)->(Eof())
+
+		oPrint:StartPage()
+		fImpBol(0, cFLogo)
+		fImpBol(1650, cFLogo)
+		oPrint:EndPage()
+
+		(OrdenConsul)->(dbSkip())
+	EndDo
+
+	#IFDEF TOP
+	dBCloseArea(OrdenConsul)
+	#ENDIF
+	oPrint:Refresh()
+	oPrint:Preview()
+
+	oPrint:End()//Fin de la impresion
+
+Return Nil
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³fImpBol³ Autor ³ Erika                 ³ Data ³ 19/03/08 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Impressao das Verbas (Lancamentos) Zebrado (Bolivia)       ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ fImpBol()                                               ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                            ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+
+Static Function fImpBol(nLinB, cFLogo)   // Impressao dos Lancamentos
+
+	Local nTermina  := 0
+	Local nCont     := 0
+	Local nCont1    := 0
+	Local nValidos  := 0
+	Local dFechPago := DATE()//RCH->RCH_DTPAGO
+	Local nTotal	:= 0
+	Local cPeriodo	:= MV_PAR09
+	Local ConsulAnt	:= GetNextAlias()
+	Local cTab		:= "U001"
+	Local aInfoLegal:= {}
+	Private nNroLin := 60
+	Private aTabU001:= {}
+	//	Local cAliasQry   := GetNextAlias()
+
+	cNomeEmp:= AllTrim(UPPER(TRIM(FWCompanyName())/*SM0->M0_NOME*/))	//Nombre de la empresa
+	oPrint:SayBitmap(nLinB+100,090, cFLogo,500,100)
+	oPrint:Say(nLinB+80,1800, cNomeEmp,oArial08N)
+
+	fCarrTab ( @aTabU001, cTab, dFechPago, .T.)
+
+	//Se recorre el array para filtrar la sucursal del empleado
+	for i:= 1 to Len(aTabU001)
+		if(TRIM(aTabU001[i][2]) == TRIM(SRA->RA_FILIAL))
+			aInfoLegal:= aTabU001[i]
+			exit
+		endIf
+	next i
+
+	cNit := TRIM(aInfoLegal[6])
+	oPrint:Say(nLinB+130,1800,"N.I.T. : " + Alltrim(cNit),oArial08N)
+
+	cNrEmplea := TRIM(aInfoLegal[5])
+	oPrint:Say(nLinB+180,1800,"Nro. Empleador: " + TRIM(cNrEmplea),oArial08N)
+
+	//         linea de abajo   linea de arriba
+	oPrint:Box (nLinB+090, 0840, nLinB+170, 1600) //Recuadro
+	oPrint:Say(nLinB+110,0870, cTitulo + " - " + UPPER(MesExtenso(Month( STOD(TRIM(cPeriodo) + "01")))) + SPACE(1) + UPPER(cValtoChar(Year( STOD(TRIM(cPeriodo) + "01")))),oArial10N)//"BOLETA DE PAGO"
+
+	oPrint:Box (nLinB+390, 0050, nLinB+310, 0800) //Recuadro
+	oPrint:Say(nLinB+270,250, "NOMBRE Y APELLIDO" ,oArial09N)
+	oPrint:Say(nLinB+340,150,TRIM((OrdenConsul)->RA_NOMECMP),oArial08N)
+
+	oPrint:Box (nLinB+390, 1500, nLinB+310, 2400) //Recuadro
+	oPrint:Say(nLinB+340,1550, "CARGO: " + TRIM((OrdenConsul)->RJ_DESC),oArial08N)
+
+	cFecAdmi := DTOC(STOD((OrdenConsul)->RA_ADMISSA))
+	cSalariB := (OrdenConsul)->RA_SALARIO
+
+	//X   ,Inicio           ,Fin,Y
+
+	oPrint:Box (nLinB+550,0050, nLinB+470, 0300) //Recuadro
+	oPrint:Say(nLinB+430,90, "FECHA ING." ,oArial09N)
+	oPrint:Say(nLinB+500,100,cFecAdmi,oArial08N)
+
+	oPrint:Box (nLinB+550,0600, nLinB+470, 0350) //Recuadro
+	oPrint:Say(nLinB+430,360, "HABER BASICO" ,oArial09N)
+	oPrint:Say(nLinB+500,415,Alltrim(Transform(cSalariB,"999999.99")),oArial08N)
+
+	oPrint:Box (nLinB+550,0650, nLinB+470, 0900) //Recuadro
+	oPrint:Say(nLinB+430,730, "C.I.",oArial09N)
+	oPrint:Say(nLinB+500,675,SUBS(TRIM((OrdenConsul)->RA_CIC),0,10) + " " + TRIM((OrdenConsul)->RA_NATURAL),oArial08N)
+	oPrint:Say(nLinB+630,050, "EXPRESADO EN Bs." ,oArial09N)
+
+	/*INGRESOS-DESCUENTOS*/
+	oPrint:Box (nLinB+780,0050, nLinB+700, 2400) //Recuadro
+	//oPrint:Line(nLinB+700, 1220, nLinB+1470, 1220) //Linea Vertical
+	oPrint:Say(nLinB+727,900, "CONCEPTOS A PAGAR", oArial10N)
+
+	oPrint:Say(nLinB+800,130, "DETALLE", oArial10N)
+	//oPrint:Say(nLinB+800,2140, "REF.", oArial10N)
+	oPrint:Say(nLinB+800,2140, "IMPORTE", oArial10N)
+	//         linea de abajo   linea de arriba
+	/*CONCEPTOS-IMPORTE*/
+	oPrint:Box (nLinB+860,0050, nLinB+780, 2400) //Recuadro
+	//         linea de abajo   linea de arriba
+	/*oPrint:Line(nLinB+780, 0840, nLinB+1390, 0840) //Linea Vertical
+	oPrint:Line(nLinB+780, 0990, nLinB+1390, 0990) //Linea Vertical*/
+	oPrint:Line(nLinB+780, 2100, nLinB+1220, 2100) //Linea Vertical
+	//oPrint:Line(nLinB+780, 2150, nLinB+1390, 2150) //Linea Vertical
+	/*TOTAL GANADO-TOTAL EGRESOS*/
+	//DENAR
+	oPrint:Box (nLinB+780,0050, nLinB+1220, 2400) //Recuadro
+
+	BeginSql Alias ConsulAnt
+
+		SELECT RC_FILIAL, RC_MAT, RC_VALOR, RC_PD, RV_DESC, RV_DESCDET
+		FROM SRC010 SRC
+		JOIN SRV010 SRV ON SRC.RC_PD = SRV.RV_COD
+		WHERE SRC.RC_FILIAL = %exp:(OrdenConsul)->RA_FILIAL%
+		AND SRC.RC_MAT = %exp:(OrdenConsul)->RA_MAT%
+		AND SRC.RC_PERIODO = %exp:MV_PAR09%
+		AND SRC.RC_SEMANA = %exp:MV_PAR10%
+		AND SRC.RC_ROTEIR IN ('FOL', 'ANT')
+		AND SRV.RV_COD IN %exp:cConceptos%
+		AND SRC.%notdel%
+		AND SRV.%notdel%
+		UNION
+		(SELECT RD_FILIAL, RD_MAT, RD_VALOR, RD_PD, RV_DESC, RV_DESCDET
+		FROM SRD010 SRD
+		JOIN SRV010 SRV ON SRD.RD_PD = SRV.RV_COD
+		WHERE SRD.RD_FILIAL = %exp:(OrdenConsul)->RA_FILIAL%
+		AND SRD.RD_MAT = %exp:(OrdenConsul)->RA_MAT%
+		AND SRD.RD_PERIODO = %exp:MV_PAR09%
+		AND SRD.RD_SEMANA = %exp:MV_PAR10%
+		AND SRD.RD_ROTEIR IN ('FOL', 'ANT')
+		AND SRV.RV_COD IN %exp:cConceptos%
+		AND SRD.%notdel%
+		AND SRV.%notdel%)
+		ORDER BY RC_FILIAL, RC_MAT
+
+	EndSql
+
+	DbSelectArea(ConsulAnt) // seleccionar area Area
+	nCont:= 1
+	While !(ConsulAnt)->(Eof())
+
+		nColsB:= 820+(50 * nCont)
+
+		oPrint:Say(nLinB+nColsB,130, TRIM((ConsulAnt)->RC_PD) + " " + TRIM((ConsulAnt)->RV_DESCDET),oArial08)  //Detalle Ingresos
+		//oPrint:Say(nLinB+nColsB,2120, TRANSFORM((ConsulAnt)->RC_HORAS,'999.99'))
+		oPrint:Say(nLinB+nColsB,2150, TRANSFORM((ConsulAnt)->RC_VALOR, cPict3))
+		nTotal+= (ConsulAnt)->RC_VALOR
+		nCont++
+		(ConsulAnt)->(dbSkip())
+	EndDo
+	nColsB:= 820+(50 * 7)
+	//oPrint:Box (nLinB+1370,0050, nLinB+1290, 2400) //Recuadro
+	oPrint:Line(nLinB+nColsB-15, 050, nLinB+nColsB-15, 2400)//Linea horizontal
+	oPrint:Say(nLinB+nColsB+0,090, "TOTAL GANADO",oArial08N) //"| TOTAL INGRESOS" + SPACE(10)
+	//oPrint:Say(nLinB+nColsB+0,950, TRANS(TOTVENC, cPict1))
+	//oPrint:Say(nLinB+nColsB+0,1280, STR0126 + SPACE(10),oArial08N) //" TOTAL EGRESOS"
+	oPrint:Say(nLinB+nColsB+0,2090, TRANS(nTotal, cPict1))
+	//oPrint:Say(nLinB+nColsB+150,25, DESC_MSG1)
+	oPrint:Say(nLinB+nColsB+150,0070, REPLICATE("_",140))
+	oPrint:Say(nLinB+nColsB+220,900,"SANTA CRUZ, " + cValtoChar(Day(dFechPago)) + " de " + MesExtenso(Month(dFechPago)) + " de " + cValtoChar(Year(dFechPago)) + ".")
+	oPrint:Say(nLinB+nColsB+200,1830, "RECIBI CONFORME",oArial08N)
+	oPrint:Say(nLinB+nColsB+200,0300, "VoBo",oArial08N)
+
+Return Nil
+
+Static Function CriaSX1(cPerg)  // Crear Preguntas
+	/*Esta funcion al ejecutarse crea los registro en la tabla SX1, asi de esta manera podemos utilizar los parametros
+	Tomar en cuanta que deben cambiar los parametros segun el caso, se debe indicar cada uno las preguntas con toda las
+	especificaciones,
+	*/
+	xPutSX1(cPerg,"01","¿De Sucursal?"			, "¿De Sucursal?"			,"¿De Sucursal?"		,"MV_CH1","C",04,0,0,"G","","SM0","","","MV_PAR01",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"02","¿A Sucursal?" 			, "¿A Sucursal?"			,"¿A Sucursal?"			,"MV_CH2","C",04,0,0,"G","","SM0","","","MV_PAR02",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"03","¿De Matrícula?" 		, "¿De Matrícula?"			,"¿De Matrícula?"		,"MV_CH3","C",06,0,0,"G","","SRA","","","MV_PAR03",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"04","¿A Matrícula?" 			, "¿A Matrícula?"			,"¿A Matrícula?"		,"MV_CH4","C",06,0,0,"G","NaoVazio()","SRA","","","MV_PAR04",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"05","¿De Centro de costo?" 	, "¿De Centro de costo?"	,"¿De Centro de costo?"	,"MV_CH5","C",11,0,0,"G","","CTT","004","","MV_PAR05",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"06","¿A Centro de costo?" 	, "¿A Centro de costo?"		,"¿A Centro de costo?"	,"MV_CH6","C",11,0,0,"G","NaoVazio()","CTT","004","","MV_PAR06",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"07","¿De Departamento?" 		, "¿De Departamento?"		,"¿De Departamento?"	,"MV_CH7","C",09,0,0,"G","","SQB","","","MV_PAR07",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"08","¿A Departamento?" 		, "¿A Departamento?"		,"¿A Departamento?"		,"MV_CH8","C",09,0,0,"G","NaoVazio()","SQB","","","MV_PAR08",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"09","¿Periodo?" 				, "¿Periodo?"				,"¿Periodo?"			,"MV_CH9","C",06,0,0,"G","","RCH","","","MV_PAR09",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"10","¿Número de Pago?" 		, "¿Número de Pago?"		,"¿Número de Pago?"		,"MV_CHA","C",02,0,0,"G","","","","","MV_PAR10",""       ,""            ,""        ,""     ,""   ,"")
+	xPutSX1(cPerg,"11","¿Conceptos a Listar?" 	, "¿Conceptos a Listar?"	,"¿Conceptos a Listar?"	,"MV_CHB","C",18,0,0,"G","fVerbas()","","","","MV_PAR11",""       ,""            ,""        ,""     ,""   ,"")
+
+return
+
+Static Function xPutSx1(cGrupo,cOrdem,cPergunt,cPerSpa,cPerEng,cVar,;
+	cTipo ,nTamanho,nDecimal,nPresel,cGSC,cValid,;
+	cF3, cGrpSxg,cPyme,;
+	cVar01,cDef01,cDefSpa1,cDefEng1,cCnt01,;
+	cDef02,cDefSpa2,cDefEng2,;
+	cDef03,cDefSpa3,cDefEng3,;
+	cDef04,cDefSpa4,cDefEng4,;
+	cDef05,cDefSpa5,cDefEng5,;
+	aHelpPor,aHelpEng,aHelpSpa,cHelp)
+
+	LOCAL aArea := GetArea()
+	Local cKey
+	Local lPort := .f.
+	Local lSpa := .f.
+	Local lIngl := .f.
+
+	cKey := "P." + AllTrim( cGrupo ) + AllTrim( cOrdem ) + "."
+
+	cPyme    := Iif( cPyme           == Nil, " ", cPyme          )
+	cF3      := Iif( cF3           == NIl, " ", cF3          )
+	cGrpSxg := Iif( cGrpSxg     == Nil, " ", cGrpSxg     )
+	cCnt01   := Iif( cCnt01          == Nil, "" , cCnt01      )
+	cHelp      := Iif( cHelp          == Nil, "" , cHelp          )
+
+	dbSelectArea( "SX1" )
+	dbSetOrder( 1 )
+
+	// Ajusta o tamanho do grupo. Ajuste emergencial para validação dos fontes.
+	// RFC - 15/03/2007
+	cGrupo := PadR( cGrupo , Len( SX1->X1_GRUPO ) , " " )
+
+	If !( DbSeek( cGrupo + cOrdem ))
+
+		cPergunt:= If(! "?" $ cPergunt .And. ! Empty(cPergunt),Alltrim(cPergunt)+" ?",cPergunt)
+		cPerSpa     := If(! "?" $ cPerSpa .And. ! Empty(cPerSpa) ,Alltrim(cPerSpa) +" ?",cPerSpa)
+		cPerEng     := If(! "?" $ cPerEng .And. ! Empty(cPerEng) ,Alltrim(cPerEng) +" ?",cPerEng)
+
+		Reclock( "SX1" , .T. )
+
+		Replace X1_GRUPO   With cGrupo
+		Replace X1_ORDEM   With cOrdem
+		Replace X1_PERGUNT With cPergunt
+		Replace X1_PERSPA With cPerSpa
+		Replace X1_PERENG With cPerEng
+		Replace X1_VARIAVL With cVar
+		Replace X1_TIPO    With cTipo
+		Replace X1_TAMANHO With nTamanho
+		Replace X1_DECIMAL With nDecimal
+		Replace X1_PRESEL With nPresel
+		Replace X1_GSC     With cGSC
+		Replace X1_VALID   With cValid
+
+		Replace X1_VAR01   With cVar01
+
+		Replace X1_F3      With cF3
+		Replace X1_GRPSXG With cGrpSxg
+
+		If Fieldpos("X1_PYME") > 0
+			If cPyme != Nil
+				Replace X1_PYME With cPyme
+			Endif
+		Endif
+
+		Replace X1_CNT01   With cCnt01
+		If cGSC == "C"               // Mult Escolha
+			Replace X1_DEF01   With cDef01
+			Replace X1_DEFSPA1 With cDefSpa1
+			Replace X1_DEFENG1 With cDefEng1
+
+			Replace X1_DEF02   With cDef02
+			Replace X1_DEFSPA2 With cDefSpa2
+			Replace X1_DEFENG2 With cDefEng2
+
+			Replace X1_DEF03   With cDef03
+			Replace X1_DEFSPA3 With cDefSpa3
+			Replace X1_DEFENG3 With cDefEng3
+
+			Replace X1_DEF04   With cDef04
+			Replace X1_DEFSPA4 With cDefSpa4
+			Replace X1_DEFENG4 With cDefEng4
+
+			Replace X1_DEF05   With cDef05
+			Replace X1_DEFSPA5 With cDefSpa5
+			Replace X1_DEFENG5 With cDefEng5
+		Endif
+
+		Replace X1_HELP With cHelp
+
+		PutSX1Help(cKey,aHelpPor,aHelpEng,aHelpSpa)
+
+		MsUnlock()
+	Else
+
+		lPort := ! "?" $ X1_PERGUNT .And. ! Empty(SX1->X1_PERGUNT)
+		lSpa := ! "?" $ X1_PERSPA .And. ! Empty(SX1->X1_PERSPA)
+		lIngl := ! "?" $ X1_PERENG .And. ! Empty(SX1->X1_PERENG)
+
+		If lPort .Or. lSpa .Or. lIngl
+			RecLock("SX1",.F.)
+			If lPort
+				SX1->X1_PERGUNT:= Alltrim(SX1->X1_PERGUNT)+" ?"
+			EndIf
+			If lSpa
+				SX1->X1_PERSPA := Alltrim(SX1->X1_PERSPA) +" ?"
+			EndIf
+			If lIngl
+				SX1->X1_PERENG := Alltrim(SX1->X1_PERENG) +" ?"
+			EndIf
+			SX1->(MsUnLock())
+		EndIf
+	Endif
+
+	RestArea( aArea )
+
+Return
