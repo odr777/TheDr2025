@@ -1,0 +1,33 @@
+#line 1 "g:/meu drive/protheus/include12\Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\dialog.ch"
+#line 28 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\font.ch"
+#line 29 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\ptmenu.ch"
+#line 31 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\print.ch"
+#line 33 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\colors.ch"
+#line 35 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\folder.ch"
+#line 37 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\msobject.ch"
+#line 38 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\vkey.ch"
+#line 42 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\winapi.ch"
+#line 44 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\fwcommand.ch"
+#line 47 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\fwcss.ch"
+#line 50 "Protheus.ch"
+#line 11 "g:\meu drive\workspace\agro centro\campaña\solicitação\\g:/meu drive/workspace/agro centro/campaña/solicitação/mt110grv.prw"
+Function U_MT110GRV()
+	RecLock("SC1", .F. )
+	SC1->C1_CAMPANA	:= cCampana
+	SC1->C1_CAMPDES	:= cCampdes
+	SC1->C1_CAMPRO	:= cCampro
+	SC1->C1_CAMPROD	:= cCamprod
+	SC1->C1_XCHAPA  := cChapa
+	SC1->(MsUnlock())
+Return

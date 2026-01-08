@@ -1,0 +1,90 @@
+#line 1 "g:/meu drive/protheus/include12\Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\dialog.ch"
+#line 28 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\font.ch"
+#line 29 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\ptmenu.ch"
+#line 31 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\print.ch"
+#line 33 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\colors.ch"
+#line 35 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\folder.ch"
+#line 37 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\msobject.ch"
+#line 38 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\vkey.ch"
+#line 42 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\winapi.ch"
+#line 44 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\fwcommand.ch"
+#line 47 "Protheus.ch"
+#line 1 "g:/meu drive/protheus/include12\fwcss.ch"
+#line 50 "Protheus.ch"
+#line 12 "g:\meu drive\workspace\agro centro\campaña\pedido de compra\\g:/meu drive/workspace/agro centro/campaña/pedido de compra/mt12ate.prw"
+Function U_MT12ATE()
+	Local aArea     := GetArea()
+	Local oDlg      := PARAMIXB[1]
+	Local aPosGet   := PARAMIXB[2]
+	Local nOpcx     := PARAMIXB[4]
+	Local nRecPC    := PARAMIXB[5]
+	Local aDlgFiel	:= PARAMIXB[6]
+	Local lEdit     := IIF(nOpcx == 3 .Or.  nOpcx == 4 .Or.  nOpcx ==  9, .T. , .F. )
+	Local oCampan
+	Local oCampro
+	Public cCampana := ""
+	Public cCampro 	:= ""
+	Public cCampdes := ""
+	Public cCamprod	:= ""
+
+
+	SC7->(DbGoTo(nRecPc))
+	If nOpcx == 3
+		cCampana := CriaVar("C7_CAMPANA", .F. )
+		cCampro  := CriaVar("C7_CAMPRO", .F. )
+	Else
+		If Empty(SC7->C7_NUMSC)
+			cCampana := SC7->C7_CAMPANA
+			cCampro  := SC7->C7_CAMPRO
+		Else
+			cCampana := SC1->C1_CAMPANA
+			cCampro  := SC1->C1_CAMPRO
+		EndIf
+	EndIf
+
+
+
+	 TSay():New( 050, aPosGet[1,1]+793,{||  Alltrim(RetTitle("C7_CAMPANA"))},oDlg,,,.F.,.F.,.F.,.T.,,, 050, 006,.F.,.F.,.F.,.F.,.F.,.F. )
+
+
+
+
+
+
+
+	 oCampan := TGet():New( 049, aPosGet[1,1]+843, { | u | If( PCount() == 0, cCampana, cCampana := u ) },oDlg, 05, 006,,{||  U_CampDes(oDlG,cCampana,"","","")}, 0, 16777215,,.F.,,.T.,,.F.,{||  INCLUI .OR. ALTERA},.F.,.F.,,.F.,.F. ,"ZZK","cCampana",,,, )
+	oCampan:bHelp := {|| ShowHelpCpo( "C7_CAMPANA", {GetHlpSoluc("C7_CAMPANA")[1]}, 5  )}
+	aadd(aDlgFiel,{"C7_CAMPANA","cCampana"})
+
+
+
+	 TSay():New( 064, aPosGet[1,1]+793,{||  Alltrim(RetTitle("C7_CAMPRO"))},oDlg,,,.F.,.F.,.F.,.T.,,, 050, 006,.F.,.F.,.F.,.F.,.F.,.F. )
+
+
+
+
+
+
+
+	 oCampro := TGet():New( 063, aPosGet[1,1]+843, { | u | If( PCount() == 0, cCampro, cCampro := u ) },oDlg, 05, 006,,, 1, 16777215,,.F.,,.T.,,.F.,{||  !Empty(cCampana)},.F.,.F.,,.F.,.F. ,"ZZL","cCampro",,,, )
+	oCampro:bHelp := {|| ShowHelpCpo( "C7_CAMPRO", {GetHlpSoluc("C7_CAMPRO")[1]}, 5  )}
+
+	If !lEdit
+		oCampan:lActive := .F. 
+		oCamdes:lActive := .F. 
+		oCampro:lActive := .F. 
+		oCamprod:lActive := .F. 
+	EndIf
+
+	RestArea(aArea)
+Return

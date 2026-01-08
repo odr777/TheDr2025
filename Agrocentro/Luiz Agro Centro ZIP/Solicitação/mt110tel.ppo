@@ -1,0 +1,105 @@
+#line 1 "g:/meu drive/protheus/include12\PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\dialog.ch"
+#line 28 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\font.ch"
+#line 29 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\ptmenu.ch"
+#line 31 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\print.ch"
+#line 33 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\colors.ch"
+#line 35 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\folder.ch"
+#line 37 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\msobject.ch"
+#line 38 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\vkey.ch"
+#line 42 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\winapi.ch"
+#line 44 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\fwcommand.ch"
+#line 47 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\fwcss.ch"
+#line 50 "PROTHEUS.CH"
+#line 2 "g:\meu drive\workspace\agro centro\campaña\solicitação\\g:/meu drive/workspace/agro centro/campaña/solicitação/mt110tel.prw"
+#line 1 "g:/meu drive/protheus/include12\rwmake.ch"
+#line 1 "g:/meu drive/protheus/include12\stdwin.ch"
+#line 14 "rwmake.ch"
+#line 12 "g:\meu drive\workspace\agro centro\campaña\solicitação\\g:/meu drive/workspace/agro centro/campaña/solicitação/mt110tel.prw"
+Function U_MT110TEL()
+	Local oNewDialog 	:= PARAMIXB[1]
+	Local aPosGet 		:= PARAMIXB[2]
+	Local nOpcx 		:= PARAMIXB[3]
+	Local nPos 	 		:= 64
+	Local aPos			:= Array(8)
+
+	If Alltrim(FunName()) == "MATA110"
+		If nOpcx == 3
+			Public cCampana	 := CriaVar("C1_CAMPANA")
+			Public cCampdes  := CriaVar("C1_CAMPDES")
+			Public cCampro	 := CriaVar("C1_CAMPRO")
+			Public cCamprod	 := CriaVar("C1_CAMPROD")
+			Public cChapa	 := CriaVar("C1_XCHAPA")
+		Else
+			Public cCampana	 := SC1->C1_CAMPANA
+			Public cCampdes	 := SC1->C1_CAMPDES
+			Public cCampro	 := SC1->C1_CAMPRO
+			Public cCamprod	 := SC1->C1_CAMPROD
+			Public cChapa	 := SC1->C1_XCHAPA
+		Endif
+
+		aadd(aPosGet[1],031)
+		aPos[1]	:= 31 ;aPos[2]	:= 108 ;aPos[3]	:= 149 ;aPos[4]	:= 312 ;aPos[5]	:= 421 ;aPos[6]	:= 462 ;aPos[7]	:= 633 ;aPos[8]	:= 674
+
+
+
+		 TSay():New( nPos, aPos[1],{||  FWX3Titulo("C1_CAMPANA")},oNewDialog,,,.F.,.F.,.F.,.T.,,, 40, 9,.F.,.F.,.F.,.F.,.F.,.F. )
+
+
+
+
+
+
+
+		 TGet():New( nPos, aPos[2], { | u | If( PCount() == 0, cCampana, cCampana := u ) },oNewDialog, 40, 9, PesqPict("SC1","C1_CAMPANA"),{||  U_CampDes(oNewDialog,cCampana,"",@cCampdes,"")},,,,.F.,,.T.,,.F.,{||  INCLUI .OR. ALTERA},.F.,.F.,,.F.,.F. ,"ZZK","cCampana",,,, )
+
+
+
+
+
+		 TGet():New( nPos, aPos[3], { | u | If( PCount() == 0, cCampdes, cCampdes := u ) },oNewDialog, 90, 9, PesqPict("SC1","C1_CAMPDES"),,,,,.F.,,.T.,,.F.,{||  .F. },.F.,.F.,,.F.,.F. ,,"cCampdes",,,, )
+
+
+
+		 TSay():New( nPos, aPos[4],{||  FWX3Titulo("C1_CAMPRO")},oNewDialog,,,.F.,.F.,.F.,.T.,,, 40, 9,.F.,.F.,.F.,.F.,.F.,.F. )
+
+
+
+
+
+
+
+
+		 TGet():New( nPos, aPos[5], { | u | If( PCount() == 0, cCampro, cCampro := u ) },oNewDialog, 40, 9, PesqPict("SC1","C1_CAMPRO"),{||  U_CampDes(oNewDialog,cCampana,cCampro,@cCampdes,@cCamprod)},,,,.F.,,.T.,,.F.,{||  INCLUI .OR. ALTERA},.F.,.F.,,.F.,.F. ,"ZZL","cCampro",,,, )
+
+
+
+
+
+
+		 TGet():New( nPos, aPos[6], { | u | If( PCount() == 0, cCamprod, cCamprod := u ) },oNewDialog, 90, 9, PesqPict("SC1","C1_CAMPROD"),,,,,.F.,,.T.,,.F.,{||  .F. },.F.,.F.,,.F.,.F. ,,"cCamprod",,,, )
+
+
+
+
+
+		 TSay():New( nPos, aPos[7],{||  "No. Placa"},oNewDialog,,,.F.,.F.,.F.,.T.,,, 45, 10,.F.,.F.,.F.,.F.,.F.,.F. )
+
+
+
+
+
+		 TGet():New( nPos, aPos[8], { | u | If( PCount() == 0, cChapa, cChapa := u ) },oNewDialog,,, PesqPict("SC1","C1_XCHAPA"),,,,,.F.,,.T.,,.F.,{||  VisualSX3("C1_XCHAPA") .And. CheckSX3("C1_XCHAPA",cChapa)},.F.,.F.,,.F.,.F. ,CpoRetF3("C1_XCHAPA"),"cChapa",,,,.T. )
+
+	EndIf
+Return

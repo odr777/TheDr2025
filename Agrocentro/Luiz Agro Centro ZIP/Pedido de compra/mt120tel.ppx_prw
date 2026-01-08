@@ -1,0 +1,55 @@
+#line 1 "g:/meu drive/protheus/include12\PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\dialog.ch"
+#line 28 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\font.ch"
+#line 29 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\ptmenu.ch"
+#line 31 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\print.ch"
+#line 33 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\colors.ch"
+#line 35 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\folder.ch"
+#line 37 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\msobject.ch"
+#line 38 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\vkey.ch"
+#line 42 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\winapi.ch"
+#line 44 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\fwcommand.ch"
+#line 47 "PROTHEUS.CH"
+#line 1 "g:/meu drive/protheus/include12\fwcss.ch"
+#line 50 "PROTHEUS.CH"
+#line 17 "g:\meu drive\workspace\agro centro\campaña\pedido de compra\\g:/meu drive/workspace/agro centro/campaña/pedido de compra/mt120tel.prw"
+Function U_MT120TEL
+	Local aArea     := GetArea()
+	Local oDlg      := PARAMIXB[1]
+	Local aPosGet   := PARAMIXB[2]
+	Local aObj		:= PARAMIXB[3]
+	Local nOpcx     := PARAMIXB[4]
+	Local nRecPC    := PARAMIXB[5]
+	Local aDlgFiel	:= PARAMIXB[6]
+	Local lMT12ATE	:= ExistBlock("MT12ATE" )
+
+
+	If nOpcx == 2 .OR.  nOpcx == 4
+
+	Else
+		nTxMoeda := 1
+	Endif
+
+
+
+
+
+
+
+
+	If lMT12ATE
+		ExecBlock("MT12ATE", .F. , .F. ,{@oDlg, aPosGet, aObj, nOpcx, nRecPC, @aDlgFiel} )
+	EndIf
+
+
+	RestArea(aArea)
+Return
