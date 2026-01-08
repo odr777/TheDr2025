@@ -1,0 +1,540 @@
+#include "SIGAWIN.CH"        // incluido pelo assistente de conversao do AP5 IDE em 09/09/99
+#include "FINR899.CH"
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³FINR899   ºAutor  ³Bruno Sobieski      º Data ³  21/12/98   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³ Relacao dos Recibos por cliente                            º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ Generico                                                   º±±
+±±ÀÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+User Function FINREFEC()        // incluido pelo assistente de conversao do AP5 IDE em 09/09/99
+	Local oReport
+
+	oReport	:= ReportDef()
+	oReport:PrintDialog()
+
+	If Select("TRB") > 0
+		DbSelectArea("TRB")
+		DbCloseArea()
+	EndIf
+
+Return
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³ReportDef ºAutor  ³Paulo Augusto       º Data ³  21/07/06   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³ Tratamanto release 04                                      º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ Generico                                                   º±±
+±±ÀÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+
+Static Function ReportDef()
+
+	Local oReport,oSection2,oSection3,oSection4
+	Local cReport := "FINREFEC"
+	Local cDescri := STR0001 + STR0002
+	Private cPerg		:= "FINREFEC"
+
+	CriaSX1(cPerg)
+
+	oReport  := TReport():New( cReport, STR0009, cPerg , { |oReport| ReportPrint( oReport, "SEL" ) }, cDescri )
+
+	oSection2 := TRSection():New( oReport,"Datos de recibos en efectivo", {"SEL"} )
+	TRCell():New( oSection2, "NOME"		,"","Razon social"/*X3Titulo*/	,/*Picture*/,50/*Tamanho*/,/*lPixel*/,,"LEFT",,"LEFT")
+	TRCell():New( oSection2, "EL_RECIBO"	,"SEL",/*X3Titulo*/	,/*Picture*/,TamSX3("EL_RECIBO")[1]/*Tamanho*/,/*lPixel*/,,"LEFT",,"LEFT")
+	TRCell():New( oSection2, "EL_DTDIGIT" 	,"SEL",/*X3Titulo*/	,/*Picture*/,10/*Tamanho*/,/*lPixel*/,,"LEFT",,"LEFT")
+	TRCell():New( oSection2, "EL_EMISSAO" 	,"SEL",/*X3Titulo*/	,/*Picture*/,10/*Tamanho*/,/*lPixel*/,,"LEFT",,"LEFT")
+	TRCell():New( oSection2, "NVALBX","",OemToAnsi(STR0047)/*X3Titulo*/		,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,,"LEFT",,"LEFT")
+
+Return oReport
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³ReportPrintºAutor  ³Paulo Augusto       º Data ³  21/07/06   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³Rotina de impressao                                          º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ SIGAFIN                                                     º±±
+±±ÈÍÍÍÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+
+Static Function ReportPrint( oReport )
+	Local oSection2 := oReport:Section(1)
+	Local oBreak
+	Local lConvert := .F.
+	Local cCLIENTE:= ""
+	Local nDecs :=2
+	Local nRetGral 	:= 0
+	Local nTotBajado:= 0
+	Local nTotDesc 	:= 0
+	Local nTotComp	:=	0
+	Local nPrGral	:= 0
+	Local nDepGral	:= 0
+	Local nTotAnt	:= 0
+	Local nTotChDia	:= 0
+	Local nTotChAde	:= 0
+	Local nTotDin	:= 0
+	Local nTotCC	:= 0
+	Local nOrdenes := 0
+	Local lPrim:=.t.
+	Local cDescCli :=""
+	Local nRecOld, nRecNew
+	Local cFilterUser := ""
+	Local cVersao 	:= ""
+	Local cVerDe	:= ""
+	Local cVerAte	:= ""
+	Local dDtIni	:= dDataBase
+	Local dDtFim	:= dDataBase
+	Local nMoeInf	:= 1
+	Local cSerDe	:= ""
+	Local cSerAte	:= ""
+	Local nOutMoe	:= 0
+	Local cAliasTmp	:= GetNextAlias()
+	Local dEmissao
+
+	If !Empty(oReport:uParam)
+		Pergunte(oReport:uParam,.F.)
+	EndIf
+
+	cVerDe   := MV_PAR06
+	cVerAte  := MV_PAR07
+	dDtIni   := Iif(cPaisLoc == "ARG",MV_PAR08,MV_PAR06)
+	dDtFim   := Iif(cPaisLoc == "ARG",MV_PAR09,MV_PAR07)
+	nMoeInf  := Iif(cPaisLoc == "ARG",MV_PAR10,MV_PAR08)
+	cSerDe   := Iif(cPaisLoc == "ARG",MV_PAR11,MV_PAR09)
+	cSerAte  := Iif(cPaisLoc == "ARG",MV_PAR12,MV_PAR10)
+	nOutMoe  := Iif(cPaisLoc == "ARG",MV_PAR13,MV_PAR11)
+	dDtIniEmi   := Iif(cPaisLoc == "ARG",MV_PAR08,MV_PAR12)
+	dDtFimEmi   := Iif(cPaisLoc == "ARG",MV_PAR09,MV_PAR13)
+
+	lConvert := ( nOutMoe == 1 )
+
+	oReport:SetTitle( oReport:Title() +;
+	If(Mv_Par01==1,STR0010,If(mv_par01==2,STR0011,If(mv_par01==3,STR0012,STR0036))) +;
+	STR0039 + GetMv("MV_MOEDA"+alltrim(STR(nMoeInf))) )	// " - Por Cliente")
+
+	Do Case
+		Case Mv_Par01	==	1
+
+		cKey   := "EL_FILIAL+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+		cOrdem := "EL_SERIE+EL_RECIBO"
+
+		nCount := Val(mv_par05)-Val(mv_par04)
+		Case mv_par01 	==	2
+
+		cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+		cOrdem := "EL_CLIORIG+EL_LOJORIG"
+
+		nCount := Val(mv_par03)-Val(mv_par02)
+		Case mv_par01 	==	3
+
+		cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+		cOrdem := "EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO"
+
+		nCount := Val(mv_par05)-Val(mv_par04)
+		Case Mv_Par01	==	4
+
+		cKey   := "EL_FILIAL+EL_DTDIGIT+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+		cOrdem := "EL_SERIE+EL_RECIBO"
+
+		nCount := Val(mv_par05)-Val(mv_par04)
+	ENDCASE
+
+	cCondicao	:= 	"  EL_CLIORIG >= '"+mv_par02+"' AND EL_CLIORIG <= '"+mv_par03+"'"
+	cCondicao	+=	" AND EL_RECIBO >= '"+mv_par04+"' AND EL_RECIBO <= '"+mv_par05+"'"
+	cCondicao	+=	" AND EL_SERIE >= '"+cSerDe+"' AND EL_SERIE <= '"+cSerAte+"'"
+	cCondicao	+=	" AND EL_DTDIGIT >= '"+DTOS(dDtIni)+"' AND EL_DTDIGIT <= '"+DTOS(dDtFim)+"' AND EL_FILIAL= '"+xFilial("SEL")+"'"
+	/////aumentado para Diego ML
+	cCondicao	+=	" AND EL_EMISSAO >= '"+DTOS(dDtIniEmi)+"' AND EL_EMISSAO <= '"+DTOS(dDtFimEmi)+"' "
+	cCondicao	+=	" AND EL_BANCO >= '"+MV_PAR14+"' AND EL_BANCO <= '"+MV_PAR15+"'  "
+	cCondicao	+=	" AND EL_COBRAD >= '"+MV_PAR16+"' AND EL_COBRAD <= '"+MV_PAR17+"' AND EL_TIPODOC = 'EF' "
+
+	If !lConvert
+		cCondicao += " AND  ( EL_MOEDA == '"+Alltrim(Str(nMoeInf))+"'"
+		If ( Len( Alltrim(Str(nMoeInf)) ) = 1   )
+			cCondicao += " OR EL_MOEDA == '0"+Alltrim(Str(nMoeInf))+"'"
+			cCondicao += " OR EL_MOEDA == '"+Alltrim(Str(nMoeInf))+"'"
+			cCondicao += " OR EL_MOEDA == '"+Alltrim(Str(nMoeInf))+"'"
+		Endif
+		cCondicao += ')'
+	Endif
+
+	//Cria a tabela temporária
+	F899TMP(cAliasTmp, cKey, cCondicao)
+
+	oReport:SetMeter(Reccount())
+
+	If mv_par01==3
+
+		oBreak:= TRBreak():New(oSection2,{||.T.},OemToAnsi(STR0016))
+
+		TRFunction():New(oSection2:Cell("NVALBX")	, , "SUM" ,oBreak , , , ,.f. ,.F. )
+
+		/*TRFunction():New(oSection2:Cell("NVALDN")	, , "SUM" ,oBreak , , , , .f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALDEP")	, , "SUM" , oBreak, , , ,.f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALRA")	, , "SUM" ,oBreak, , , ,.f. ,.F. )
+		If cPaisLoc <> "BRA"
+		TRFunction():New(oSection2:Cell("NVALRET")	, , "SUM" ,oBreak , , , ,.f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALNCC"), , "SUM" ,oBreak , , , , .f. ,.F. )
+		EndIf
+		TRFunction():New(oSection2:Cell("NVALDEP")	, , "SUM" ,oBreak, , , ,.f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALCOMP"), , "SUM" ,oBreak, , , ,.f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALDESC"), , "SUM" ,oBreak, , , ,.f. ,.F. )*/
+		//TRFunction():New(oABCOrdem2:Cell("AF3_CUSTD"),"NCUSTOTSK" ,"SUM",oBreak2,/*cTitle*/,/*cPicture*/,/*uFormula*/,.F./*lEndSection*/,.F./*lEndReport*/,.F./*lEndPage*/)
+	EndIf
+
+	//oReport:EndReport(.F.)
+
+	dbSelectArea(cAliasTmp)
+
+	While  (cAliasTmp)->(!Eof())
+
+		If (cAliasTmp)->EL_CANCEL == 'T'
+			(cAliasTmp)->(DbSkip())
+			Loop
+		Endif
+
+		If mv_par01==3
+			If (Substr((cAliasTmp)->EL_TIPODOC,1,2) == "TJ")
+				(cAliasTmp)->(DbSkip())
+				Loop
+			EndIf
+		EndIf
+
+		cOrdAnt	:=	&cOrdem
+		cRecibo	:=	(cAliasTmp)->EL_RECIBO
+		cSerie  :=  (cAliasTmp)->EL_SERIE
+		dAntDtDigit	:=	(cAliasTmp)->EL_DTDIGIT
+		SA1->(DbSetOrder(1))
+		SA1->(DbSeek(xFilial("SA1") + (cAliasTmp)->EL_CLIORIG + (cAliasTmp)->EL_LOJORIG ))
+		If MV_PAR01==3
+			lPrim	:=	Iif(cCLIENTE == (cAliasTmp)->EL_CLIORIG +"-"+ (cAliasTmp)->EL_LOJORIG,.F.,.T.)
+		EndIf
+
+		cCLIENTE	:= (cAliasTmp)->EL_CLIORIG +"-"+ (cAliasTmp)->EL_LOJORIG
+		cNomeClie	:=	GetLGPDValue('SA1','A1_NOME')
+		nValBaj	:=	0.00
+		nValDesc	:=	0.00
+		nValRa 	:=	0.00
+		nValRet	:=	0.00
+		nValDep	:=	0.00
+		nValPr	:=	0.00
+		nValPaNc	:=	0.00
+		nCheqd	:= 0.00
+		nChead	:= 0.00
+		nDin		:= 0.00
+		nCC 		:= 0.00
+
+		If 	lPrim
+			lPrim	:=	.F.
+			oSection2:Init()
+		EndIf
+		dbSelectArea(cAliasTmp)
+		nRecOld := (cAliasTmp)->(Recno())
+
+		While cOrdAnt == &cOrdem .And. (cAliasTmp)->(!Eof())
+
+			If ( Substr((cAliasTmp)->EL_TIPODOC,1,2) $ "RG|RI|RB|RS|RM")
+				nValRet  := nValRet  +  Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+			Elseif	(Substr((cAliasTmp)->EL_TIPODOC,1,2) == "TB")
+				If !((cAliasTmp)->EL_TIPO $ MV_CRNEG+"|"+MVRECANT)  //Tratamento para NCCs e RAs
+					nValBaj  := nValBaj  +  Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+					nValDesc := nValDesc +  Round(xMoeda((cAliasTmp)->EL_DESCONT,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR),nDecs)
+				Else
+					nValPaNc := nValPaNc +  Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+					nValDesc := nValDesc -  Round(xMoeda((cAliasTmp)->EL_DESCONT,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR),nDecs)
+				EndIf
+			Elseif	(Substr((cAliasTmp)->EL_TIPODOC,1,2) == "TF")
+				nValDep  := nValDep  +  Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+			Elseif	(Substr((cAliasTmp)->EL_TIPODOC,1,2) == "TJ")
+				nCC      := nCC      +  Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+			Elseif	(Substr((cAliasTmp)->EL_TIPODOC,1,2) $ "CH|EF")
+				nValPr   := nValPr   +  Round( IIf( nMoeInf==1, (cAliasTmp)->EL_VLMOED1, xMoeda( (cAliasTmp)->EL_VALOR, Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+				If Substr((cAliasTmp)->EL_TIPODOC,1,2) == "CH"
+					If (cAliasTmp)->EL_EMISSAO < (cAliasTmp)->EL_DTVCTO
+						nChead:= nChead + Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+					Else
+						nCheqd:= nCheqd + Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+					Endif
+				Else
+					nDin:= nDin + Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+				Endif
+			Elseif	(Substr((cAliasTmp)->EL_TIPODOC,1,2) == "RA")
+				nValRa   := nValRa   +  Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+			ElseIf ((cAliasTmp)->EL_TIPODOC$(GetSESTipos({|| ES_RCOPGER == "2"},"1")))
+				nValPr   := nValPr   +  Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+				nDin:= nDin + Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+			ElseIf  ((cAliasTmp)->EL_TIPODOC$(GetSESTipos({|| ES_RCOPGER == "1"},"1")))
+				nValPr   := nValPr   +  Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+				nChead:= nChead + Round(IIf(nMoeInf==1,(cAliasTmp)->EL_VLMOED1,xMoeda((cAliasTmp)->EL_VALOR,Max(Val((cAliasTmp)->EL_MOEDA),1),nMoeInf,(cAliasTmp)->EL_DTDIGIT,nDecs+1,(cAliasTmp)->EL_VLMOED1/(cAliasTmp)->EL_VALOR)),nDecs)
+			EndIf
+
+			If(Substr((cAliasTmp)->EL_TIPODOC,1,2) $ "CC|CH|TF|EF|CD")
+				dEmissao := (cAliasTmp)->EL_EMISSAO
+			EndIf
+			(cAliasTmp)->(DbSkip())
+
+			nRecNew := (cAliasTmp)->(Recno())
+
+		EndDo
+		dbSelectArea(cAliasTmp)
+
+		(cAliasTmp)->(dbGoTo(nRecOld))
+
+		If mv_par01 == 1 .Or. mv_par01 == 4
+			//oSection2:Cell("CODIGO"):Disable()
+			//oSection2:Cell("LOJA"):Disable()
+			oSection2:Cell("EL_RECIBO"):SetBlock({||IIf(Empty(cSerie),"    ",cSerie+"-")+cRecibo})	///Tipo
+
+			cDescCli:= Alltrim(cCLIENTE+" "+Substr(cNomeClie,1,40))
+			oSection2:Cell("NOME"):SetBlock({||cDescCli})	//Ag
+			oSection2:Cell("EL_DTDIGIT"):SetBlock({||STOD(dAntDtDigit)})	//Ag
+		Elseif mv_par01==2
+			//oSection2:Cell("CODIGO"):Disable()
+			//oSection2:Cell("LOJA"):Disable()
+			oSection2:Cell("EL_RECIBO"):Disable()
+
+			oSection2:Cell("EL_DTDIGIT"):Disable()
+			cDescCli:= Alltrim(cCLIENTE+" "+Substr(cNomeClie,1,40))
+			oSection2:Cell("NOME"):SetBlock({||cDescCli})	//Ag
+		Else
+			//oSection2:Cell("CODIGO"):Disable()
+			//oSection2:Cell("LOJA"):Disable()
+			oSection2:Cell("NOME"):Disable()
+			oSection2:Cell("EL_RECIBO"):SetBlock({||IIf(Empty(cSerie),"    ",cSerie+"-")+cRecibo})	///Tipo
+
+			oSection2:Cell("EL_DTDIGIT"):SetBlock({||STOD(dAntDtDigit)})	//Ag
+
+		Endif
+
+		oSection2:Cell("NVALBX"):SetBlock({||nValPr})	///Tipo
+
+		oSection2:Cell("EL_EMISSAO"):SetBlock({||STOD(dEmissao)})	//Emissao
+
+		oSection2:PrintLine()
+
+		nRetGral 	:= nRetGral 	+ 	nValRet
+		nTotBajado	:= nTotBajado	+	nValBaj
+		nTotDesc   	:= nTotDesc   +	nValDesc
+		nTotComp		:=	nTotComp	+	nValPaNc
+		nPrGral		:= nPrGral + nValPr
+		nDepGral	:= nDepGral +	nValDep
+		nTotAnt		:= nTotAnt + nValRa
+		nTotChDia	:= nTotChDia + nCheqd
+		nTotChAde	:= nTotChAde + nChead
+		nTotDin		:= nTotdin + nDin
+		nTotCC		:= nTotCC + nCC
+		dbSelectArea(cAliasTmp)		// voltar para alias existente, se nao, nao funciona
+		nOrdenes    := nOrdenes + 1
+		If(cCLIENTE <> (cAliasTmp)->EL_CLIORIG +"-"+ (cAliasTmp)->EL_LOJORIG) .And. Mv_Par01==3
+			oSection2 :Finish()
+		EndIf
+
+		(cAliasTmp)->(dbGoTo(nRecNew))
+	Enddo
+	
+	If nOrdenes > 0
+		//Imprimir Totales
+		oReport:SkipLine()
+		
+		//nTotNetoGral	:=	nTotBajado - nRetGral - nTotComp + nTotAnt
+		If (mv_par01<>2)
+			oReport:PrintText(OemToAnsi(STR0017) + TransForm(nOrdenes,"@R 999,999"))  //"Recibos emitidos  -> "
+		Endif
+
+		oSection2:Cell("NOME"):SetBlock({||""})
+		oSection2:Cell("EL_RECIBO"):SetBlock({||""})		
+		oSection2:Cell("EL_DTDIGIT"):SetBlock({||"Total efectivo"})
+		oSection2:Cell("EL_EMISSAO"):SetBlock({||""})
+		oSection2:Cell("NVALBX"):SetBlock({|| nTotDin }) //PesqPict("SEL","EL_VALOR")
+		oSection2:PrintLine()
+
+		If Mv_Par01<>3 .and. !lPrim
+			oSection2 :Finish()
+		EndIf
+	Endif
+
+	(cAliasTmp)->(DbCloseArea())
+
+	Return
+
+	//-------------------------------------------------------------------------------------------------------------
+	/*/{Protheus.doc} F899TMP
+	Monta tabela temporário para o relatório
+	@type  Static Function
+	@author Renato.ito
+	@since 20/02/2020
+	@param cAliasTmp, Character, tabela temporária
+	@param cOrder, Character, ordenação para query
+	@param cCondicao, Character, filtro para query
+	/*/
+	//-------------------------------------------------------------------------------------------------------------
+	Static Function F899TMP(cAliasTmp As Character, cOrder As Character, cCondicao As Character)
+
+	cCondicao	:= "%" + cCondicao + "%"
+	cOrder		:= "%" + StrTran(cOrder, "+" , ",") + "%"
+
+	BeginSql Alias cAliasTmp
+
+		SELECT
+		EL_FILIAL,
+		EL_SERIE,
+		EL_RECIBO,
+		EL_VERSAO,
+		EL_TIPODOC,
+		EL_CLIORIG,
+		EL_LOJORIG,
+		EL_MOEDA,
+		EL_TIPO,
+		EL_VALOR,
+		EL_VLMOED1,
+		EL_DESCONT,
+		EL_CANCEL,
+		EL_EMISSAO,
+		EL_DTVCTO,
+		EL_DTDIGIT,
+		R_E_C_N_O_ RECNO
+		FROM
+		%table:SEL% SEL
+		WHERE
+		SEL.%notDel% AND
+		%exp:cCondicao%
+		ORDER BY
+		%exp:cOrder%
+	EndSql
+
+Return
+
+Static Function CriaSX1(cPerg)  // Crear Preguntas
+	Local aRegs		:= {}
+	Local aHelp 	:= {}
+	Local aHelpE 	:= {}
+	Local aHelpI 	:= {}
+	Local cHelp		:= ""
+
+	xPutSX1(cPerg,"01","Imprimir por?" , "Imprimir por?" ,"Imprimir por?" ,"MV_CH01","N",1,0,0,"C","","","","","mv_par01","Recibo","Recibo","Recibo","","Cliente(Sin.)","Cliente(Sin.)","Cliente(Sin.)","Cliente(Det.)","Cliente(Det.)","Cliente(Det.)")
+	xPutSx1(cPerg,"02","De cliente ?","De cliente ?","De cliente ?","mv_ch2","C",6,0,0,"G","","CLI","","","mv_par02",""       ,""            ,""        ,""     ,"","")
+	xPutSx1(cPerg,"03","A cliente ?","A cliente ?","A cliente ?","mv_ch2","C",6,0,0,"G","","CLI","","","mv_par03",""       ,""            ,""        ,""     ,"","")
+	xPutSx1(cPerg,"04","De Recibo ?","De Recibo ?","De Recibo ?","mv_ch2","C",6,0,0,"G","","CLI","","","mv_par04",""       ,""            ,""        ,""     ,"","")
+	xPutSx1(cPerg,"05","A Recibo ?","A Recibo ?","A Recibo ?","mv_ch2","C",6,0,0,"G","","CLI","","","mv_par05",""       ,""            ,""        ,""     ,"","")
+	xPutSx1(cPerg,"06","De fecha digitacion ?","De fecha digitacion ?","De fecha digitacion ?",         "mv_ch4","D",08,0,0,"G","","","","","mv_par06",""       ,""            ,""        ,""     ,"","")
+	xPutSx1(cPerg,"07","A fecha digitacion ?","A fecha digitacion ?","A fecha digitacion ?",         "mv_ch4","D",08,0,0,"G","","","","","mv_par07",""       ,""            ,""        ,""     ,"","")
+	xPutSX1(cPerg,"08","Cual moneda ?" , "Cual moneda ?" ,"Cual moneda ?" ,"MV_CH01","N",1,0,0,"C","","","","","mv_par08","Moneda 1","Moneda 1","Moneda 1","","Moneda 2","Moneda 2","Moneda 2","Moneda 3","Moneda 3","Moneda 3","Moneda 4","Moneda 4","Moneda 4","Moneda 5","Moneda 5","Moneda 5")
+	xPutSx1(cPerg,"09","De serie ?","De serie ?","De serie ?",         "mv_ch7","C",3,0,0,"G","","RN","","","mv_par09",""       ,""            ,""        ,""     ,"","")
+	xPutSx1(cPerg,"10","A serie ?","A serie ?","A serie ?",         "mv_ch8","C",3,0,0,"G","","RN","","","mv_par10",""       ,""            ,""        ,""     ,"","")
+	xPutSX1(cPerg,"11","Otras monedas?" , "Imprimir por?" ,"Imprimir por?" ,"MV_CH01","N",1,0,0,"C","","","","","mv_par11","Convertir","Convertir","Convertir","","No imprimir","No imprimir","No imprimir")
+	xPutSx1(cPerg,"12","Fecha emision ?","Fecha emision ?","Fecha emision ?",         "mv_ch4","D",08,0,0,"G","","","","","mv_par12",""       ,""            ,""        ,""     ,"","")
+	xPutSx1(cPerg,"13","A Fecha emision ?","A Fecha emision ?","A Fecha emision ?",         "mv_ch4","D",08,0,0,"G","","","","","mv_par13",""       ,""            ,""        ,""     ,"","")
+	xPutSx1(cPerg,"14","¿De Banco?" 	, "¿De Banco?"   ,"¿De Banco?"	 ,"MV_CH5","C",3 ,0,0,"G","","A62"	,""	,""	,"MV_PAR14",""       ,""            ,""        ,""     ,,"")
+	xPutSx1(cPerg,"15","A Banco?" 	, "A Banco?"   ,"A Banco?"	 ,"MV_CH6","C",3 ,0,0,"G","","A62"	,""	,""	,"MV_PAR15",""       ,""            ,""        ,""     ,,"")
+	
+return
+
+Static Function xPutSx1(cGrupo,cOrdem,cPergunt,cPerSpa,cPerEng,cVar,;
+	cTipo ,nTamanho,nDecimal,nPresel,cGSC,cValid,;
+	cF3, cGrpSxg,cPyme,;
+	cVar01,cDef01,cDefSpa1,cDefEng1,cCnt01,;
+	cDef02,cDefSpa2,cDefEng2,;
+	cDef03,cDefSpa3,cDefEng3,;
+	cDef04,cDefSpa4,cDefEng4,;
+	cDef05,cDefSpa5,cDefEng5,;
+	aHelpPor,aHelpEng,aHelpSpa,cHelp)
+	LOCAL aArea := GetArea()
+	Local cKey
+	Local lPort := .f.
+	Local lSpa := .f.
+	Local lIngl := .f.
+	cKey := "P." + AllTrim( cGrupo ) + AllTrim( cOrdem ) + "."
+	cPyme    := Iif( cPyme           == Nil, " ", cPyme          )
+	cF3      := Iif( cF3           == NIl, " ", cF3          )
+	cGrpSxg := Iif( cGrpSxg     == Nil, " ", cGrpSxg     )
+	cCnt01   := Iif( cCnt01          == Nil, "" , cCnt01      )
+	cHelp      := Iif( cHelp          == Nil, "" , cHelp          )
+	dbSelectArea( "SX1" )
+	dbSetOrder( 1 )
+	// Ajusta o tamanho do grupo. Ajuste emergencial para validação dos fontes.
+	// RFC - 15/03/2007
+	cGrupo := PadR( cGrupo , Len( SX1->X1_GRUPO ) , " " )
+	If !( DbSeek( cGrupo + cOrdem ))
+		cPergunt:= If(! "?" $ cPergunt .And. ! Empty(cPergunt),Alltrim(cPergunt)+" ?",cPergunt)
+		cPerSpa     := If(! "?" $ cPerSpa .And. ! Empty(cPerSpa) ,Alltrim(cPerSpa) +" ?",cPerSpa)
+		cPerEng     := If(! "?" $ cPerEng .And. ! Empty(cPerEng) ,Alltrim(cPerEng) +" ?",cPerEng)
+		Reclock( "SX1" , .T. )
+		Replace X1_GRUPO   With cGrupo
+		Replace X1_ORDEM   With cOrdem
+		Replace X1_PERGUNT With cPergunt
+		Replace X1_PERSPA With cPerSpa
+		Replace X1_PERENG With cPerEng
+		Replace X1_VARIAVL With cVar
+		Replace X1_TIPO    With cTipo
+		Replace X1_TAMANHO With nTamanho
+		Replace X1_DECIMAL With nDecimal
+		Replace X1_PRESEL With nPresel
+		Replace X1_GSC     With cGSC
+		Replace X1_VALID   With cValid
+		Replace X1_VAR01   With cVar01
+		Replace X1_F3      With cF3
+		Replace X1_GRPSXG With cGrpSxg
+		If Fieldpos("X1_PYME") > 0
+			If cPyme != Nil
+				Replace X1_PYME With cPyme
+			Endif
+		Endif
+		Replace X1_CNT01   With cCnt01
+		If cGSC == "C"               // Mult Escolha
+			Replace X1_DEF01   With cDef01
+			Replace X1_DEFSPA1 With cDefSpa1
+			Replace X1_DEFENG1 With cDefEng1
+			Replace X1_DEF02   With cDef02
+			Replace X1_DEFSPA2 With cDefSpa2
+			Replace X1_DEFENG2 With cDefEng2
+			Replace X1_DEF03   With cDef03
+			Replace X1_DEFSPA3 With cDefSpa3
+			Replace X1_DEFENG3 With cDefEng3
+			Replace X1_DEF04   With cDef04
+			Replace X1_DEFSPA4 With cDefSpa4
+			Replace X1_DEFENG4 With cDefEng4
+			Replace X1_DEF05   With cDef05
+			Replace X1_DEFSPA5 With cDefSpa5
+			Replace X1_DEFENG5 With cDefEng5
+		Endif
+		Replace X1_HELP With cHelp
+		PutSX1Help(cKey,aHelpPor,aHelpEng,aHelpSpa)
+		MsUnlock()
+	Else
+		lPort := ! "?" $ X1_PERGUNT .And. ! Empty(SX1->X1_PERGUNT)
+		lSpa := ! "?" $ X1_PERSPA .And. ! Empty(SX1->X1_PERSPA)
+		lIngl := ! "?" $ X1_PERENG .And. ! Empty(SX1->X1_PERENG)
+		If lPort .Or. lSpa .Or. lIngl
+			RecLock("SX1",.F.)
+			If lPort
+				SX1->X1_PERGUNT:= Alltrim(SX1->X1_PERGUNT)+" ?"
+			EndIf
+			If lSpa
+				SX1->X1_PERSPA := Alltrim(SX1->X1_PERSPA) +" ?"
+			EndIf
+			If lIngl
+				SX1->X1_PERENG := Alltrim(SX1->X1_PERENG) +" ?"
+			EndIf
+			SX1->(MsUnLock())
+		EndIf
+	Endif
+	RestArea( aArea )
+Return
