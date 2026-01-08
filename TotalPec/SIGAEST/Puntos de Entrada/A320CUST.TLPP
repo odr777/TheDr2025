@@ -1,0 +1,56 @@
+#Include 'Protheus.ch'
+
+/*/{Protheus.doc} A320CUST
+Actualización de los precios de la Compra Anticipada.
+@type function
+@version 1.0 
+@author jfbravo
+@since 5/23/2025
+/*/
+
+User Function A320CUST()
+Local cCodProd:= ParamIXB[1] // Codigo do Produto
+//Local nCusto := ParamIXB[2] // Valor do novo custo gravado// Customizacoes do Usuario
+Local cProc := ParamIXB[3] // Define qual processamento sera realizado de acordo com a funcao
+
+If cProc == "MA320LCust"
+
+    //ULTIMA COMPRA
+    cNextAlias := GetNextAlias()
+    BeginSQL Alias cNextAlias
+        SELECT SUM(D1_CUSTO2) / SUM(D1_QUANT) AS ULTIMA_COMPRA_ACTUAL
+            FROM SD1010 
+                WHERE D1_SERIE = 'CPR'
+                AND D1_EMISSAO >= (SELECT MAX(D1_EMISSAO) AS ULT_COMPRA_ACT FROM SD1010 WHERE D1_SERIE = 'CPR' AND D1_TIPODOC = '10' AND D1_TIPO = 'N' AND D1_COD = %Exp:cCodProd% AND %NotDel%) 
+                AND D1_COD = %Exp:cCodProd%
+                AND %NotDel%
+    EndSQL
+
+    If (cNextAlias)->ULTIMA_COMPRA_ACTUAL > 1
+        RECLOCK("SB1", .F.)
+        SB1->B1_PRV1 := (cNextAlias)->ULTIMA_COMPRA_ACTUAL
+        MSUNLOCK()          
+    EndIf
+
+    //ULTIMA COMPRA ANTERIOR
+    cNextAlias := GetNextAlias()
+    BeginSQL Alias cNextAlias
+        SELECT SUM(D1_CUSTO2) / SUM(D1_QUANT) AS ULTIMA_COMPRA_ANTERIOR
+            FROM SD1010 
+                WHERE D1_SERIE = 'CPR' 
+                AND D1_EMISSAO >= (SELECT MAX(D1_EMISSAO) AS ULT_COMPRA_ANT FROM SD1010 WHERE D1_SERIE = 'CPR' AND D1_TIPODOC = '10' AND D1_TIPO = 'N' AND D1_EMISSAO < (SELECT MAX(D1_EMISSAO) AS ULT_COMPRA_ACT FROM SD1010 WHERE D1_SERIE = 'CPR' AND D1_TIPODOC = '10' AND D1_TIPO = 'N' AND D1_COD = %Exp:cCodProd% AND %NotDel%) AND D1_COD = %Exp:cCodProd% AND %NotDel%) 
+                AND D1_EMISSAO < (SELECT MAX(D1_EMISSAO) AS ULT_COMPRA_ACT FROM SD1010 WHERE D1_SERIE = 'CPR' AND D1_TIPODOC = '10' AND D1_TIPO = 'N' AND D1_COD = %Exp:cCodProd% AND %NotDel%)
+                AND D1_COD = %Exp:cCodProd% 
+                AND %NotDel%
+
+    EndSQL
+
+    If (cNextAlias)->ULTIMA_COMPRA_ANTERIOR > 1
+        RECLOCK("SB1", .F.)
+        SB1->B1_XPRV1UP := (cNextAlias)->ULTIMA_COMPRA_ANTERIOR
+        MSUNLOCK()          
+    EndIf
+
+EndIf
+
+Return Nil
