@@ -1,0 +1,771 @@
+#INCLUDE "PROTHEUS.CH"
+#INCLUDE "GPER680.CH"
+#INCLUDE "FIVEWIN.CH"
+#INCLUDE "REPORT.CH"
+
+/*/
+‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±⁄ƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒø±±
+±±≥FunáÖo    ≥ GPER680  ≥ Autor ≥ Gisele Varandas               ≥ Data ≥ 17/12/2007 ≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥DescriáÖo ≥ Relatorio de Saldos e Salarios                                       ≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥Sintaxe   ≥ GPER680()                                                            ≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥ Uso      ≥ Especifico                                                           ≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥         ATUALIZACOES SOFRIDAS DESDE A CONSTRUÄAO INICIAL.                       ≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥Programador ≥ Data     ≥ Nr. FNC      ≥  Motivo da Alteracao                     ≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥Kelly       ≥28/06/2008≥148920        ≥Ajuste no grupo de perguntas.             ≥±±
+±±≥Leandro Dr. ≥07/08/2008≥149954        ≥Ajuste na desc. do metodo TMSPrinter      ≥±±
+±±≥Luciana     ≥24/08/2009≥020801/2009   ≥Ajuste na ordem  de impressao do relatorio≥±±
+±±≥            ≥          ≥              ≥que estava invertida.                     ≥±±
+±±≥Luciana     ≥03/09/2009≥022057/2009   ≥Ajuste para exibir corretamente o total de≥±±
+±±≥            ≥          ≥              ≥paginas geradas no relatorio.             ≥±±
+±±≥Luciana     ≥18/01/2010≥030345/2010   ≥Inclusao do campo RG no lugar do CPF se o ≥±±
+±±≥            ≥          ≥              ≥Pais for Bolivia.                         ≥±±
+±±≥Luciana     ≥26/01/2010≥001620/2010   ≥Inclusao dos parenteses na variavel       ≥±±
+±±≥            ≥          ≥              ≥cPeriodo da query utilizada para contagem ≥±±
+±±≥            ≥          ≥              ≥dos funcionarios a serem exibidos no      ≥±±
+±±≥            ≥          ≥              ≥relatorio.                                ≥±±
+±±≥L.Trombini  ≥05/08/2011≥000016819/2011≥Ajuste no lay out do relatorio devido mu- ≥±±
+±±≥            ≥          ≥              ≥danÁa na LegislaÁ„o do Pais - Bolivia     ≥±±
+±±≥Leandro Dr. ≥28/01/2012≥000002306/2012≥Ajuste para imprimir corretamente os itens≥±±
+±±≥            ≥          ≥        TEKVGJ≥K e J.                                    ≥±±
+±±≥Claudinei S.≥08/02/2012≥000003178/2012≥Ajuste funcoes Fimprime e Frodape para nao≥±±
+±±≥            ≥          ≥        TEMN66≥estourar quando o valor for de milhoes.   ≥±±
+±±≥Claudinei S.≥03/12/2012≥000022502/2012≥Ajustes nos campos,Dias uteis pagos no mes≥±±
+±±≥            ≥          ≥        TFRXQI≥e Horas/Dias pagadas, letras das colunas  ≥±±
+±±≥            ≥          ≥              ≥Aporte Sindical e Total Dctos.            ≥±±
+±±≥M. Silveira ≥07/12/2012≥000028612/2012≥Disponibilizado em formato personalizavel ≥±±
+±±≥            ≥          ≥        TGBVQW≥(TReport) p/ permitir exportacao p/ Excel.≥±±
+±±|M. Silveira |05/02/2013|        TGJWB9|Ajustes para retirar os controles SetPrint|±±
+±±|            |          |              |nao imprimir folha vazia indevidamente.   |±±
+±±|Claudinei S.|22/03/2013|000006815/2013|Ajuste para que seja impresso o relatorio |±±
+±±|            |          |        TGXLHV|qdo num. pagto estiver informado na RHC   |±±
+±±|M. Silveira |26/11/2013|        THOVNO|Diversos ajustes realizados p/ atender aos|±±
+±±|            |          |              |requisitos levantados pelo Hub-Mex:       |±±
+±±|            |          |              |*permitir a selecao de multiplos processos|±±
+±±|            |          |              | e roteiros.                              |±±
+±±|            |          |              |*alinhada a posicao de titulos das colunas|±±
+±±|            |          |              | e a linha dos dados no formato TReport.  |±±
+±±|            |          |              |*retirados campos Fundo Solid. e Sindicais|±±
+±±≥            ≥          ≥              ≥                                          ≥±±
+±±≥Jonathan Glz≥06/05/2015≥    PCREQ-4256≥Se elimina la funcion AjustaSX1, la cual  ≥±±
+±±≥            ≥          ≥              ≥realiza la modificacion aldiccionario de  ≥±±
+±±≥            ≥          ≥              ≥datos(SX1) por motivo de adecuacion  nueva≥±±
+±±≥            ≥          ≥              ≥estructura de SXs para version 12         ≥±±
+±±≥---------------------------------------------------------------------------------±±≥
+±±≥Carlos Eg¸ez  06/11/18    UGPER680    |  Actualizaion de la Cabecera y Detalle   ±±≥
+±± Uso:  MP12BIB                                                                    ±±≥   
+±±¿ƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ±±
+ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+/*/
+User Function GPERU01()
+
+Private aInfo   	:= {}
+Private aRoteiros	:= {}
+Private cPerg   	:= "GPERU01"
+
+	If FindFunction("TRepInUse") .And. TRepInUse()
+ 		//Relatorio em formato TReport
+ 		GPER680R4()
+ 	Else
+ 		//Relatorio em formato TMSPrinter
+ 		u_GPER680R3()
+	EndIF
+
+Return
+
+/*
+‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±⁄ƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒø±±
+±±≥Funáao    ≥ GPER682R4  ≥ Autor ≥ Marcelo Silveira      ≥ Data ≥07/12/2012≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥Descriáao ≥ Relatorio de Saldos e Salarios                               ≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥ Uso      ≥ GPER680                                                      ≥±±
+±±¿ƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ*/
+ Static Function GPER680R4()
+
+	Private oReport
+
+	Private nOrdem		:= 1
+	Private nPerEvent	:= 0
+	Private nTotFunc	:= 0
+	Private nMaxFunc	:= 32
+
+	Private cPerg		:= "GPR680"
+	Private cCodFilial	:= "##"
+	Private cAliasQry	:= ""
+	Private cProcesso	:= ""
+	Private cPeriodo	:= ""
+	Private cRoteiro	:= ""
+	Private cCompet		:= ""
+
+	Private oCNew08		:= TFont():New("Courier New",Nil,6.5,,.F.,,,,.F.,.F.)
+	Private oCNew08N 	:= TFont():New("Courier New",Nil,6.5,,.T.,,,,.F.,.F.)
+	Private oCNew10		:= TFont():New("Courier New",Nil,10,,.F.,,,,.F.,.F.)
+	Private oCNew10N 	:= TFont():New("Courier New",Nil,10,,.T.,,,,.F.,.F.)
+
+	Private aInfo		:= Array(26)
+	Private aOrd		:= {	OemToAnsi("Matricula"),;   		//1 - "Matricula"
+						 		OemToAnsi("Centro de Custos");	//2 - "Centro de Custos"
+							}
+
+	//⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø
+	//≥ Executa relatorio T-REPORT                                   ≥
+	//¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ
+	Pergunte(cPerg,.F.)
+
+	oReport := ReportDef()
+	oReport:SetLandscape()
+	oReport:PrintDialog()
+
+Return
+
+
+/*
+‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±⁄ƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒø±±
+±±≥Funáao    ≥ ReportDef  ≥ Autor ≥ Marcelo Silveira      ≥ Data ≥05/11/2012≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥Descriáao ≥ Relatorio de Saldos e Salarios                               ≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥ Uso      ≥ GPER680                                                      ≥±±
+±±¿ƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ*/
+Static Function ReportDef()
+
+	Local oReport
+	Local oSectCab	//Section Cabecalho
+	Local oSectFun	//Section Funcionarios
+	Local oSectLan 	//Section Lancamentos
+
+	Local cTitulo	:=	STR0003	//"PLANILLA DE SUELDOS Y SALARIOS"
+	Local cnomeprog	:= "GPR680"
+	Local cDesc1	:= "PLANILLA DE SUELDOS Y SALARIOS"
+	Local cDesc2	:= STR0004	//"Ser† impresso de acordo com os parametros solicitados pelo"
+	Local cDesc3	:= STR0005	//"usu†rio."
+	Local bBlkEmp	:= {|| If( !Empty((cAliasFun)->RA_FILIAL) .And. cCodFilial != (cAliasFun)->RA_FILIAL, Eval( {|| fInfo(@aInfo,(cAliasFun)->RA_FILIAL), OemToAnsi(STR0008) +": "+ aInfo[3]} ), OemToAnsi(STR0008) +": "+aInfo[3] )}
+
+	DEFINE REPORT oReport NAME "GPER680" TITLE cTitulo PARAMETER cPerg ACTION {|oReport| R680ImpR4(oReport) } DESCRIPTION cDesc1
+
+	oReport:nFontBody := 6
+	oReport:SetDynamic()
+	oReport:SetTotalInLine(.F.)
+	oReport:PageTotalBefore(.T.)
+	oReport:SetEdit(.F.)			//Nao permite ao usuario personalizar o relatorio
+	oReport:lHeaderVisible := .F.	//Nao imprime o cabecalho padrao
+
+
+    //SECTION 1 - CABECALHO
+	DEFINE SECTION oSectCab OF oReport TITLE OemToAnsi("Cabecalho") TABLE "SM0","SRA" ORDERS aOrd PAGE HEADER  			//Section Fixa
+		DEFINE CELL NAME "EMPRESA"    	OF oSectCab TITLE ""	SIZE 60 BLOCK {|| Eval( bBlkEmp ) } 	//Nome Empresa:
+		DEFINE CELL NAME "PAGINA"		OF oSectCab TITLE ""	SIZE 30	 								//Numero de paginas
+		DEFINE CELL NAME "NUM_EMP"		OF oSectCab TITLE "" 	SIZE 60									//Numero do empregador
+
+		oSectCab:Cell("EMPRESA"):nAlign := 1
+		oSectCab:Cell("PAGINA"):nAlign := 3
+		oSectCab:Cell("NUM_EMP"):nAlign := 1
+
+		oSectCab:SetLineStyle()
+		oSectCab:SetCols(2)
+
+
+    //SECTION 2 - FUNCIONARIO
+	DEFINE SECTION oSectFun OF oReport TITLE OemToAnsi("Funcionarios") TABLE "SM0","SRA" ORDERS aOrd
+
+//		DEFINE CELL NAME "NUM"			OF oSectFun TITLE "" 	SIZE 3
+//		DEFINE CELL NAME "CI"			OF oSectFun TITLE "" 	SIZE 10
+//		DEFINE CELL NAME "NACIONAL"		OF oSectFun TITLE ""	SIZE 15
+//		DEFINE CELL NAME "NASCIMENTO"	OF oSectFun TITLE ""	SIZE 8
+		//DEFINE CELL NAME "SEXO"			OF oSectFun TITLE ""	SIZE 1
+//		DEFINE CELL NAME "OCUPACION"	OF oSectFun TITLE ""  	SIZE 30
+//		DEFINE CELL NAME "INGRESSO"		OF oSectFun TITLE ""	SIZE 30
+
+//		oSectFun:Cell("NUM"			):nAlign := 2
+//		oSectFun:Cell("CI"			):nAlign := 1
+//		oSectFun:Cell("NACIONAL"	):nAlign := 1
+//		oSectFun:Cell("NASCIMENTO"	):nAlign := 1
+		//oSectFun:Cell("SEXO"		):nAlign := 1
+//		oSectFun:Cell("OCUPACION"	):nAlign := 1
+//		oSectFun:Cell("INGRESSO"	):nAlign := 1
+
+
+    //SECTION 3 - LANCAMENTOS
+	DEFINE SECTION oSectLan OF oReport TITLE OemToAnsi("Lancamentos") TABLE "SM0","SRA" ORDERS aOrd
+
+		DEFINE CELL NAME "NUM"			OF oSectLan TITLE "" 	SIZE 7
+		DEFINE CELL NAME "CI"			OF oSectLan TITLE "" 	SIZE 9
+		DEFINE CELL NAME "APELLIDOS"	OF oSectLan TITLE ""	SIZE 35	
+		DEFINE CELL NAME "NACIONAL"		OF oSectLan TITLE ""	SIZE 10
+		DEFINE CELL NAME "NASCIMENTO"	OF oSectLan TITLE ""	SIZE 10
+		DEFINE CELL NAME "SEXO"			OF oSectLan TITLE ""	SIZE 2	
+		DEFINE CELL NAME "OCUPACION"	OF oSectLan TITLE ""  	SIZE 23
+		DEFINE CELL NAME "INGRESSO"		OF oSectLan TITLE ""	SIZE 10								  	
+		DEFINE CELL NAME "DIASHPM"		OF oSectLan TITLE "" 	PICTURE '@E 999'			SIZE 5	//DIAS HAB. PAGADOS MES
+		DEFINE CELL NAME "HORASDP"		OF oSectLan TITLE "" 	PICTURE '@E 999.99'			SIZE 6	//HORAS PAGADOS MES
+		DEFINE CELL NAME "HABERB"		OF oSectLan TITLE "" 	PICTURE '@E 99,999,999.99'	SIZE 10 //HABER BASICO (A)
+		DEFINE CELL NAME "BONOANT"		OF oSectLan TITLE "" 	PICTURE '@E 999,999.99'		SIZE 9 //BONO DE ANTIGUEDAD (B)
+		DEFINE CELL NAME "HENUMERO"		OF oSectLan TITLE "" 	PICTURE '@E 999'			SIZE 3	//HORA EXTRA - NUMERO
+		DEFINE CELL NAME "HEMONTO"		OF oSectLan TITLE "" 	PICTURE '@E 999,999.99'		SIZE 5 //HORA EXTRA - MONTO PAGADO (C)
+		DEFINE CELL NAME "REMBONO"		OF oSectLan TITLE "" 	PICTURE '@E 999,999.99'		SIZE 7 //REMUNERACAO - BONO DE PRODUCION (D)
+		DEFINE CELL NAME "REMOTROS"		OF oSectLan TITLE "" 	PICTURE '@E 999,999.99'		SIZE 6 //REMUNERACAO - OUTROS BONOS (F)
+		DEFINE CELL NAME "SDSRNUM"		OF oSectLan TITLE "" 	PICTURE '@E 999'			SIZE 6	//SUELDO DSR - NUMERO DE DOMINGOS
+		DEFINE CELL NAME "SDSRSUE"		OF oSectLan TITLE "" 	PICTURE '@E 999,999.99'		SIZE 8 //SUELDO DSR - SUELDO DOMINICAL (E)
+		DEFINE CELL NAME "TOTGANADO"	OF oSectLan TITLE "" 	PICTURE '@E 99,999,999.99'	SIZE 10 //TOTAL GANADO (G)
+		DEFINE CELL NAME "DAFP"			OF oSectLan TITLE "" 	PICTURE '@E 999,999.99'		SIZE 8 //DESCONTO - AFP 12 (H)
+		DEFINE CELL NAME "DRCIVA"		OF oSectLan TITLE "" 	PICTURE '@E 999,999.99'		SIZE 9 //DESCONTO - RC-IVA(I)
+		DEFINE CELL NAME "DODESC"		OF oSectLan TITLE "" 	PICTURE '@E 999,999.99'		SIZE 9 //DESCONTO - OUTROS DESCONTOS (J)
+		DEFINE CELL NAME "TOTDCTOS"		OF oSectLan TITLE "" 	PICTURE '@E 99,999,999.99'	SIZE 11 //TOTAL DESCONTOS (L)
+		DEFINE CELL NAME "LIQUIDOP"		OF oSectLan TITLE "" 	PICTURE '@E 99,999,999.99'	SIZE 11	 //LIQUIDO PAGABLE (M)
+		DEFINE CELL NAME "FIRMA"		OF oSectLan TITLE "" 								SIZE 11 //FIRMA
+
+		oSectLan:Cell("NUM"):nAlign := 2
+		oSectLan:Cell("CI"):nAlign        := 1
+		oSectLan:Cell("APELLIDOS"):nAlign := 1
+		oSectLan:Cell("NACIONAL"):nAlign  := 1
+		oSectLan:Cell("NASCIMENTO"):nAlign := 1
+		oSectLan:Cell("SEXO")     :nAlign := 3
+		oSectLan:Cell("OCUPACION"):nAlign := 1
+		oSectLan:Cell("INGRESSO"):nAlign  := 1
+		oSectLan:Cell("DIASHPM"	):nAlign  := 2
+		oSectLan:Cell("HORASDP"):nAlign  := 1
+		oSectLan:Cell("HABERB"	):nAlign  := 1
+		oSectLan:Cell("BONOANT"	):nAlign  := 1
+		oSectLan:Cell("HENUMERO"):nAlign  := 1
+		oSectLan:Cell("HEMONTO"	):nAlign  := 1
+		oSectLan:Cell("REMBONO"	):nAlign  := 1
+		oSectLan:Cell("REMOTROS"):nAlign  := 1
+		oSectLan:Cell("SDSRNUM"):nAlign   := 2
+		oSectLan:Cell("SDSRSUE"):nAlign   := 1
+		oSectLan:Cell("TOTGANADO"):nAlign := 1
+		oSectLan:Cell("DAFP"):nAlign := 1
+		oSectLan:Cell("DRCIVA"):nAlign  := 1
+		oSectLan:Cell("DODESC"):nAlign  := 1
+		oSectLan:Cell("TOTDCTOS"):nAlign := 2
+		oSectLan:Cell("LIQUIDOP"):nAlign := 2
+		oSectLan:Cell("FIRMA"):nAlign := 1
+
+	//TOTALIZADORES
+	DEFINE FUNCTION NAME "THABERB"  	FROM oSectLan:Cell("HABERB") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//HABER BASICO (A)
+	DEFINE FUNCTION NAME "TBONOANT" 	FROM oSectLan:Cell("BONOANT") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//BONO DE ANTIGUEDAD (B)
+	DEFINE FUNCTION NAME "THENUMERO" 	FROM oSectLan:Cell("HENUMERO") 	FUNCTION SUM TITLE "" PICTURE "@E 9999"				NO END SECTION	//HORA EXTRA - NUMERO
+	DEFINE FUNCTION NAME "THEMONTO" 	FROM oSectLan:Cell("HEMONTO") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//HORA EXTRA - MONTO PAGADO (C)
+	DEFINE FUNCTION NAME "TREMBONO" 	FROM oSectLan:Cell("REMBONO") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//REMUNERACAO - BONO DE PRODUCION (D)
+	DEFINE FUNCTION NAME "TREMOTROS" 	FROM oSectLan:Cell("REMOTROS") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//REMUNERACAO - OUTROS BONOS (F)
+	DEFINE FUNCTION NAME "TSDSRNUM" 	FROM oSectLan:Cell("SDSRNUM") 	FUNCTION SUM TITLE "" PICTURE "@E 9999"				NO END SECTION	//SUELDO DSR - NUMERO DE DOMINGOS
+	DEFINE FUNCTION NAME "TSDSRSUE" 	FROM oSectLan:Cell("SDSRSUE") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//SUELDO DSR - SUELDO DOMINICAL (E)
+	DEFINE FUNCTION NAME "TTOTGANADO" 	FROM oSectLan:Cell("TOTGANADO")	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//TOTAL GANADO (G)
+	DEFINE FUNCTION NAME "TDAFP" 		FROM oSectLan:Cell("DAFP") 		FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION 	//DESCONTO - AFP 12 (H)
+	DEFINE FUNCTION NAME "TDRCIVA" 		FROM oSectLan:Cell("DRCIVA") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//DESCONTO - RC-IVA(I)
+	DEFINE FUNCTION NAME "TDODESC"		FROM oSectLan:Cell("DODESC") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//DESCONTO - OUTROS DESCONTOS (J)
+	DEFINE FUNCTION NAME "TOTDCTOS" 	FROM oSectLan:Cell("TOTDCTOS") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//TOTAL DESCONTOS (L)
+	DEFINE FUNCTION NAME "TLIQUIDOP" 	FROM oSectLan:Cell("LIQUIDOP") 	FUNCTION SUM TITLE "" PICTURE "@E 999,999,999.99"	NO END SECTION	//LIQUIDO PAGABLE (M)
+
+Return(oReport)
+
+
+/*
+‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±⁄ƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒø±±
+±±≥Funáao    ≥ R680ImpR4  ≥ Autor ≥ Marcelo Silveira      ≥ Data ≥05/11/2012≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥Descriáao ≥ Relatorio de Saldos e Salarios                               ≥±±
+±±√ƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥±±
+±±≥ Uso      ≥ GPER680                                                      ≥±±
+±±¿ƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ*/
+Static Function R680ImpR4(oReport)
+
+Local nX		:= 0
+Local nReg		:= 0
+Local nTamProc	:= 0
+Local nVHDiaPg 	:= 0
+Local nDiaPgMes	:= 0
+Local cMatAnt	:= ""
+Local cOrdem 	:= ""
+Local cSitQuery	:= ""
+Local cCatQuery	:= ""
+Local cAuxPrc	:= ""
+Local cProcs	:= ""
+Local cFilPd	:= ""
+Local cFilPer	:= ""
+Local cFiltro	:= ""
+Local cPersona	:= ""
+Local cEmpMTrab	:= ""
+Local cCondicao := ""
+Local cDescMes	:= ""
+ 																												     
+Local cTexto0 	:= "  |  N∫  |      CI     |            APELLIDO Y NOMBRE               | NACIONALIDAD |  FECHA DE  |SEXO|   OCUPACION QUE DESEMPE—A   |  FECHA DE  |  DIAS | HORAS/|   HABER    |  BONO DE   | HORAS EXTRAS |   REMUNERACION  |    SUELDO DSR    |   TOTAL    |            DESCUENTOS               |      TOTAL     |   LIQUIDO   |       FIRMA     |" //5
+Local cTexto1 	:= "		      											                                                                | NACIMIENTO |                                  |   INGRESO  |  HAB. |  DIAS |  BASICO    | ANTIGUEDAD |NUMERO| MONTO | BONO DE | OTROS | NUMERO | SUELDO  | GANADO (G) |    AFP    |   RC-IVA    |  Otros    | 	   DCTOS      |   Pagable   |                 |                                                     " //3
+Local cTexto2 	:= "                                                                                                                                                |PAGADOS|PAGADAS|    (A)     |    (B)     |      | PAGADO|PRODUCION| BONOS |   DE   |DOMINICAL|  A+B+C+D+  |   12.71%  |     13%     |  Dctos.   |       (K)      |     (L)     |                 |" //2
+Local cTexto3 	:= "                                                                                                                                                |  MES  |       |            |            |      |  (C)  |   (D)   |  (F)  |DOMINGOS|   (E)   |     E+F    |    (H)    |     (I)     |    (J)    |      H+I+J     |     G-K     |                 |"
+Local cTexto4 	:= " "
+Local cFirma	:= "   ..............."
+
+Local i			:= 0
+Local iX		:= 0
+Local nQtdFun	:= 0
+Local nTotPage	:= 0
+Local nPageAtu	:= 1
+Local aVerba 	:= Array(14,2)
+
+Private	nPerEvent
+Private oSectCab	:= oReport:Section(1)
+Private oSectFun	:= oReport:Section(2)
+Private oSectLan	:= oReport:Section(3)
+
+	/*/
+	⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø
+	≥ mv_par01        //  Processo						           ≥
+	≥ mv_par02        //  Roteiro							       ≥
+	≥ mv_par03        //  Competencia                              ≥
+	≥ mv_par04        //  Filial  De                               ≥
+	≥ mv_par05        //  Filial  Ate                              ≥
+	≥ mv_par06        //  Centro de Custo De                       ≥
+	≥ mv_par07        //  Centro de Custo Ate                      ≥
+	≥ mv_par08        //  Matricula De                             ≥
+	≥ mv_par09        //  Matricula Ate                            ≥
+	≥ mv_par10        //  Nome De                                  ≥
+	≥ mv_par11        //  Nome Ate                                 ≥
+	≥ mv_par12        //  Situacao                                 ≥
+	≥ mv_par13        //  Categoria                                ≥
+	≥ mv_par14        //  Personal - Eventual/Permanente           ≥
+	¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ/*/
+	cProcesso 	:= mv_par01
+	cCompet		:= mv_par03
+	cFilDe   	:= mv_par04
+	cFilAte  	:= mv_par05
+	cCcDe    	:= mv_par06
+	cCcAte   	:= mv_par07
+	cMatDe   	:= mv_par08
+	cMatAte  	:= mv_par09
+	cNomDe   	:= mv_par10
+	cNomAte  	:= mv_par11
+	cSituacao  	:= mv_par12
+	cCategoria 	:= mv_par13
+	nPerEvent	:= mv_par14
+	cNomEmpr	:= mv_par15
+	cNumDocId	:= mv_par16
+	nOrdem		:= oReport:GetOrder()
+
+	cPersona 	:= If( nPerEvent == 1, STR0010, STR0075) 	//1-PERMANENTE / 2-EVENTUAL
+	cEmpMTrab	:= OemToAnsi(STR0009) +": "+ If( fTabela("S007",1,5 ) <> Nil, fTabela("S007",1,5 ), " " )
+	cNomEmpr	:= If( (cNomEmpr := fTabela("S007",1,10 )) <> Nil, cNomEmpr, mv_par15 )
+	cNumDocId	:= If( (cNumDocId := fTabela("S007",1,11 )) <> Nil, cNumDocId, mv_par16 )
+
+	If !Empty(cCompet)
+		cPeriodo := SubStr(cCompet,3,4) + SubStr(cCompet,1,2)
+	EndIf
+
+	cSitQuery	:= ""
+	If !Empty(cSituacao)
+		For nReg:=1 to Len(cSituacao)
+			cSitQuery += "'"+Subs(cSituacao,nReg,1)+"'"
+			If ( nReg+1 ) <= Len(cSituacao)
+				cSitQuery += ","
+			Endif
+		Next nReg
+		cSitQuery := "%" + cSitQuery + "%"
+	EndIf
+
+	cCatQuery	:= ""
+	If !Empty(cSituacao)
+		For nReg:=1 to Len(cCategoria)
+			cCatQuery += "'"+Subs(cCategoria,nReg,1)+"'"
+			If ( nReg+1 ) <= Len(cCategoria)
+				cCatQuery += ","
+			Endif
+		Next nReg
+		cCatQuery := "%" + cCatQuery + "%"
+	EndIf
+
+	//Trata os roteiros para a query
+	SelecRoteiros()
+	For nX := 1 to Len(aRoteiros)
+		cRoteiro += "'" + aRoteiros[nX, 1] + "'"
+		If( nX+1 ) <=  Len(aRoteiros)
+			cRoteiro += ","
+		EndIf
+	Next
+	cRoteiro := "%" + cRoteiro + "%"
+
+	//Trata os processos para a query
+	nTamProc := GetSx3Cache( "RCJ_CODIGO", "X3_TAMANHO" )
+	For nX := 1 to Len(Alltrim(cProcesso)) Step 5
+		If Len(Subs(cProcesso,nX,5)) < nTamProc
+			cAuxPrc := Subs(cProcesso,nX,5) + Space(nTamProc - Len(Subs(cProcesso,nX,5)))
+		Else
+			cAuxPrc := Subs(cProcesso,nX,5)
+		EndIf
+		cProcs += "'" + cAuxPrc + "',"
+	Next nX
+	cProcs := "%" + Substr( cProcs, 1, Len(cProcs)-1) + "%"
+
+	cAliasFun := GetNextAlias()
+	cAliasQry := GetNextAlias()
+
+	lExeQry	  := .T.
+
+	If nOrdem == 1
+		cOrdFun   := "% RA_FILIAL, RA_MAT %"
+		cOrdLan	  := "% RA_FILIAL, RA_MAT, PD, SEQ %"
+		cCondicao := "(cAliasQry)->FILIAL == (cAliasFun)->RA_FILIAL .And. (cAliasQry)->RA_MAT == (cAliasFun)->RA_MAT"
+	Else
+		cOrdFun   := "% RA_FILIAL, RA_CC, RA_MAT %"
+		cOrdLan   := "% RA_FILIAL, RA_CC, RA_MAT, PD, SEQ %"
+		cCondicao := "(cAliasQry)->FILIAL == (cAliasFun)->RA_FILIAL .And. (cAliasQry)->RA_CC == (cAliasFun)->RA_CC .And. (cAliasQry)->RA_MAT == (cAliasFun)->RA_MAT"
+	EndIf
+
+	cFilPd	:= If( Alltrim(FWModeAccess("SRV",3)) == "C", "%'" + xFilial("SRV") + "'%", "%SRA.RA_FILIAL%" )
+	cFilPer	:= If( Alltrim(FWModeAccess("RCF",3)) == "C", "%'" + xFilial("RCF") + "'%", "%SRA.RA_FILIAL%" )
+
+	BEGIN REPORT QUERY oSectFun
+
+		BeginSql alias cAliasFun
+
+			SELECT	SRA.RA_FILIAL,			SRA.RA_MAT,			SRA.RA_CC,			SRA.RA_NOME,
+					SRA.RA_DEPTO,			SRA.RA_HRSMES,		SRA.RA_SALARIO,		SRA.RA_SITFOLH,
+					SRA.RA_DTREC,			SRA.RA_CATFUNC,		SRA.RA_CIC,			SRA.RA_NACIONA,
+					SRA.RA_NASC,			SRA.RA_SEXO,		SRA.RA_ADMISSA,		SRA.RA_CODFUNC,
+					SRA.RA_TNOTRAB,			SRA.RA_PROCES,		SRA.RA_HRSMES,		SRA.RA_CARGO,
+					SRC.RC_FILIAL FILIAL,	SRC.RC_CC CCUSTO,
+					RCF.RCF_HRSDIA,			RCF.RCF_DIATRA
+
+			FROM %table:SRA% SRA
+
+			INNER JOIN  %table:SRC% SRC
+			ON 	    SRA.RA_FILIAL = SRC.RC_FILIAL	AND
+					SRA.RA_MAT    = SRC.RC_MAT
+			INNER JOIN %table:RCF% RCF
+			ON		RCF.RCF_FILIAL	=	%exp:cFilPer%	AND
+					RCF.RCF_PROCES	=	SRA.RA_PROCES	AND
+					RCF.RCF_PER 	=	%exp:Upper(cPeriodo)%
+
+			WHERE	SRA.RA_FILIAL BETWEEN %Exp:cFilDe% AND %Exp:cFilAte% AND
+					SRA.RA_MAT    BETWEEN %Exp:cMatDe% AND %Exp:cMatAte% AND
+					SRA.RA_CC     BETWEEN %Exp:cCcDe%  AND %Exp:cCcAte%  AND
+					SRA.RA_NOME   BETWEEN %Exp:cNomDe% AND %Exp:cNomAte% AND
+					SRA.RA_SITFOLH IN (%exp:Upper(cSitQuery)%) AND
+			   		SRA.RA_CATFUNC IN (%exp:Upper(cCatQuery)%) AND
+			   		SRC.RC_PROCES  IN (%exp:Upper(cProcs)%)  	AND
+			   		SRC.RC_PERIODO =   %exp:Upper(cPeriodo)%   AND
+			   		SRC.RC_ROTEIR  IN (%exp:Upper(cRoteiro)%)  AND
+					SRA.%notDel% AND SRC.%notDel% AND RCF.%notDel%
+			UNION
+
+			(SELECT	SRA.RA_FILIAL,			SRA.RA_MAT,			SRA.RA_CC,			SRA.RA_NOME,
+					SRA.RA_DEPTO,			SRA.RA_HRSMES,		SRA.RA_SALARIO,		SRA.RA_SITFOLH,
+					SRA.RA_DTREC,			SRA.RA_CATFUNC,		SRA.RA_CIC,			SRA.RA_NACIONA,
+					SRA.RA_NASC,			SRA.RA_SEXO,		SRA.RA_ADMISSA,		SRA.RA_CODFUNC,
+					SRA.RA_TNOTRAB,			SRA.RA_PROCES,		SRA.RA_HRSMES,		SRA.RA_CARGO,
+					SRD.RD_FILIAL FILIAL,	SRD.RD_CC CCUSTO,
+					RCF.RCF_HRSDIA,			RCF.RCF_DIATRA
+
+			FROM %table:SRA% SRA
+
+			INNER JOIN  %table:SRD% SRD
+			ON 	    SRA.RA_FILIAL = SRD.RD_FILIAL	AND
+					SRA.RA_MAT    = SRD.RD_MAT
+			INNER JOIN %table:RCF% RCF
+			ON		RCF.RCF_FILIAL	=	%exp:cFilPer%	AND
+					RCF.RCF_PROCES	=	SRA.RA_PROCES	AND
+					RCF.RCF_PER 	=	%exp:Upper(cPeriodo)%
+
+			WHERE	SRA.RA_FILIAL BETWEEN %Exp:cFilDe% AND %Exp:cFilAte% AND
+					SRA.RA_MAT    BETWEEN %Exp:cMatDe% AND %Exp:cMatAte% AND
+					SRA.RA_CC     BETWEEN %Exp:cCcDe%  AND %Exp:cCcAte%  AND
+					SRA.RA_NOME   BETWEEN %Exp:cNomDe% AND %Exp:cNomAte% AND
+					SRA.RA_SITFOLH IN (%exp:Upper(cSitQuery)%) AND
+			   		SRA.RA_CATFUNC IN (%exp:Upper(cCatQuery)%) AND
+			   		SRD.RD_PROCES  IN (%exp:Upper(cProcs)%)  	AND
+			   		SRD.RD_PERIODO =   %exp:Upper(cPeriodo)%   AND
+			   		SRD.RD_ROTEIR  IN (%exp:Upper(cRoteiro)%)  AND
+					SRA.%notDel% AND SRD.%notDel% AND RCF.%notDel%)
+			ORDER BY %exp:cOrdFun%
+
+		EndSql
+
+	END REPORT QUERY oSectFun
+
+	BEGIN REPORT QUERY oSectLan
+
+		BeginSql alias cAliasQry
+
+			SELECT	SRA.RA_FILIAL,			SRA.RA_MAT,				SRA.RA_CC,				SRA.RA_NOME,
+					SRA.RA_DEPTO,			SRA.RA_HRSMES,			SRA.RA_SALARIO,			SRA.RA_SITFOLH,
+					SRA.RA_DTREC,			SRA.RA_CATFUNC,			SRA.RA_CIC,				SRA.RA_NACIONA,
+					SRA.RA_NASC,			SRA.RA_SEXO,			SRA.RA_ADMISSA,			SRA.RA_CODFUNC,
+					SRA.RA_CARGO,
+					SRC.RC_FILIAL FILIAL,	SRC.RC_MAT MAT,			SRC.RC_CC CCUSTO,		SRC.RC_PD PD,
+					SRC.RC_TIPO1 TIPO1,		SRC.RC_QTDSEM QTDSEM,	SRC.RC_HORINFO HORINFO,	SRC.RC_HORAS HORAS,
+					SRC.RC_VALINFO VALINFO,	SRC.RC_VALOR VALOR,		SRC.RC_VNAOAPL VNAOAPL,	SRC.RC_DATA DATPGT,
+					SRC.RC_DTREF DTREF,		SRC.RC_SEMANA SEMANA,	SRC.RC_SEQ SEQ,			SRC.RC_PROCES PROCES,
+					SRC.RC_PERIODO PERIODO,	SRC.RC_NUMID NUMID,		SRC.RC_ROTEIR ROTEIR,
+					SRV.RV_COD,				SRV.RV_INFSAL INFSAL,	SRV.RV_CODFOL CODFOL
+			FROM %table:SRA% SRA
+			INNER JOIN	%table:SRC% SRC
+			ON 	    SRA.RA_FILIAL = SRC.RC_FILIAL	AND
+					SRA.RA_MAT    = SRC.RC_MAT
+			INNER JOIN 	%table:SRV% SRV
+			ON		SRV.RV_FILIAL = %exp:cFilPd%	AND
+					SRV.RV_COD    = SRC.RC_PD
+
+			WHERE	SRA.RA_FILIAL BETWEEN %Exp:cFilDe% AND %Exp:cFilAte% AND
+					SRA.RA_MAT    BETWEEN %Exp:cMatDe% AND %Exp:cMatAte% AND
+					SRA.RA_CC     BETWEEN %Exp:cCcDe%  AND %Exp:cCcAte%  AND
+					SRA.RA_NOME   BETWEEN %Exp:cNomDe% AND %Exp:cNomAte% AND
+					SRA.RA_SITFOLH IN (%exp:Upper(cSitQuery)%) AND
+			   		SRA.RA_CATFUNC IN (%exp:Upper(cCatQuery)%) AND
+			   		SRC.RC_PROCES  IN (%exp:Upper(cProcs)%)  	AND
+			   		SRC.RC_PERIODO =   %exp:Upper(cPeriodo)%   AND
+			   		SRC.RC_ROTEIR  IN (%exp:Upper(cRoteiro)%)  AND
+			   		SRV.RV_INFSAL <> (%exp:""%) AND
+					SRA.%notDel% AND SRC.%notDel% AND SRV.%notDel%
+			UNION
+
+			(SELECT SRA.RA_FILIAL,			SRA.RA_MAT,				SRA.RA_CC,				SRA.RA_NOME,
+					SRA.RA_DEPTO,			SRA.RA_HRSMES,			SRA.RA_SALARIO,			SRA.RA_SITFOLH,
+					SRA.RA_DTREC,			SRA.RA_CATFUNC,			SRA.RA_CIC,				SRA.RA_NACIONA,
+					SRA.RA_NASC,			SRA.RA_SEXO,			SRA.RA_ADMISSA,			SRA.RA_CODFUNC,
+					SRA.RA_CARGO,
+					SRD.RD_FILIAL FILIAL,	SRD.RD_MAT MAT,			SRD.RD_CC CCUSTO,		SRD.RD_PD PD,
+					SRD.RD_TIPO1 TIPO1,		SRD.RD_QTDSEM QTDSEM,	SRD.RD_HORINFO HORINFO,	SRD.RD_HORAS HORAS,
+					SRD.RD_VALINFO VALINFO,	SRD.RD_VALOR VALOR,		SRD.RD_VNAOAPL VNAOAPL,	SRD.RD_DATPGT DATPGT,
+					SRD.RD_DTREF DTREF,		SRD.RD_SEMANA SEMANA,	SRD.RD_SEQ SEQ,			SRD.RD_PROCES PROCES,
+					SRD.RD_PERIODO PERIODO,	SRD.RD_NUMID NUMID,		SRD.RD_ROTEIR ROTEIR,
+					SRV.RV_COD,				SRV.RV_INFSAL INFSAL,	SRV.RV_CODFOL CODFOL
+			FROM %table:SRA% SRA
+
+			INNER JOIN %table:SRD% SRD
+			ON 	    SRA.RA_FILIAL = SRD.RD_FILIAL	AND
+					SRA.RA_MAT    = SRD.RD_MAT
+			INNER JOIN %table:SRV% SRV
+			ON		SRV.RV_FILIAL 	= %exp:cFilPd%	AND
+					SRV.RV_COD    	= SRD.RD_PD
+
+			WHERE	SRA.RA_FILIAL BETWEEN %Exp:cFilDe% AND %Exp:cFilAte% AND
+					SRA.RA_MAT    BETWEEN %Exp:cMatDe% AND %Exp:cMatAte% AND
+					SRA.RA_CC     BETWEEN %Exp:cCcDe%  AND %Exp:cCcAte%  AND
+					SRA.RA_NOME   BETWEEN %Exp:cNomDe% AND %Exp:cNomAte% AND
+					SRA.RA_SITFOLH	IN	(%exp:Upper(cSitQuery)%)	AND
+			   		SRA.RA_CATFUNC	IN	(%exp:Upper(cCatQuery)%)	AND
+			   		SRD.RD_PROCES	IN	(%exp:Upper(cProcs)%)		AND
+			   		SRD.RD_PERIODO	=	%exp:Upper(cPeriodo)%		AND
+			   		SRD.RD_ROTEIR	IN	(%exp:Upper(cRoteiro)%)		AND
+			   		SRV.RV_INFSAL	<>	(%exp:""%) AND
+					SRA.%notDel% AND SRD.%notDel% AND SRV.%notDel%)
+			ORDER BY %exp:cOrdLan%
+
+	EndSql
+
+	END REPORT QUERY oSectLan
+
+	//Quantidade total de funcionarios
+	Do While (cAliasFun)->( !Eof())
+		nTotFunc++
+  		(cAliasFun)->(DbSkip())
+	EndDo
+	(cAliasFun)->( dbGoTop())
+
+	If nTotFunc > 0
+		If nTotFunc > 27
+			nTotPage := If( Int( nTotFunc/(nMaxFunc ) ) >= 1, Int(nTotFunc/(nMaxFunc-1)), 1 )
+			If Mod( nTotFunc, (nMaxFunc-1) ) > 0
+				nTotPage ++
+			EndIf
+		Else
+			nTotPage := 1
+		EndIf
+	EndIf
+
+	cDescMes := OemToAnsi(STR0012) +" "+ UPPER(FDESC_MES(Val(SubStr(cCompet,1,2)))) +" "+ STR0013 +" "+ SubStr(cCompet,3,4)
+	cTotPage := OemToAnsi(STR0073) +" "+ cValToChar(nPageAtu) +" "+ STR0013 +" "+ cValToChar(nTotPage)
+
+	//IMPRESSAO DO CABECALHO
+	oReport:OnPageBreak({||	oSectCab:Init(),;
+							oSectCab:Cell("NUM_EMP"):SetValue( cEmpMTrab ),;
+							oSectCab:Cell("PAGINA"):SetValue( cTotPage ),;
+							oSectCab:PrintLine(),;
+							oSectCab:Finish(),;
+							oReport:Say((oReport:nRow)+030, (oReport:nCol+1850), STR0003, oCNew10),;
+							oReport:Say((oReport:nRow)+060, (oReport:nCol+1920), cPersona, oCNew10N),;
+							oReport:Say((oReport:nRow)+090, (oReport:nCol+1990), STR0011, oCNew08N),;
+							oReport:Say((oReport:nRow)+120, (oReport:nCol+2950), cDescMes, oCNew08N),;
+							oReport:Say((oReport:nRow)+180, (oReport:nCol), cTexto0, oCNew08N),;
+							oReport:Say((oReport:nRow)+210, (oReport:nCol), cTexto1, oCNew08N),;
+							oReport:Say((oReport:nRow)+240, (oReport:nCol), cTexto2, oCNew08N),;
+							oReport:Say((oReport:nRow)+270, (oReport:nCol), cTexto3, oCNew08N),;
+							oReport:Say((oReport:nRow)+300, (oReport:nCol), cTexto4, oCNew08N),;
+							oReport:Line((oReport:nRow)+330,(oReport:nCol)+10, (oReport:nRow)+330, (oReport:nCol)+3950 ),;
+							oReport:SetRow(oReport:nRow+360) })
+							
+	//IMPRESSAO DOS LANCAMENTOS
+	//Recurso para retirar o espaco da primeira linha porque foram iniciadas duas secoes ao mesmo tempo
+	oSectFun:SetHeaderSection(.F.)
+	oSectFun:Init()
+	oSectFun:PrintLine()
+
+	oSectLan:SetHeaderSection(.F.)
+	oSectLan:Init()
+	oSectLan:PrintLine()
+
+	oReport:SetRow(oReport:nRow-90)
+
+	If nTotFunc <= 0
+		Return()
+	EndIf
+
+	Do While (cAliasFun)->(!Eof())
+
+		nDiaPgMes := 0
+		nVHDiaPg  := 0
+
+		For i := 1 To 14
+			For iX := 1 to 2
+				aVerba[i,iX] := 0
+			Next iX
+		Next i
+
+		IF (cAliasFun)->RA_MAT <> cMatAnt .And. &cCondicao
+//			oSectFun:Cell("NUM"			):SetValue( nQtdFun += 1 )
+//			oSectFun:Cell("CI"			):SetValue( (cAliasFun)->RA_CIC )
+//			oSectFun:Cell("NACIONAL"	):SetValue( fDesc("SX5","34"+(cAliasFun)->RA_NACIONA,"X5_DESCRI") )
+//			oSectFun:Cell("NASCIMENTO"	):SetValue( (cAliasFun)->RA_NASC )
+//			oSectFun:Cell("SEXO"		):SetValue( (cAliasFun)->RA_SEXO )
+//			oSectFun:Cell("OCUPACION"	):SetValue( fDesc("SQ3",(cAliasFun)->RA_CARGO,"Q3_DESCSUM") )
+//			oSectFun:Cell("INGRESSO"	):SetValue( (cAliasFun)->RA_ADMISSA )
+			oSectFun:PrintLine()
+			nDiaPgMes	:= (cAliasFun)->RCF_DIATRA
+		EndIf
+
+		Do While (cAliasQry)->(!Eof()) .And. &cCondicao
+
+			If (cAliasQry)->CODFOL $ "0031|0048"
+				nVHDiaPg += (cAliasQry)->HORAS
+			EndIf
+
+			Do Case
+				Case (cAliasQry)->INFSAL == "A"
+					aVerba[1,1] += (cAliasQry)->VALOR
+				Case (cAliasQry)->INFSAL == "B"
+			   		aVerba[2,1] += (cAliasQry)->VALOR
+				Case (cAliasQry)->INFSAL == "C"
+			   		aVerba[3,1] += (cAliasQry)->VALOR
+			   		aVerba[3,2] += (cAliasQry)->HORAS
+				Case (cAliasQry)->INFSAL == "D"
+				   	aVerba[4,1] += (cAliasQry)->VALOR
+				Case (cAliasQry)->INFSAL == "F"
+			   		aVerba[5,1] += (cAliasQry)->VALOR
+				Case (cAliasQry)->INFSAL == "E"
+				   	aVerba[6,1] += (cAliasQry)->VALOR
+			   		aVerba[6,2] += (cAliasQry)->HORAS
+				Case (cAliasQry)->INFSAL == "H"
+			   		aVerba[7,1] += (cAliasQry)->VALOR
+				Case (cAliasQry)->INFSAL == "I"
+			   		aVerba[8,1] += (cAliasQry)->VALOR
+				Case (cAliasQry)->INFSAL == "J"
+			   		aVerba[9,1] += (cAliasQry)->VALOR
+			   	Case (cAliasQry)->INFSAL == "K" 			//Nao mais usado (retirado em 2013/11)
+			   		aVerba[13,1] += (cAliasQry)->VALOR
+				Case (cAliasQry)->INFSAL == "L"
+			   		aVerba[14,1] += (cAliasQry)->VALOR
+				Case (cAliasQry)->INFSAL == "N"     		//Nao mais usado (retirado em 2013/11)
+			   		aVerba[14,1] += (cAliasQry)->VALOR
+			EndCase
+
+			(cAliasQry)->(DbSkip())
+		EndDo
+
+		If aVerba[1,1] > 0
+
+			aVerba[10,1] := aVerba[1,1] + aVerba[2,1] + aVerba[3,1] + aVerba[4,1] + aVerba[5,1] + aVerba[6,1]	//TOTAL GANADO (G)
+			aVerba[11,1] := aVerba[7,1] + aVerba[8,1] + aVerba[9,1] 				 								//TOTAL DESCONTOS (L)
+			aVerba[12,1] := aVerba[10,1] - aVerba[11,1] 															//LIQUIDO PAGABLE (N)
+
+			oSectLan:Cell("NUM"):SetValue( nQtdFun += 1 )
+			oSectLan:Cell("CI"):SetValue( (cAliasFun)->RA_CIC )
+			oSectLan:Cell("APELLIDOS"):SetValue( (cAliasFun)->RA_NOME )
+			oSectLan:Cell("NACIONAL"):SetValue( fDesc("SX5","34"+(cAliasFun)->RA_NACIONA,"X5_DESCRI") )
+			oSectLan:Cell("NASCIMENTO"):SetValue( (cAliasFun)->RA_NASC )
+			oSectLan:Cell("SEXO"):SetValue( (cAliasFun)->RA_SEXO )
+			oSectLan:Cell("OCUPACION"):SetValue( fDesc("SQ3",(cAliasFun)->RA_CARGO,"Q3_DESCSUM") )
+			oSectLan:Cell("INGRESSO"):SetValue( (cAliasFun)->RA_ADMISSA )
+			oSectLan:Cell("DIASHPM"):SetValue(nDiaPgMes)	  //DIAS HAB. PAGADOS MES
+			oSectLan:Cell("HORASDP"):SetValue(nVHDiaPg)		  //HORAS PAGADOS MES
+			oSectLan:Cell("HABERB"):SetValue(aVerba[1,1])	  //HABER BASICO (A)
+			oSectLan:Cell("BONOANT"):SetValue(aVerba[2,1])	  //BONO DE ANTIGUEDAD (B)
+			oSectLan:Cell("HENUMERO"):SetValue(aVerba[3,2])	  //HORA EXTRA - NUMERO
+			oSectLan:Cell("HEMONTO"):SetValue(aVerba[3,1])	  //HORA EXTRA - MONTO PAGADO (C)
+			oSectLan:Cell("REMBONO"):SetValue(aVerba[4,1])	  //REMUNERACAO - BONO DE PRODUCION (D)
+			oSectLan:Cell("REMOTROS"):SetValue(aVerba[5,1])	  //REMUNERACAO - OUTROS BONOS (F)
+			oSectLan:Cell("SDSRNUM"):SetValue(aVerba[6,2])	  //SUELDO DSR - NUMERO DE DOMINGOS
+			oSectLan:Cell("SDSRSUE"):SetValue(aVerba[6,1])	  //SUELDO DSR - SUELDO DOMINICAL (E)
+			oSectLan:Cell("TOTGANADO"):SetValue(aVerba[10,1]) //TOTAL GANADO (G)
+			oSectLan:Cell("DAFP"):SetValue(aVerba[7,1])		  //DESCONTO - AFP 12 (H)
+			oSectLan:Cell("DRCIVA"):SetValue(aVerba[8,1])	  //DESCONTO - RC-IVA(I)
+			oSectLan:Cell("DODESC"):SetValue(aVerba[9,1])	  //DESCONTO - OUTROS DESCONTOS (J)
+			oSectLan:Cell("TOTDCTOS"):SetValue(aVerba[11,1])  //TOTAL DESCONTOS (L)
+			oSectLan:Cell("LIQUIDOP"):SetValue(aVerba[12,1])  //LIQUIDO PAGABLE (M)
+			oSectLan:Cell("FIRMA"):SetValue( cFirma )		  //FIRMA
+
+			oSectLan:PrintLine()
+
+		EndIf
+
+		cCodFilial	:= (cAliasFun)->RA_FILIAL
+		cMatAnt 	:= (cAliasFun)->RA_MAT
+
+		//Salta pagina - limite de impressao dos lancamentos por funcionario
+	    If oReport:nRow >= 2350
+		    nPageAtu++
+		    cTotPage := cValToChar(nPageAtu) + " " + STR0013 + " " + cValToChar(nTotPage)
+			oReport:EndPage()
+	    Endif
+
+		(cAliasFun)->(DbSkip())
+
+	EndDo
+
+	oSectFun:Finish()
+	oSectLan:Finish()
+
+	//Salta pagina - limite para nao cortar a impressao do rodape (330)
+    If oReport:nRow >= 2110
+		nPageAtu++
+	    cTotPage := cValToChar(nPageAtu) + " " + STR0013 + " " + cValToChar(nTotPage) //"CORRESPONDIENTE AL MES DE"
+		oReport:EndPage()
+	EndIf
+
+	//Nome do Empregador
+	oReport:Say((oReport:nRow)+300, (oReport:nCol)+350, cNomEmpr, oCNew08 )
+	oReport:Line( (oReport:nRow)+327, (oReport:nCol)+130, (oReport:nRow)+327, (oReport:nCol)+750 )
+	oReport:Say((oReport:nRow)+330, (oReport:nCol)+190, STR0071, oCNew08N )
+
+	//Documento de Identidade
+	oReport:Say((oReport:nRow)+300, (oReport:nCol)+1200, cNumDocId, oCNew08 )
+	oReport:Line( (oReport:nRow)+327, (oReport:nCol)+1000, (oReport:nRow)+327, (oReport:nCol)+1500 )
+	oReport:Say((oReport:nRow)+330, (oReport:nCol)+1100, STR0070, oCNew08N )
+
+	//Assinatura (firma)
+	oReport:Say((oReport:nRow)+330, (oReport:nCol)+1950, STR0068, oCNew08N )
+	oReport:Line( (oReport:nRow)+327, (oReport:nCol)+1750, (oReport:nRow)+327, (oReport:nCol)+2250 )
+
+	//Data
+	oReport:Say((oReport:nRow)+300, (oReport:nCol)+2850, STR0018 + " " + DtoC(dDataBase), oCNew08N )
+
+Return()
+
+
