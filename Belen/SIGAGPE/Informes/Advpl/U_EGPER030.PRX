@@ -1,0 +1,1789 @@
+#INCLUDE "GPER1030.CH"
+#INCLUDE "PROTHEUS.CH"
+#IFNDEF CRLF
+#DEFINE CRLF ( chr(13)+chr(10) )
+#ENDIF
+
+#DEFINE CPDHE		"040"//Codigo concepto Horas Extras
+#DEFINE CPDRN		"041"//Codigo concepto Recargo Nocturno
+#DEFINE CPDIVAANT	"625"//Codigo concepto IVA - Saldo Anterior 
+#DEFINE NDATOS		9	//Tamanho del array
+
+#DEFINE NSECCION	1	//Seccion
+#DEFINE NDIASTRAB	2	//Dias trabajados
+#DEFINE NDOMINICAL	3	//Dominical
+#DEFINE NRN			4	//Recargo Nocturno
+#DEFINE NHE			5	//Horas Extras
+#DEFINE NIVAANT		6	//IVA - Saldo Anterior
+#DEFINE NIVACR		7	//IVA - CR
+#DEFINE NIVAACT		8	//IVA - Saldo Actual
+#DEFINE NAFPBASE	9	//B/AFP Laboral/Patronal
+
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³ GPER030  ³ Autor ³ R.H. - Ze Maria       ³ Data ³ 14.03.95 	   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Emissao de Recibos de Pagamento                                 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ GPER030(void)                                             	   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                           	   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                               		   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³         ATUALIZACOES SOFRIDAS DESDE A CONSTRU€AO INICIAL.                  ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Programador ³ Data   ³ BOPS ³  Motivo da Alteracao 		                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Pedro Eloy ³06/02/04³------		³Ajuste no retorno da funcao OpenSrc().    ³±±
+±±³ Natie      ³16/03/04³F01027		³Acerto p/trazer Funcao do mes de Referec. ³±±
+±±| Natie      ³08/04/04³------		³ Acerto no Driver p/Impressao             ³±±
+±±| Natie      ³16/04/04³------		³ PerSemana()busca semana do Cad.Perido    ³±±
+±±| Emerson GR.³27/05/04³------		³Tratamento do Cargo de Funcionario.	   ³±±
+±±| Emerson    ³08/06/04³------		³Igualar variavel lEnvioOk na chamada da   ³±±
+±±³            ³        ³------		³funcao GPEMail() p/ que seja atualizada.  ³±±
+±±³ Pedro Eloy ³03/06/04³070926		|Ajustado o disposicionamento do nome empr.³±±
+±±³            ³        ³      		|e tratado o botao cancelar no teste impres³±±
+±±³ Ricardo D. ³20/08/04³Melhor		|Tratamento da data de liberacao para con- ³±±
+±±³            ³        ³      		|sulta ao recibo pagto no Rh-OnLine.       ³±±
+±±³ Pedro Eloy ³26/08/04³------		|Estava se perdendo ao imprimir um funciona³±±
+±±³            ³        ³      		|rio onde tivesse mais de um recibo.       ³±±
+±±³ Ricardo D. ³30/08/04³Melhor		|Passagem do parametro ".F." em todas as   ³±±
+±±³            ³        ³      		|chamadas da funcao R030IMPR.              ³±±
+±±³ Pedro Eloy ³01/09/04³073931		³Ajuste no disposicionamento do nome da    ³±±
+±±³            ³        ³      		³empresa, emissao do recibo de pagamento.  ³±±
+±±³Emerson     ³28/10/04³075658		³Checar parametro MV_IREFSEM para imprimir ³±±
+±±³            ³        ³------		³referencias em Semanas ou Horas.		   ³±±
+±±³ Ricardo D. ³12/01/05³077579		³Ajuste da impressao da mensagem do recibo.³±±
+±±³ Ricardo D. ³17/01/05³FNC092		|Ajuste da impressao c.custos c/ate 20carac³±±
+±±³ Ricardo D. ³04/05/05³081718		|Ajuste do tipo dos parametros do rh-online³±±
+±±³            ³        ³------		³MV_TCFD???. Devem ser do tipo caracter.   ³±±
+±±³Ricardo/Emer³02/06/05³FN1996		|Ajuste no teste dos parametros MV_TCFD???.³±±
+±±³Emerson     ³15/12/05³------		|Ajuste para nao imprimir valor igual a 0. ³±±
+±±³Emerson     ³25/04/06³------		³Criado parametro MV_AGLUTPD - Aglut.verbas³±±
+±±³Emerson     ³19/06/06³------		³Criado o ponto de entrada GPR030PD.       ³±±
+±±³Emerson     ³19/06/06³------		³Alteracao de aVerbasFunc para private.    ³±±
+±±³Emerson     ³22/06/06³------		³Trocar elemento 15 do aVerbasFunc pelo 5. ³±±
+±±³Emerson     ³23/06/06³------		³Exclusao do ponto de entrada GPR030PD e   ³±±
+±±³            ³        ³------		³inclusao do ponto GP030HTM.               ³±±
+±±³Mauricio T. ³13/12/06³------		³Alterado para Private cRotBlank para exe- ³±±
+±±³            ³        ³------		³cutar o dbseek com Macro &.               ³±±
+±±³Erika K.    ³19/03/08³      		|Ajuste para localizacao Bolivia.      	   ³±±
+±±³Erika       ³26/05/08³------		³Alteracao do CH para compatibilizar dicio-³±±
+±±³            ³        ³      		³narios Mexico e R 1.2.                    ³±±
+±±³Marcos Kato ³06/06/08³------		³Implementação de Recibo de Pagamento      ³±±
+±±³            ³        ³      		³grafico para Portugal - R.1.2             ³±±
+±±³Rogerio Vaz ³25/06/08³148775		³Correcao da impressao grafica, exibia     ³±±
+±±³Melonio     ³        ³      		³o recibo para cada funcionario.           ³±±
+±±³Kelly       ³30/06/08³149032		³Ajuste no grupo de perguntas.             ³±±
+±±³Erika       ³05/08/08³150584		³Correcao de indices para Argentina.       ³±±
+±±³Abel Ribeiro³12/03/09³--5950		|Alteração para buscar tabela Municipio e  ³±±
+±±³            ³        ³  		    |Estado - Localização Colombia             ³±±
+±±³Mauricio T. ³17/04/09³009298/2009|Na funcao f030Roteiro - Selecao de Roteiro³±±
+±±³            ³        ³      		|por fopcoes estava aplicando Alltrim no co³±±
+±±³            ³        ³      		|digo selecionado. Quando o codigo nao ocu-³±±
+±±³            ³        ³      		|pava o tamanho do campo o sistmea nao loca³±±
+±±³            ³        ³      		|lizava as informacoes no banco            ³±±
+±±³Tiago Malta ³17/11/09³   		|Localização para o pais Angola            ³±±
+±±³Luciana     ³07/01/10³030318/2009|Inclusao do campo  Horas Domingo Trabajado³±±
+±±³            ³        ³           |no Recibo de Pago para pais Bolivia.      ³±±
+±±³Alceu P.    ³05/02/10³00284882009|Alteracao de cabecalho para Peru.         ³±±
+±±³Tiago Malta ³23/02/10³00311122009|Tratamento de periodo sem roteiro para    ³±±
+±±³            ³        ³           | argentina .                              ³±±
+±±ÀÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ±±
+±± Denar Terrazas  20/05/2019   Modificacion de Reporte para Industrias Belen   ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+User Function EGPER030(lTerminal,cFilTerminal,cMatTerminal,cProcTerminal, nRecTipo, cPerTerminal, cSemanaTerminal)
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define Variaveis Locais (Basicas)                            ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	Local cString:="SRA"        // alias do arquivo principal (Base)
+	Local aOrd   := {STR0001,STR0002,STR0003,STR0004,STR0005} //"Matricula"###"C.Custo"###"Nome"###"Chapa"###"C.Custo + Nome"
+	Local cDesc1 := STR0006		//"Emiss„o de Recibos de Pagamento."
+	Local cDesc2 := STR0007		//"Ser  impresso de acordo com os parametros solicitados pelo"
+	Local cDesc3 := STR0008		//"usu rio."
+	Local aDriver:= ReadDriver()
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define Variaveis Locais (Programa)                           ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	Local cIndCond
+	Local cRotBlank := Space(GetSx3Cache( "RCH_ROTEIR", "X3_TAMANHO" ))
+	Local Baseaux 	:= "S"
+	Local cHtml 	:= ""
+	Local cMes		:= ""
+	Local cAno		:= ""
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define o numero da linha de impressão como 0                 ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	SetPrc(0,0)
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define Variaveis Private(Basicas)                            ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	Private aReturn  := {STR0009, 1,STR0010, 2, 2, 1, "",1 }	//"Zebrado"###"Administra‡„o"
+	Private nomeprog :="GPER030"
+	Private aLinha   := { }
+	Private nLastKey := 0
+	Private cPerg    :="GPER030"
+	Private nAteLim , nBaseFgts , nFgts , nBaseIr , nBaseIrFe
+	Private nNetVal , nNetHor
+
+	Private cCompac := aDriver[1]
+	Private cNormal := aDriver[2]
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define Variaveis Private(Programa)                           ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	Private aLanca 		:= {}
+	Private aProve 		:= {}
+	Private aDesco 		:= {}
+	Private aBases 		:= {}
+	Private aInfo  		:= {}
+	Private aCodFol		:= {}
+	Private li     		:= _PROW()
+	Private Titulo 		:= STR0011		//"EMISSO DE RECIBOS DE PAGAMENTOS"
+	Private lEnvioOk 	:= .F.
+	Private lRetCanc	:= .t.
+	Private cIRefSem    := GetMv("MV_IREFSEM",,"S")
+	Private aPerAberto	:= {}
+	Private aPerFechado	:= {}
+	Private cProcesso	:= "" // Armazena o processo selecionado na Pergunte GPR040 (mv_par01).
+	Private cRoteiro	:= "" // Armazena o Roteiro selecionado na Pergunte GPR040 (mv_par02).
+	Private cPeriodo	:= "" // Armazena o Periodo selecionado na Pergunte GPR040 (mv_par03).
+	Private cCcto		:= ""
+	Private cCond		:= ""
+	Private cRot		:= ""
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define Variaveis da Impressao Grafica                        ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	Private oPrint
+	Private oArial08	:= TFont():New("Courier New",08,08,,.F.,,,,.T.,.F.)//Normal
+	Private oArial08N	:= TFont():New("Courier New",08,08,,.T.,,,,.T.,.F.)//Negrito
+	Private oArial09N	:= TFont():New("Courier New",09,09,,.T.,,,,.T.,.F.)//Negrito
+	Private oArial10	:= TFont():New("Courier New",10,10,,.F.,,,,.T.,.F.)//Normal
+	Private oArial10N	:= TFont():New("Courier New",10,10,,.T.,,,,.T.,.F.)//Negriot
+
+	//AjustaSx1()	//RS
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Envia controle para a funcao SETPRINT                        ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	wnrel:="GPER030"            //Nome Default do relatorio em Disco
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Verifica se o programa foi chamado do terminal - TCF         ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	lTerminal := If( lTerminal == Nil, .F., lTerminal )
+
+	IF !( lTerminal )
+		wnrel:=SetPrint(cString,wnrel,cPerg,Titulo,cDesc1,cDesc2,cDesc3,.F.,aOrd)
+	EndIF
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define a Ordem do Relatorio                                  ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	nOrdem := IF( !( lTerminal ), aReturn[8] , 1 )
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Verifica as perguntas selecionadas                           ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	Pergunte("GPER030",.F.)
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Carregando variaveis mv_par?? para Variaveis do Sistema.     ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	cSemanaTerminal := IF( Empty( cSemanaTerminal ) , Space( Len( SRC->RC_SEMANA ) ) , cSemanaTerminal )
+	cProcesso  := IF( !( lTerminal ), mv_par01 , cProcTerminal		)   //Processo
+	cRoteiro   := IF( !( lTerminal ), mv_par02 , nRecTipo			)	//Emitir Recibos(Roteiro)
+	cPeriodo   := IF( !( lTerminal ), mv_par03 , cPerTerminal		)   //Periodo
+	Semana     := IF( !( lTerminal ), mv_par04 , cSemanaTerminal	)	//Numero da Semana
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Verificar se o sistema esta trabalhando com ou sem roteiro   ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	DbSelectArea( "RCH" )
+	DbSetOrder( 4 )
+	DbSeek(  xFilial( "RCH" ) + cProcesso + cRoteiro + cPeriodo + Semana, .F. )
+	If Eof()
+		DbSeek(  xFilial( "RCH" ) + cProcesso + cRotBlank + cPeriodo + Semana, .F. )
+	Else
+		cRotBlank := cRoteiro
+	EndIf
+
+	//Carregar os periodos abertos (aPerAberto) e/ou
+	// os periodos fechados (aPerFechado), dependendo
+	// do periodo (ou intervalo de periodos) selecionado
+	RetPerAbertFech(cProcesso	,; // Processo selecionado na Pergunte.
+	cRotBlank	,; // Roteiro selecionado na Pergunte.
+	cPeriodo	,; // Periodo selecionado na Pergunte.
+	Semana		,; // Numero de Pagamento selecionado na Pergunte.
+	NIL			,; // Periodo Ate - Passar "NIL", pois neste relatorio eh escolhido apenas um periodo.
+	NIL			,; // Numero de Pagamento Ate - Passar "NIL", pois neste relatorio eh escolhido apenas um numero de pagamento.
+	@aPerAberto	,; // Retorna array com os Periodos e NrPagtos Abertos
+	@aPerFechado ) // Retorna array com os Periodos e NrPagtos Fechados
+
+	// Retorna o mes e o ano do periodo selecionado na pergunte.
+	AnoMesPer(	cProcesso	,; // Processo selecionado na Pergunte.
+	cRotBlank	,; // Roteiro selecionado na Pergunte.
+	cPeriodo	,; // Periodo selecionado na Pergunte.
+	@cMes		,; // Retorna o Mes do Processo + Roteiro + Periodo selecionado
+	@cAno		 ) // Retorna o Ano do Processo + Roteiro + Periodo selecionado
+
+	dDataRef := CTOD("01/" + cMes + "/" + cAno)
+	dDataRef := If(Empty(dDataRef),CTOD("01/" + Substr(cPeriodo,5,2) + "/" + Substr(cPeriodo,1,4)),dDataRef)
+
+	nTipRel    := IF( !( lTerminal ), mv_par05 , 3					)	//Tipo de Recibo (Pre/Zebrado/EMail)
+	cFilDe     := IF( !( lTerminal ), mv_par06,cFilTerminal		)	//Filial De
+	cFilAte    := IF( !( lTerminal ), mv_par07,cFilTerminal		)	//Filial Ate
+	cCcDe      := IF( !( lTerminal ), mv_par08,SRA->RA_CC			)	//Centro de Custo De
+	cCcAte     := IF( !( lTerminal ), mv_par09,SRA->RA_CC			)	//Centro de Custo Ate
+	cMatDe     := IF( !( lTerminal ), mv_par10,cMatTerminal		)	//Matricula Des
+	cMatAte    := IF( !( lTerminal ), mv_par11,cMatTerminal		)	//Matricula Ate
+	cNomDe     := IF( !( lTerminal ), mv_par12,SRA->RA_NOME		)	//Nome De
+	cNomAte    := IF( !( lTerminal ), mv_par13,SRA->RA_NOME		)	//Nome Ate
+	ChapaDe    := IF( !( lTerminal ), mv_par14,SRA->RA_CHAPA 		)	//Chapa De
+	ChapaAte   := IF( !( lTerminal ), mv_par15,SRA->RA_CHAPA 		)	//Chapa Ate
+	Mensag1    := mv_par16										 	//Mensagem 1
+	Mensag2    := mv_par17											//Mensagem 2
+	Mensag3    := mv_par18											//Mensagem 3
+	cSituacao  := IF( !( lTerminal ),mv_par19, fSituacao( NIL , .F. ) )	//Situacoes a Imprimir
+	cCategoria := IF( !( lTerminal ),mv_par20, fCategoria( NIL , .F. ))	//Categorias a Imprimir
+	cBaseAux   := If(mv_par21 == 1,"S","N")							//Imprimir Bases
+	cSecDe     := IF( !( lTerminal ), mv_par22,cMatTerminal		)	//Sector Des
+	cSecAte    := IF( !( lTerminal ), mv_par23,cMatTerminal		)	//Sector Ate
+
+	If nTipRel == 1 .AND. cPaisLoc = "BOL"
+		nTipRel := 2
+	Endif
+
+	If aReturn[5] == 1 .and. nTipRel == 1
+		li	:=  0
+	EndIf
+
+	cMesAnoRef := StrZero(Month(dDataRef),2) + StrZero(Year(dDataRef),4)
+	IF !( lTerminal )
+		//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+		//³ Inicializa Impressao                                         ³
+		//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+		If ! fInicia(cString,nTipRel)
+			Return
+		Endif
+	Else
+
+	EndIF
+
+	DbSelectArea( "SRA" )
+	IF nTipRel==3
+		IF lTerminal
+			cHtml := R030Imp(.F.,wnRel,cString,cMesAnoRef,lTerminal)
+		Else
+			ProcGPE({|lEnd| R030IMP(@lEnd,wnRel,cString,cMesAnoRef,.f.)},,,.T.)  // Chamada do Processamento
+		EndIF
+	Else
+		RptStatus({|lEnd| R030Imp(@lEnd,wnRel,cString,cMesAnoRef,.f.)},Titulo)  // Chamada do Relatorio
+	EndIF
+
+Return( IF( lTerminal , cHtml , NIL ) )
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³ R030IMP  ³ Autor ³ R.H. - Ze Maria       ³ Data ³ 14.03.95 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Processamento Para emissao do Recibo                       ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ R030Imp(lEnd,WnRel,cString,cMesAnoRef,lTerminal)			  ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                            ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+Static Function R030Imp(lEnd,WnRel,cString,cMesAnoRef,lTerminal)
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define Variaveis Locais (Basicas)                            ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	Local aCodBenef   := {}
+	Local cAcessaSR1  := &("{ || " + ChkRH("GPER030","SR1","2") + "}")
+	Local cAcessaSRA  := &("{ || " + ChkRH("GPER030","SRA","2") + "}")
+	Local cAcessaSRC  := &("{ || " + ChkRH("GPER030","SRC","2") + "}")
+	Local cAcessaSRD  := &("{ || " + ChkRH("GPER030","SRD","2") + "}")
+	Local cNroHoras   := &("{ || If(aVerbasFunc[nReg,5] > 0 .And. cIRefSem == 'S', aVerbasFunc[nReg,5], aVerbasFunc[nReg,6]) }")
+	Local cHtml		  := ""
+	Local nHoras      := 0
+	Local nMes, nAno
+	Local nX
+	Local nReg		  := 0
+	Local cPerAnt	  := ""
+	Local cKey		  := ""
+	Local cInicio	  := ""
+
+	Local dDataLibRh
+	Local cPerCorrente	:= ""
+	Local cSemCorrente	:= ""
+	Local cMesCorrente 	:= ""
+	Local cAnoCorrente 	:= ""
+
+	Local nTcfDadt		:= if(lTerminal,getmv("MV_TCFDADT",,0),0)		// indica o dia a partir do qual esta liberada a consulta ao TCF
+	Local nTcfDfol		:= if(lTerminal,getmv("MV_TCFDFOL",,0),0)		// indica a quantidade de dias a somar ou diminuir no ultimo dia do mes corrente para liberar a consulta do TCF
+	Local nTcfD131		:= if(lTerminal,getmv("MV_TCFD131",,0),0)		// indica o dia a partir do qual esta liberada a consulta ao TCF
+	Local nTcfD132		:= if(lTerminal,getmv("MV_TCFD132",,0),0)		// indica o dia a partir do qual esta liberada a consulta ao TCF
+	Local nTcfDext		:= if(lTerminal,getmv("MV_TCFDEXT",,0),0)		// indica o dia a partir do qual esta liberada a consulta ao TCF
+
+	Private tamanho     := "M"
+	Private limite		:= 132
+	Private cDtPago     := ""
+	Private cPict1		:=	"@E 999,999,999.99"
+	Private cPict2 		:= "@E 99,999,999.99"
+	Private cPict3 		:=	"@E 999,999.99"
+	Private cTipoRot 	:= PosAlias("SRY", cRoteiro, SRA->RA_FILIAL, "RY_TIPO")
+	Private aVerbasFunc := {}
+	Private cRotBlank
+	Private nHraExtra 	:= 0
+	Private nPagoDom	:= 0
+
+	If MsDecimais(1) == 0
+		cPict1	:=	"@E 99,999,999,999"
+		cPict2 	:=	"@E 9,999,999,999"
+		cPict3 	:=	"@E 99,999,999"
+	Endif
+
+	// Ajuste do tipo da variavel
+	nTcfDadt	:= if(valtype(ntcfdadt)=="C",val(ntcfdadt),ntcfdadt)
+	nTcfD131	:= if(valtype(nTcfD131)=="C",val(nTcfD131),nTcfD131)
+	nTcfD132	:= if(valtype(nTcfD132)=="C",val(nTcfD132),nTcfD132)
+	nTcfDfol	:= if(valtype(ntcfdfol)=="C",val(ntcfdfol),ntcfdfol)
+	nTcfDext	:= if(valtype(ntcfdext)=="C",val(ntcfdext),ntcfdext)
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//| Verifica se o Mes solicitado esta liberado para consulta no  |
+	//| terminal de consulta do funcionario.                         |
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	If lTerminal
+
+		dbSelectArea("RCH")
+		dbSetOrder(6)
+		cKey    := "xFilial('RCH') + cProcesso" + IIf(cRoteiro == "EXT", "", " + cRoteiro")
+		cInicio := "RCH_FILIAL + RCH_PROCES" + IIf(cRoteiro == "EXT", "", " + RCH_ROTEIR")
+
+		DbSeek( &(cKey))
+		If Eof()
+			cRotBlank 	:= Space(GetSx3Cache( "RCH_ROTEIR", "X3_TAMANHO" ))
+			cKey := "xFilial('RCH') + cProcesso " + IIf(cRoteiro == "EXT", "", " + cRotBlank")
+			cInicio := "RCH_FILIAL + RCH_PROCES " + IIf(cRoteiro == "EXT", "", " + RCH_ROTEIR")
+			DbSeek( &(cKey))
+		EndIf
+		If !Eof()
+			While RCH->( !Eof() .and. &(cInicio) == &(cKey))
+				If Empty(RCH->RCH_DTFECH)
+					cPerCorrente := RCH->RCH_PER
+					cSemCorrente := RCH->RCH_NUMPAG
+					cMesCorrente := RCH->RCH_MES
+					cAnoCorrente := RCH->RCH_ANO
+					Exit
+				EndIf
+				RCH->( dbSkip() )
+			EndDo
+		EndIf
+
+		If	(cPerCorrente == cPeriodo .AND. cSemCorrente == Semana)  .OR. ;
+		( MesAno(dDataRef) >= (cAnoCorrente + cMesCorrente) )
+
+			If  cTipoRot == "2" //Adiantamento
+				If ( MesAno(dDataRef) > (cAnoCorrente + cMesCorrente) ) .Or.;
+				( If(MesAno(Date()) == (cAnoCorrente + cMesCorrente), Day(Date()) < nTCFDADT,.F.) )
+					Return( IF( lTerminal <> NIL .And. lTerminal , cHtml , NIL ) )
+				EndIf
+			ElseIf cTipoRot == "1" .and. !empty(nTCFDFOL) //Folha
+				dDataLibRh := fMontaDtTcf(cMesCorrente + cAnoCorrente,nTCFDFOL)
+				If Date() < dDataLibRH
+					Return( IF( lTerminal <> NIL .And. lTerminal , cHtml , NIL ) )
+				Endif
+			ElseIf cTipoRot == "5" //1a parcela 13o Salario
+				If ( MesAno(dDataRef) > (cAnoCorrente + cMesCorrente) ) .Or.;
+				( If(MesAno(Date()) == (cAnoCorrente + cMesCorrente), Day(Date()) < nTCFD131,.F.) )
+					Return( IF( lTerminal <> NIL .And. lTerminal , cHtml , NIL ) )
+				Endif
+			ElseIf cTipoRot == "6" //2a parcela 13o Salario
+				If ( MesAno(dDataRef) > (cAnoCorrente + cMesCorrente) ) .Or.;
+				( If(MesAno(Date()) == (cAnoCorrente + cMesCorrente), Day(Date()) < nTCFD132,.F.) )
+					Return( IF( lTerminal <> NIL .And. lTerminal , cHtml , NIL ) )
+				Endif
+			ElseIf cRoteiro == "EXT"  // Valores Extras
+				If ( MesAno(dDataRef) > (cAnoCorrente + cMesCorrente) ) .Or.;
+				( If(MesAno(Date()) == (cAnoCorrente + cMesCorrente), Day(Date()) < nTCFDEXT,.F.) )
+					Return( IF( lTerminal <> NIL .And. lTerminal , cHtml , NIL ) )
+				Endif
+			EndIf
+		Endif
+	Endif
+
+	//If cPaisLoc == "ARG"
+	//	nMes := Month(dDataRef) - 1
+	//	nAno := Year(dDataRef)
+	//	If nMes == 0
+	//		nMes := 12
+	//		nAno := nAno - 1
+	//	Endif
+	//	If nMes < 0
+	//		nMes := 12 - ( nMes * -1 )
+	//		nAno := nAno - 1
+	//	Endif
+	//
+	//	dbSelectArea( "RCH")
+	//	dbSetOrder(6)
+	//	dbSeek(xFilial("RCH") + cProcesso + cRoteiro + Transform(nAno,"9999") + Transform(nMes,"99"))
+	//	If Eof()
+	//		dbSeek(xFilial("RCH") + cProcesso + Space(GetSx3Cache( "RCH_ROTEIR", "X3_TAMANHO" )) +Transform(nAno,"9999") + Transform(nMes,"99"))
+	//	EndIF
+	//	If !Eof()
+	//		cPerAnt := RCH->RCH_PER + RCH->RCH_NUMPAG
+	//	EndIf
+	//Endif
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Selecionando a Ordem de impressao escolhida no parametro.    ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	dbSelectArea( "SRA")
+	//alert(nOrdem)
+	nOrdem:= 5	//Ordenado por Centro de costo y nombre	//SRA->RA_FILIAL + SRA->RA_CC + SRA->RA_NOME
+	IF !( lTerminal )
+		If nOrdem == 1
+			dbSetOrder(1)
+		ElseIf nOrdem == 2
+			dbSetOrder(2)
+		ElseIf nOrdem == 3
+			dbSetOrder(3)
+		Elseif nOrdem == 4
+			cArqNtx  := CriaTrab(NIL,.f.)
+			cIndCond :="RA_Filial + RA_Chapa + RA_Mat"
+			IndRegua("SRA",cArqNtx,cIndCond,,,STR0012)		//"Selecionando Registros..."
+		ElseIf nOrdem == 5
+			dbSetOrder(8)
+		Endif
+
+		dbGoTop()
+
+		If nTipRel == 2
+			@ LI,00 PSAY AvalImp(Limite)
+		Endif
+	EndIF
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Selecionando o Primeiro Registro e montando Filtro.          ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	If nOrdem == 1 .or. lTerminal
+		cInicio := "SRA->RA_FILIAL + SRA->RA_MAT"
+		IF !( lTerminal )
+			dbSeek(cFilDe + cMatDe,.T.)
+			cFim    := cFilAte + cMatAte
+		Else
+			cFim    := &(cInicio)
+		EndIF
+	ElseIf nOrdem == 2
+		dbSeek(cFilDe + cCcDe + cMatDe,.T.)
+		cInicio  := "SRA->RA_FILIAL + SRA->RA_CC + SRA->RA_MAT"
+		cFim     := cFilAte + cCcAte + cMatAte
+	ElseIf nOrdem == 3
+		dbSeek(cFilDe + cNomDe + cMatDe,.T.)
+		cInicio := "SRA->RA_FILIAL + SRA->RA_NOME + SRA->RA_MAT"
+		cFim    := cFilAte + cNomAte + cMatAte
+	ElseIf nOrdem == 4
+		dbSeek(cFilDe + ChapaDe + cMatDe,.T.)
+		cInicio := "SRA->RA_FILIAL + SRA->RA_CHAPA + SRA->RA_MAT"
+		cFim    := cFilAte + ChapaAte + cMatAte
+	ElseIf nOrdem == 5
+		dbSeek(cFilDe + cCcDe + cNomDe,.T.)
+		cInicio  := "SRA->RA_FILIAL + SRA->RA_CC + SRA->RA_NOME"
+		cFim     := cFilAte + cCcAte + cNomAte
+	Endif
+
+	dbSelectArea("SRA")
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Carrega Regua Processamento                                  ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	IF nTipRel # 3
+		SetRegua(RecCount())	// Total de elementos da regua
+	Else
+		IF !( lTerminal )
+			GPProcRegua(RecCount())// Total de elementos da regua
+		EndIF
+	EndIF
+
+	TOTVENC:= TOTDESC:= FLAG:= CHAVE := 0
+
+	Desc_Fil := Desc_End := DESC_CC:= DESC_FUNC:= ""
+	Desc_Comp:= Desc_Est := Desc_Cid:= ""
+	DESC_MSG1:= DESC_MSG2:= DESC_MSG3:= Space(01)
+	cFilialAnt := "  "
+	Vez        := 0
+	OrdemZ     := 0
+
+	If nTipRel == 2 .and. !( lTerminal )
+		If cPaisLoc=="PTG" .OR. cPaisLoc=="BOL"	//RS
+			oPrint:= TMSPrinter():New(Titulo)//Emissao de Recibos de Pagamentos
+			oPrint:SetPortrait()            //Define que a impressao deve ser RETRATO//
+
+			DEFINE FONT oFont08 NAME "Arial" SIZE 0,08 OF oPrint
+			DEFINE FONT oFont08N NAME "Arial" SIZE 0,08 Bold OF oPrint
+			DEFINE FONT oFont09 NAME "Arial" SIZE 0,09 OF oPrint
+			DEFINE FONT oFont09N NAME "Arial" SIZE 0,09 Bold OF oPrint
+			DEFINE FONT oFont10 NAME "Arial" SIZE 0,10 OF oPrint
+			DEFINE FONT oFont10N NAME "Arial" SIZE 0,10 Bold  OF oPrint
+			DEFINE FONT oFont105N NAME "Arial" SIZE 0,10.5 Bold  OF oPrint
+			DEFINE FONT oFont11N NAME "Arial" SIZE 0,11 Bold  OF oPrint
+			DEFINE FONT oFont12 NAME "Arial" SIZE 0,12 OF oPrint
+			DEFINE FONT oFont12N NAME "Arial" SIZE 0,12 Bold  OF oPrint
+			DEFINE FONT oFont13N NAME "Arial" SIZE 0,13 Bold  OF oPrint
+			DEFINE FONT oFont14N NAME "Arial" SIZE 0,16 Bold  OF oPrint
+			DEFINE FONT oFont20N NAME "Arial" SIZE 0,20 Bold  OF oPrint
+			DEFINE FONT oFont24N NAME "Arial" SIZE 0,24 Bold  OF oPrint
+			DEFINE FONT oFont40N NAME "Arial" SIZE 0,40 OF oPrint
+
+		Endif
+	Endif
+
+	While SRA->( !Eof() .And. &cInicio <= cFim )
+
+		//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+		//³ Movimenta Regua Processamento                                ³
+		//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+		IF !( lTerminal )
+
+			IF nTipRel # 3
+				IncRegua()  // Anda a regua
+			ElseIF !( lTerminal )
+				GPIncProc(SRA->RA_FILIAL+" - "+SRA->RA_MAT+" - "+SRA->RA_NOME)
+			EndIF
+
+			If lEnd
+				@Prow()+1,0 PSAY cCancel
+				Exit
+			Endif
+
+			//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+			//³ Consiste Parametrizacao do Intervalo de Impressao            ³
+			//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+			If	(SRA->RA_CHAPA < ChapaDe) .Or. (SRA->Ra_CHAPa > ChapaAte) .Or. ;
+			(SRA->RA_NOME < cNomDe)   .Or. (SRA->Ra_NOME > cNomAte)   .Or. ;
+			(SRA->RA_MAT < cMatDe)    .Or. (SRA->Ra_MAT > cMatAte)    .Or. ;
+			(SRA->RA_CC < cCcDe)      .Or. (SRA->Ra_CC > cCcAte)      .Or. ;
+			(SRA->RA_DEPTO < cSecDe)  .Or. (SRA->RA_DEPTO > cSecAte)
+				SRA->(dbSkip(1))
+				Loop
+			EndIf
+
+		EndIF
+
+		aLanca:={}         // Zera Lancamentos
+		aProve:={}         // Zera Lancamentos
+		aDesco:={}         // Zera Lancamentos
+		aBases:={}         // Zera Lancamentos
+		nAteLim := nBaseFgts := nFgts := nBaseIr := nBaseIrFe := 0.00
+		nNetVal := 0
+		nNetHor := 0
+
+		Ordem_rel := 1     // Ordem dos Recibos
+
+		//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+		//³ Verifica Data Demissao         ³
+		//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+		cSitFunc := SRA->RA_SITFOLH
+		dDtPesqAf:= CTOD("01/" + Left(cMesAnoRef,2) + "/" + Right(cMesAnoRef,4),"DDMMYY")
+		If cSitFunc == "D" .And. (!Empty(SRA->RA_DEMISSA) .And. MesAno(SRA->RA_DEMISSA) > MesAno(dDtPesqAf))
+			cSitFunc := " "
+		Endif
+
+		IF !( lTerminal )
+
+			//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+			//³ Consiste situacao e categoria dos funcionarios			     |
+			//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+			If !( cSitFunc $ cSituacao ) .OR.  ! ( SRA->RA_CATFUNC $ cCategoria )
+				dbSkip()
+				Loop
+			Endif
+			If cSitFunc $ "D" .And. Mesano(SRA->RA_DEMISSA) # Mesano(dDataRef)
+				dbSkip()
+				Loop
+			Endif
+
+			//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+			//³ Consiste controle de acessos e filiais validas				 |
+			//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+			If !(SRA->RA_FILIAL $ fValidFil()) .Or. !Eval(cAcessaSRA)
+				dbSkip()
+				Loop
+			EndIf
+
+		EndIF
+
+		If SRA->RA_Filial # cFilialAnt
+			If ! Fp_CodFol(@aCodFol,Sra->Ra_Filial) .Or. ! fInfo(@aInfo,Sra->Ra_Filial)
+				Exit
+			Endif
+			Desc_Fil := aInfo[3]
+			Desc_End := aInfo[4]                // Dados da Filial
+			Desc_CGC := aInfo[8]
+			DESC_MSG1:= DESC_MSG2:= DESC_MSG3:= Space(01)
+			Desc_Est := Substr(fDesc("SX5","12"+aInfo[6],"X5DESCRI()"),1,12)
+			Desc_Comp:= aInfo[14]        			// Complemento Cobranca
+			Desc_Cid := aInfo[05]
+			// MENSAGENS
+			If MENSAG1 # SPACE(3)
+				If FPHIST82(SRA->RA_FILIAL,"06",MENSAG1)
+					DESC_MSG1 := Left(SRX->RX_TXT,30)
+				Endif
+			Endif
+
+			If MENSAG2 # SPACE(3)
+				If FPHIST82(SRA->RA_FILIAL,"06",MENSAG2)
+					DESC_MSG2 := Left(SRX->RX_TXT,30)
+				Endif
+			Endif
+
+			If MENSAG3 # SPACE(3)
+				If FPHIST82(SRA->RA_FILIAL,"06",MENSAG3)
+					DESC_MSG3 := Left(SRX->RX_TXT,30)
+				Endif
+			Endif
+			dbSelectArea("SRA")
+			cFilialAnt := SRA->RA_FILIAL
+		Endif
+
+		Totvenc := Totdesc := 0
+
+		//Retorna as verbas do funcionario, de acordo com os periodos selecionados
+		aVerbasFunc	:= RetornaVerbasFunc(	SRA->RA_FILIAL					,; // Filial do funcionario corrente
+		SRA->RA_MAT	  					,; // Matricula do funcionario corrente
+		NIL								,; //
+		cRoteiro	  					,; // Roteiro selecionado na pergunte
+		NIL			  					,; // Array com as verbas que deverão ser listadas. Se NIL retorna todas as verbas.
+		aPerAberto	  					,; // Array com os Periodos e Numero de pagamento abertos
+		aPerFechado	 	 				 ) // Array com os Periodos e Numero de pagamento fechados
+
+		If cRoteiro <> "EXT"
+			For nReg := 1 to Len(aVerbasFunc)
+				If (Len(aPerAberto) > 0 .AND. !Eval(cAcessaSRC)) .OR. (Len(aPerFechado) > 0 .AND. !Eval(cAcessaSRD)) .Or.;
+				( aVerbasFunc[nReg,7] <= 0 )
+					dbSkip()
+					Loop
+				EndIf
+
+				If cPaisLoc $ "ANG" .AND. cBaseAux = "N"
+					if PosSrv( aVerbasFunc[nReg,3] , SRA->RA_FILIAL , "RV_TIPOCOD" ) $ "34"
+						dbSkip()
+						Loop
+					Endif
+				Endif
+
+				If PosSrv( aVerbasFunc[nReg,3] , SRA->RA_FILIAL , "RV_TIPOCOD" ) == "1"
+					//				If cPaisLoc == "PAR" .and. Eval(cNroHoras) == 30
+					//					LocGHabRea(Ctod("01/"+SubStr(DTOC(dDataRef),4)), Ctod(StrZero(F_ULTDIA(dDataRef),2)+"/"+Strzero(Month(dDataRef),2)+"/"+right(str(Year(dDataRef)),2),"ddmmyy"),@nHoras)
+					//				Else
+					nHoras := Eval(cNroHoras)
+					//				Endif
+					U_EfSomaPdRec("P",aVerbasFunc[nReg,3],nHoras,aVerbasFunc[nReg,7])
+					TOTVENC += aVerbasFunc[nReg,7]
+
+					If cPaisLoc == "BOL"       //soma Horas Extras para localizacao Bolivia
+						If PosSrv(aVerbasFunc[nReg,3], SRA->RA_FILIAL, "RV_HE") == "S"
+							nHraExtra:= nHraExtra + aVerbasFunc[nReg,6]
+						Endif
+						//Soma a verba de Horas Trabalhadas no Domingo id 0779
+
+						If (aVerbasFunc[nReg,3] == aCodFol[779,1])
+							nPagoDom:= nPagoDom + aVerbasFunc[nReg,6]
+						Endif
+					Endif
+
+				Elseif SRV->RV_TIPOCOD == "2"
+					U_EfSomaPdRec("D",aVerbasFunc[nReg,3],Eval(cNroHoras),aVerbasFunc[nReg,7])
+					TOTDESC += aVerbasFunc[nReg,7]
+				Elseif SRV->RV_TIPOCOD $ "3/4"
+					//No Paraguai imprimir somente o valor liquido
+					If cPaisLoc <> "PAR" .Or. (aVerbasFunc[nReg,3] == aCodFol[047,1])
+						U_EfSomaPdRec("B",aVerbasFunc[nReg,3],Eval(cNroHoras),aVerbasFunc[nReg,7])
+					Endif
+				Endif
+
+				If (aVerbasFunc[nReg,3] $ aCodFol[10,1]+'*'+aCodFol[15,1]+'*'+aCodFol[27,1])
+					nBaseIr += aVerbasFunc[nReg,7]
+				ElseIf (aVerbasFunc[nReg,3] $ aCodFol[13,1]+'*'+aCodFol[19,1])
+					nAteLim += aVerbasFunc[nReg,7]
+				Elseif (aVerbasFunc[nReg,3] $ aCodFol[108,1]+'*'+aCodFol[17,1])
+					nBaseFgts += aVerbasFunc[nReg,7]
+				Elseif (aVerbasFunc[nReg,3] $ aCodFol[109,1]+'*'+aCodFol[18,1])
+					nFgts += aVerbasFunc[nReg,7]
+				Elseif (aVerbasFunc[nReg,3] == aCodFol[16,1])
+					nBaseIrFe += aVerbasFunc[nReg,7]
+				Endif
+			Next nReg
+
+			//RS Verifica si el concepto 998 es negativo.
+			If TOTDESC > TOTVENC
+				If Len(aPerAberto) > 0
+					nNetVal := GetAdvFVal("SRC","RC_VALOR",xFilial("SRC")+SRA->RA_MAT+fGetCodFol("0126"),1,0)
+					nNetHor := GetAdvFVal("SRC","RC_HORAS",xFilial("SRC")+SRA->RA_MAT+fGetCodFol("0126"),1,0)
+				ElseIf Len(aPerFechado) > 0
+					nNetVal := GetAdvFVal("SRD","RD_VALOR",xFilial("SRD")+SRA->RA_MAT+cPeriodo+fGetCodFol("0126"),1,0)
+					nNetHor := GetAdvFVal("SRD","RD_HORAS",xFilial("SRD")+SRA->RA_MAT+cPeriodo+fGetCodFol("0126"),1,0)
+				endif
+				If nNetVal < 0
+					U_EfSomaPdRec("D",fGetCodFol("0126"),nNetHor,nNetVal)
+					TOTDESC += nNetVal
+				endif
+			EndIf
+		Elseif cRoteiro == "EXT"
+			dbSelectArea("SR1")
+			dbSetOrder(1)
+			If dbSeek( SRA->RA_FILIAL + SRA->RA_MAT )
+				While !Eof() .And. SRA->RA_FILIAL + SRA->RA_MAT ==	SR1->R1_FILIAL + SR1->R1_MAT
+					If Semana # "99"
+						If SR1->R1_SEMANA # Semana
+							dbSkip()
+							Loop
+						Endif
+					Endif
+					If !Eval(cAcessaSR1)
+						dbSkip()
+						Loop
+					EndIf
+					If PosSrv( SR1->R1_PD , SRA->RA_FILIAL , "RV_TIPOCOD" ) == "1"
+						U_EfSomaPdRec("P",SR1->R1_PD,SR1->R1_HORAS,SR1->R1_VALOR)
+						TOTVENC = TOTVENC + SR1->R1_VALOR
+					Elseif SRV->RV_TIPOCOD == "2"
+						U_EfSomaPdRec("D",SR1->R1_PD,SR1->R1_HORAS,SR1->R1_VALOR)
+						TOTDESC = TOTDESC + SR1->R1_VALOR
+					Elseif SRV->RV_TIPOCOD $ "3/4"
+						U_EfSomaPdRec("B",SR1->R1_PD,SR1->R1_HORAS,SR1->R1_VALOR)
+					Endif
+					dbskip()
+				Enddo
+			Endif
+		Endif
+
+		//	If cPaisLoc == "ARG"
+		//		dbSelectArea("SRD")
+		//		If dbSeek(SRA->RA_FILIAL + SRA->RA_MAT + cProcesso + cRoteiro + cPerAnt)
+		//			cDtPago := dtoc(SRD->RD_DATPGT)
+		//		Endif
+		//	Endif
+		dbSelectArea("SRA")
+
+		If TOTVENC = 0 .And. TOTDESC = 0
+			dbSkip()
+			Loop
+		Endif
+
+		If nTipRel == 1 .and. !( lTerminal )
+			fImpressao()   // Impressao do Recibo de Pagamento
+			IF !( lTerminal )
+				If Vez = 0  .and. nTipRel # 3  .and. aReturn[5] # 1
+					//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+					//³ Descarrega teste de impressao                                ³
+					//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+					fImpTeste(cString)
+					If !lRetCanc
+						Exit
+					Endif
+					TotDesc := TotVenc := 0
+					If nTipRel == 2
+						Loop
+					Endif
+
+				ENDIF
+			EndIF
+		ElseIf nTipRel == 2 .and. !( lTerminal )
+			For nX := 1 to If(cPaisLoc <> "ARG",1,2)
+				If cPaisLoc=="PTG"
+					fImpreGraf()
+				Else
+					fImpreZebr()
+				Endif
+			Next nX
+			ASize(AProve,0)
+			ASize(ADesco,0)
+			ASize(aBases,0)
+		ElseIf nTipRel == 3 .or. lTerminal
+			//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+			//³ Ponto de entrada para alterar layout do recibo.				 |
+			//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+			If ExistBlock("GP030HTM")
+				cHtml := ExecBlock("GP030HTM",.F.,.F.)
+			Else
+				cHtml := fSendDPgto(lTerminal)   //Monta o corpo do e-mail e envia-o
+			Endif
+		Endif
+
+		dbSelectArea("SRA")
+		SRA->( dbSkip() )
+		TOTDESC := TOTVENC := 0
+
+	EndDo
+
+	If nTipRel == 2 .and. !( lTerminal )
+		If cPaisLoc=="PTG" .OR. cPaisLoc=="BOL"	//RS
+			oPrint:Preview()
+		Endif
+	Endif
+
+	IF !( lTerminal ).And.cPaisLoc<>"PTG"
+		//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+		//³ Termino do relatorio                                         ³
+		//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+		dbSelectArea("SRC")
+		dbSetOrder(1)          // Retorno a ordem 1
+		dbSelectArea("SRD")
+		dbSetOrder(1)          // Retorno a ordem 1
+		dbSelectArea("SRA")
+		SET FILTER TO
+		RetIndex("SRA")
+
+		If !(Type("cArqNtx") == "U")
+			fErase(cArqNtx + OrdBagExt())
+		Endif
+
+		Set Device To Screen
+
+		If lEnvioOK
+			APMSGINFO(STR0042)
+		ElseIf nTipRel== 3
+			APMSGINFO(STR0043)
+		EndIf
+		SeTPgEject(.F.)
+		nlin:= 0
+		If aReturn[5] = 1 .and. nTipRel # 3
+			/*	Set Printer To
+			Commit
+			ourspool(wnrel)*/	//RS
+		Endif
+
+		MS_FLUSH()
+
+	EndIF
+
+Return( cHtml )
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³fImpressao³ Autor ³ R.H. - Ze Maria       ³ Data ³ 14.03.95 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ IMRESSAO DO RECIBO FORMULARIO CONTINUO                     ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ fImpressao()                                               ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                            ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+Static Function fImpressao()
+
+	Local lLinhaRoda := .T.	// Variavel que informa se foram impressas todas as linhas do miolo do recibo.
+	Local nConta  := 0
+	Local nContr  := 0
+	Local nContrT :=0
+	Private nLinhas:=16              // Numero de Linhas do Miolo do Recibo
+
+	Ordem_Rel := 1
+
+	fCabec()
+
+	For nConta = 1 To Len(aLanca)
+		fLanca(nConta)
+		nContr ++
+		nContrT ++
+		If nContr = nLinhas .And. nContrT < Len(aLanca)
+			nContr:=0
+			Ordem_Rel ++
+			fContinua()
+			fCabec()
+		Endif
+	Next nConta
+	Li:=Li -1
+	Li+=IF( lLinhaRoda := (nLinhas-nContr) == 0,1,(nLinhas-nContr))
+	fRodape(lLinhaRoda)
+
+Return Nil
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³fImpreZebr³ Autor ³ R.H. - Ze Maria       ³ Data ³ 14.03.95 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ IMRESSAO DO RECIBO FORMULARIO ZEBRADO                      ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ fImpreZebr()                                               ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                            ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+Static Function fImpreZebr()
+
+	Local nConta    := nContr := nContrT:=0
+
+	If li >= 60
+		li := 0
+	Endif
+	if cPaisLoc == "BOL"
+		fCabecZBol()
+	Else
+		fCabecZ()
+	Endif
+	If cPaisLoc == "BOL"
+		//	fLancaZBol(nConta)	//RS
+		oPrint:EndPage()
+	Else
+		fLancaZ(nConta)
+	Endif
+
+Return Nil
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³fImpreGraf³ Autor ³ SSERVICE				³ Data ³ 05.05.08 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ IMRESSAO DO RECIBO FORMULARIO GRAFICO                      ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ fImpreGraf()                                               ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                            ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+Static Function fImpreGraf()
+
+	Local nConta    := nContr := nContrT:=0
+
+	//fcabecg()
+	fLancaG(nConta)
+
+Return Nil
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³fCabecZBolºAutor  ³Erika               º Data ³  19/03/08   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³ Impressao do Cabecalho - Bolivia                           º±±
+±±º          ³ Zebrado                                                    º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ AP6                                                        º±±
+±±ÈÍÍÍÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+Static Function fCabecZBol()
+	Local cCodFunc		:= ""		//-- codigo da Funcao do funcionario
+	Local cDescFunc		:= ""		//-- Descricao da Funcao do Funcionario
+	Local cSec        := ""
+	Local nTc			:= 0		//-- T. C.
+	Local dData         := "00/00/00"
+	Local nCreIva		:= 0		//RS
+	Local aDatos[NDATOS]
+
+	Local cCodFunc		:= ""		//-- codigo da Funcao do funcionario
+	Local cDescFunc		:= ""		//-- Descricao da Funcao do Funcionario
+	Local cStartPath	:= GetSrvProfString("Startpath","")
+
+	oPrint:StartPage()
+	//cFLogo := cStartPath + "LGBPA1"+Subs(SM0->M0_CODFIL,1,4)+".bmp"
+	
+	
+	cFLogo := cStartPath + "lgrl01.bmp" //+Subs(SM0->M0_CODFIL,1,4)+".bmp"
+	cFLogo2:= cStartPath + "lgrl01.bmp"//+Subs(SM0->M0_CODFIL,1,4)+".bmp"
+
+	/*ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	³ Carrega Funcao do Funcion. de acordo com a Dt Referencia     ³
+	ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ*/
+	fBuscaFunc(dDataRef, @cCodFunc, @cDescFunc)
+
+	/*
+	//calcula o ultimo dia do mes do Periodo selecionado para buscar o campo nTc
+	dData:=  F_UltDia(dDataRef)
+	dData:= DaySum( dDataRef , dData-Day(dDataRef) )
+	nTc := fTabela( "S009", 1, 5, dData)
+
+	LI++
+	@ LI,00  PSAY "|"
+	@ LI,100 PSAY STR0141 + Transform(nTc, "99.99999") 		//T.C.:
+	@ LI,131 PSAY "|"*/
+
+	//carrega departamento
+	cSec:= fDesc("CTT", SRA->RA_CC, "CTT->CTT_DESC01", 30)
+	aDatos[NSECCION]:= cSec	//Seccion
+
+	//carrega IVA mes siguiente y dias trabajados	//RS
+	If Len(aPerAberto) > 0
+		nDiaTra := GetAdvFVal("SRC","RC_HORAS",XFILIAL("SRC")+SRA->RA_MAT+"001",1,0)
+		nDiaTra := If( nDiaTra == 0, GetAdvFVal("SRC","RC_HORAS",XFILIAL("SRC")+SRA->RA_MAT+"003",1,0), nDiaTra )
+		
+		
+		aDatos[NDIASTRAB]	:= nDiaTra	//Dias Trabajados
+		aDatos[NDOMINICAL]	:= GetAdvFVal("SRC","RC_HORAS",XFILIAL("SRC")+SRA->RA_MAT+fGetCodFol("0779"),1,0)	//Dominical
+		aDatos[NRN]			:= GetAdvFVal("SRC","RC_HORAS",XFILIAL("SRC")+SRA->RA_MAT+CPDRN,1,0)	//Recargo Nocturno
+		aDatos[NHE]			:= GetAdvFVal("SRC","RC_HORAS",XFILIAL("SRC")+SRA->RA_MAT+CPDHE,1,0)	//Horas Extras
+		aDatos[NIVAANT]		:= GetAdvFVal("SRC","RC_HORAS",XFILIAL("SRC")+SRA->RA_MAT+CPDIVAANT,1,0)	//IVA - Saldo Anterior
+		aDatos[NIVACR]		:= GetAdvFVal("SRC","RC_HORAS",XFILIAL("SRC")+SRA->RA_MAT+fGetCodFol("0732"),1,0)	//IVA - CR
+		aDatos[NIVAACT]		:= GetAdvFVal("SRC","RC_HORAS",XFILIAL("SRC")+SRA->RA_MAT+fGetCodFol("0733"),1,0)	//IVA - Saldo Actual
+		aDatos[NAFPBASE]	:= GetAdvFVal("SRC","RC_VALOR",XFILIAL("SRC")+SRA->RA_MAT+fGetCodFol("0731"),1,0)	//Base/AFP Laboral/Patronal
+		
+		
+	ElseIf Len(aPerFechado) > 0
+		nDiaTra := GetAdvFVal("SRD","RD_HORAS",XFILIAL("SRD")+SRA->RA_MAT+cPeriodo+"001",1,0)
+		nDiaTra := If( nDiaTra == 0, GetAdvFVal("SRD","RD_HORAS",XFILIAL("SRD")+SRA->RA_MAT+cPeriodo+"003",1,0), nDiaTra )
+		
+		aDatos[NDIASTRAB]	:= nDiaTra	//Dias Trabajados
+		aDatos[NDOMINICAL]	:= GetAdvFVal("SRD","RD_HORAS",XFILIAL("SRD")+SRA->RA_MAT+cPeriodo+fGetCodFol("0779"),1,0)	//Dominical
+		aDatos[NRN]			:= GetAdvFVal("SRD","RD_HORAS",XFILIAL("SRD")+SRA->RA_MAT+cPeriodo+CPDRN,1,0)	//Recargo Nocturno
+		aDatos[NHE]			:= GetAdvFVal("SRD","RD_HORAS",XFILIAL("SRD")+SRA->RA_MAT+cPeriodo+CPDHE,1,0)	//Horas Extras
+		aDatos[NIVAANT]		:= GetAdvFVal("SRD","RD_HORAS",XFILIAL("SRD")+SRA->RA_MAT+cPeriodo+CPDIVAANT,1,0)	//IVA - Saldo Anterior
+		aDatos[NIVACR]		:= GetAdvFVal("SRD","RD_HORAS",XFILIAL("SRD")+SRA->RA_MAT+cPeriodo+fGetCodFol("0732"),1,0)	//IVA - CR
+		aDatos[NIVAACT]		:= GetAdvFVal("SRD","RD_HORAS",XFILIAL("SRD")+SRA->RA_MAT+cPeriodo+fGetCodFol("0733"),1,0)	//IVA - Saldo Actual
+		aDatos[NAFPBASE]	:= GetAdvFVal("SRD","RD_VALOR",XFILIAL("SRD")+SRA->RA_MAT+cPeriodo+fGetCodFol("0731"),1,0)	//Base/AFP Laboral/Patronal
+	EndIf
+
+	CabBolPag(0, cFLogo, cFLogo2, aDatos)
+	CabBolPag(1600, cFLogo, cFLogo2, aDatos)
+	//fLancaZBol(0, cFLogo, cFLogo2, nCreIva, nDiaTra, cDepto)
+	//fLancaZBol(1700, cFLogo, cFLogo2, nCreIva, nDiaTra, cDepto)
+
+	//RS
+	nPagoDom	:= 0
+	nHraExtra	:= 0
+Return Nil
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³fLancaZBol³ Autor ³ Erika                 ³ Data ³ 19/03/08 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Impressao das Verbas (Lancamentos) Zebrado (Bolivia)       ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ fLancaZBol()                                               ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                            ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+Static Function fLancaZBol(nLinB, cFLogo, cFLogo2, nCreIva, nDiaTra, cDepto)   // Impressao dos Lancamentos
+
+	Local nTermina  := 0
+	Local nCont     := 0
+	Local nCont1    := 0
+	Local nValidos  := 0
+	Local dFechPago := RCH->RCH_DTPAGO
+	Local cDescRot	:= PosAlias("SRY", cRoteiro, SRA->RA_FILIAL, "RY_DESC")
+	Private nNroLin := 60
+
+	cDescRot := if(cRoteiro=='AGU','     ','')+allTrim(cDescRot)
+	oPrint:SayBitmap(nLinB+100,090, cFLogo,3000,2000)//Union01.bmp
+	oPrint:Say(nLinB+80,1950,"UNION CENTRO VETERINARIO S.R.L.",oArial08N)
+
+	cNit := posicione("RCC",1,xFilial("RCC") + "S007","RCC_CONTEU")
+	cNit := SubStr(cNit,30,10)
+	oPrint:Say(nLinB+130,1950,"N.I.T. : " + Alltrim(cNit),oArial08N)
+
+	cNrEmplea := posicione("RCC",1,xFilial("RCC") + "S007","RCC_CONTEU")
+	cNrEmplea := SubStr(cNrEmplea,11,10)
+	oPrint:Say(nLinB+180,1950,"Nro. Empleador: " + Alltrim(cNrEmplea),oArial08N)
+
+	oPrint:Say(nLinB+105,1050,STR0133,oArial10N)//"BOLETA DE PAGO"
+
+	oPrint:Box (nLinB+390, 0050, nLinB+310, 0800) //Recuadro
+	oPrint:Say(nLinB+270,250, "NOMBRE Y APELLIDO" ,oArial09N)
+	oPrint:Say(nLinB+340,150,SRA->RA_NOME,oArial08N)
+
+	oPrint:Box (nLinB+390, 1500, nLinB+310, 2500) //Recuadro
+	oPrint:Say(nLinB+340,1550, "CARGO: " + Alltrim(fDesc("SRJ",SRA->RA_CODFUNC,"RJ_DESC")),oArial08N)
+
+	oPrint:Box (nLinB+470, 1500, nLinB+390, 2500) //Recuadro
+	oPrint:Say(nLinB+420,1550, "SALDO DE VACACIONES: ",oArial08N)
+	oPrint:Box (nLinB+550, 1500, nLinB+470, 2500) //Recuadro
+	oPrint:Say(nLinB+500,1550, "SALDO RC-IVA: " + Alltrim(Transform(nCreIva,"999999.99")),oArial08N)
+
+	cMontEmp := val(RCC->RCC_CONTEU) // numero
+	If !Empty()
+		QRYRCC := "QSRC"
+
+		cQuery := "SELECT SUBSTRING (RCC_CONTEU,11,10) AS CONTEU "
+		cQuery += "FROM " + RetSqlName("RCC") + " RCC "
+		cQuery += "WHERE RCC.D_E_L_E_T_ = ' ' "
+		cQuery += "AND RCC_CODIGO = 'S005' "
+		cQuery += "AND RCC_CHAVE = '201704' "
+
+		cQuery := ChangeQuery(cQuery)
+	endif
+
+	Private nPor := 12.71
+	Private nVari := 4
+	//TotalGanado-(TotalGanado*12.71%)-(SalarioMínimoNacional * 4)
+	cMonFac := TOTVENC- ( TOTVENC * nPor) - ( cMontEmp *nVari	)
+
+	oPrint:Box (nLinB+630, 1500, nLinB+550, 2500) //Recuadro
+	oPrint:Say(nLinB+580,1550,"MONTO APROXIMADO FACTURAS AL 100%: " + TRANS(cMonFac,cPict1),oArial08N)
+
+	cFecAdmi := DTOC(SRA->RA_ADMISSA)
+	cSalariB := SRA->RA_SALARIO
+	QRYSR9 := "QSR9"
+	//RS
+	cQuery := "SELECT * FROM " + RetSqlName("SR9") + " WHERE R_E_C_N_O_ IN ( "
+	cQuery += "IsNull((SELECT MAX(R_E_C_N_O_) FROM " + RetSqlName("SR9") + " SR9 "
+	cQuery += "WHERE SR9.D_E_L_E_T_ = ' ' AND R9_CAMPO = 'RA_ADMISSA' AND R9_MAT = '" + SRA->RA_MAT + "'"
+	cQuery += "AND SUBSTRING(R9_DESC,7,4)+SUBSTRING(R9_DESC,4,2) <= '" + cPeriodo + "' ), "
+	cQuery += "(SELECT MIN(R_E_C_N_O_) FROM " + RetSqlName("SR9") + " SR9 "
+	cQuery += "WHERE SR9.D_E_L_E_T_ = ' ' AND R9_CAMPO = 'RA_ADMISSA' AND R9_MAT = '" + SRA->RA_MAT + "')))"
+
+	cQuery := ChangeQuery(cQuery)
+	dbUseArea(.T., "TOPCONN", TCGenQry(,,cQuery), QRYSR9, .F., .T.)
+
+	dbSelectArea(QRYSR9)
+	cFecAdmi := if(!Empty((QRYSR9)->R9_DESC),(QRYSR9)->R9_DESC,cFecAdmi)
+
+	(QRYSR9)->( dbCloseArea() )
+
+	QRYSR9 := "QSR9"
+	//RS
+	cQuery := "SELECT * FROM " + RetSqlName("SR3") + " WHERE R_E_C_N_O_ IN ( "
+	cQuery += "SELECT MAX(R_E_C_N_O_) FROM " + RetSqlName("SR3")+ " SR3 "
+	cQuery += "WHERE SR3.D_E_L_E_T_ = ' ' AND R3_MAT = '" + SRA->RA_MAT
+	cQuery += "' AND SUBSTRING(R3_DATA,1,6) <= '" + cPeriodo + "' )"
+
+	cQuery := ChangeQuery(cQuery)
+	dbUseArea(.T., "TOPCONN", TCGenQry(,,cQuery), QRYSR9, .F., .T.)
+
+	dbSelectArea(QRYSR9)
+	cSalariB := if(!Empty((QRYSR9)->R3_VALOR),(QRYSR9)->R3_VALOR,cSalariB)
+	(QRYSR9)->( dbCloseArea() )
+
+	oPrint:Box (nLinB+550,0050, nLinB+470, 0300) //Recuadro
+	oPrint:Say(nLinB+430,100, "FECHA ING." ,oArial09N)
+	oPrint:Say(nLinB+500,100,cFecAdmi,oArial08N)
+
+	oPrint:Box (nLinB+550,0600, nLinB+470, 0350) //Recuadro
+	oPrint:Say(nLinB+430,390, "HABER BASICO" ,oArial09N)
+	oPrint:Say(nLinB+500,415,Alltrim(Transform(cSalariB,"999999.99")),oArial08N)
+
+	oPrint:Box (nLinB+550,0650, nLinB+470, 0900) //Recuadro
+	oPrint:Say(nLinB+430,730, "C.I.",oArial09N)
+	oPrint:Say(nLinB+500,720,SRA->RA_CIC,oArial08N)
+	oPrint:Say(nLinB+630,050, "EXPRESADO EN Bs." ,oArial09N)
+
+	/*INGRESOS-DESCUENTOS*/
+	oPrint:Box (nLinB+780,0050, nLinB+700, 2500) //Recuadro
+	oPrint:Line(nLinB+700, 1220, nLinB+1470, 1220) //Linea Vertical
+	oPrint:Say(nLinB+730,500, STR0129, oArial10)  //" I N G R E S O S "
+	oPrint:Say(nLinB+730,1680, STR0028, oArial10) //" D E S C U E N T O S"
+
+	oPrint:Say(nLinB+800,180, "CONCEPTOS", oArial10)
+	oPrint:Say(nLinB+800,1300, "CONCEPTOS", oArial10)
+	oPrint:Say(nLinB+800,0950, "IMPORTE", oArial10)
+	oPrint:Say(nLinB+800,2200, "IMPORTE", oArial10)
+	//         linea de abajo   linea de arriba
+	/*CONCEPTOS-IMPORTE*/
+	oPrint:Box (nLinB+860,0050, nLinB+780, 2500) //Recuadro
+	//         linea de abajo   linea de arriba
+	oPrint:Line(nLinB+780, 0500, nLinB+1390, 0500) //Linea Vertical
+	oPrint:Line(nLinB+780, 0800, nLinB+1390, 0800) //Linea Vertical
+	oPrint:Line(nLinB+780, 1750, nLinB+1390, 1750) //Linea Vertical
+	oPrint:Line(nLinB+780, 2050, nLinB+1390, 2050) //Linea Vertical
+	/*TOTAL GANADO-TOTAL EGRESOS*/
+	oPrint:Box (nLinB+1390,0050, nLinB+780, 2500) //Recuadro
+	/*LIQUIDO PAGABLE*/
+	oPrint:Box (nLinB+1570,0670, nLinB+1500, 1220) //Recuadro
+	oPrint:Line(nLinB+1570,0970, nLinB+1500, 0970) //Linea Vertical
+
+	//	nTermina := Max(Max(LEN(aProve),LEN(aDesco)),LEN(aBases))
+	nTermina := 12
+
+	For nCont := 1 To nTermina
+		nColsB:= 820+(50*nCont)
+		IF nCont <= LEN(aProve)
+			oPrint:Say(nLinB+nColsB,50, "   " + aProve[nCont,1],oArial08N)  //Detalle Ingresos
+			oPrint:Say(nLinB+nColsB,615, TRANSFORM(aProve[nCont,2],'999.99'),oArial08N) //Detalle Ingresos
+			oPrint:Say(nLinB+nColsB,1015, TRANSFORM(aProve[nCont,3], cPict3),oArial08N) //Detalle Ingresos
+		ENDIF
+		IF nCont <= LEN(aDesco)
+			oPrint:Say(nLinB+nColsB,1215, "   " + aDesco[nCont,1])
+			oPrint:Say(nLinB+nColsB,1825, TRANSFORM(aDesco[nCont,2],'999.99'))
+			oPrint:Say(nLinB+nColsB,2180, TRANSFORM(aDesco[nCont,3],cPict3))
+		ENDIF
+
+		//---- Soma 1 nos nValidos e Linha
+		nValidos ++
+		//	Li ++
+
+		If nValidos = 12
+
+			oPrint:Box (nLinB+1470,0050, nLinB+1390, 2500) //Recuadro
+			oPrint:Say(nLinB+nColsB+0,090, "TOTAL GANADO",oArial08N) //"| TOTAL INGRESOS" + SPACE(10)
+			oPrint:Say(nLinB+nColsB+0,950, TRANS(TOTVENC, cPict1))
+			oPrint:Say(nLinB+nColsB+0,1280, STR0126 + SPACE(10),oArial08N) //" TOTAL EGRESOS"
+			oPrint:Say(nLinB+nColsB+0,2130, TRANS(TOTDESC, cPict1))
+			oPrint:Say(nLinB+nColsB+150,25, DESC_MSG1)
+			oPrint:Say(nLinB+nColsB+100,0700, "LIQUIDO PAGABLE" + SPACE(1) + TRANS((TOTVENC-TOTDESC),cPict1)) //"LIQUIDO PAGABLE: "
+			//oPrint:Say(nLinB+nColsB+150,1950, STR0136) //"BOLIVIANOS"
+
+			//oPrint:SayBitmap(nLinB+nColsB+180,500, cFLogo2,500,170)
+
+			//oPrint:Say(nLinB+nColsB+200,25, DESC_MSG2)
+			//oPrint:Say(nLinB+nColsB+250,25, DESC_MSG3)
+			oPrint:Say(nLinB+nColsB+160,0070, REPLICATE("_",140))
+			oPrint:Say(nLinB+nColsB+230,900,"SANTA CRUZ, " + cValtoChar(Day(dFechPago)) + STR0080 + MesExtenso(Month(dFechPago)) + STR0080 + cValtoChar(Year(dFechPago)) + ".")
+			oPrint:Say(nLinB+nColsB+210,1830, "RECIBI CONFORME",oArial08N)
+			oPrint:Say(nLinB+nColsB+210,0300, "VoBo",oArial08N)
+
+		Endif
+
+	Next nCont
+
+Return Nil
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³fContinua ³ Autor ³ R.H. - Ze Maria       ³ Data ³ 14.03.95 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Impressap da Continuacao do Recibo                         ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ fContinua()                                                ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                            ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+Static Function fContinua()    // Continuacao do Recibo
+
+	Li+=1
+	@ LI,05 PSAY &cNormal + STR0037		//"CONTINUA !!!"
+	Li+= 7 //8
+
+Return Nil
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³fRodape   ³ Autor ³ R.H. - Ze Maria       ³ Data ³ 14.03.95 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Impressao do Rodape                                        ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ fRodape()                                                  ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                            ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ Generico                                                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+Static Function fRodape(lLinhaRoda)    // Rodape do Recibo
+
+	If !lLinhaRoda
+		LI += 1
+	Endif
+	@ LI,05 PSAY DESC_MSG1
+	LI ++
+	@ LI,05 PSAY DESC_MSG2
+	@ LI,42 PSAY TOTVENC PICTURE cPict1
+	@ LI,56 PSAY TOTDESC PICTURE cPict1
+	LI ++
+	@ LI,05 PSAY DESC_MSG3
+	LI ++
+	IF MONTH(dDataRef) = MONTH(SRA->RA_NASC)
+		@ LI, 02 PSAY STR0038		//"F E L I Z   A N I V E R S A R I O  ! !"
+	ENDIF
+	@ LI,56 PSAY TOTVENC - TOTDESC PICTURE cPict1
+	LI +=2
+
+	nValSal := 0
+	nValSal := fBuscaSal(dDataRef)
+	If nValSal ==0
+		nValSal := SRA->RA_SALARIO
+	EndIf
+
+	@ LI,05 PSAY &cCompac+Transform(nValSal,cPict2)
+
+	If cTipoRot = "2"  // Bases de Adiantamento
+		If cBaseAux = "S" .And. nBaseIr # 0
+			@ LI,89 PSAY nBaseIr PICTURE cPict1
+		Endif
+	ElseIf cTipoRot = "1" .Or. cTipoRot = "6"  // Bases de Folha e 13o. 2o.Parc.
+		If cBaseAux = "S"
+			@ LI,23 PSAY Transform(nAteLim,cPict1)
+			If nBaseFgts # 0
+				@ LI,46 PSAY nBaseFgts PICTURE cPict1
+			Endif
+			If nFgts # 0
+				@ LI,66 PSAY nFgts PICTURE cPict2
+			Endif
+			If nBaseIr # 0
+				@ LI,89 PSAY nBaseIr PICTURE cPict1
+			Endif
+			@ LI,103 PSAY Transform(nBaseIrfE,cPict1)
+		Endif
+	ElseIf cTipoRot = "5" // Bases de FGTS e FGTS Depositado da 1¦ Parcela
+		If cBaseAux = "S"
+			If nBaseFgts # 0
+				@ LI,46 PSAY nBaseFgts PICTURE cPict1
+			Endif
+			If nFgts # 0
+				@ LI,66 PSAY nFgts PICTURE cPict2
+			Endif
+		Endif
+	Endif
+
+	@ LI,Pcol() Psay &cNormal
+
+	Li ++
+	IF SRA->RA_BCDEPSAL # SPACE(8)
+		Desc_Bco := DescBco(Sra->Ra_BcDepSal,Sra->Ra_Filial)
+		@ LI,01 PSAY STR0039	//"CRED:"
+		@ LI,06 PSAY SRA->RA_BCDEPSAL
+		@ LI,14 PSAY "-"
+		@ LI,15 PSAY DESC_BCO
+		@ LI,50 PSAY STR0040 + SRA->RA_CTDEPSAL	//"CONTA:"
+	ENDIF
+	LI += 2
+	@ LI,05 PSAY " "
+Return Nil
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³fRodapeAr ºAutor  ³Silvia Taguti       º Data ³  02/12/03   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³ Impressao Rodape-Argentina                                º±±
+±±º          ³                                                            º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ AP6                                                        º±±
+±±ÈÍÍÍÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+Static Function fRodapeAr() //CARLOS
+
+	@ LI,00 PSAY "|"+REPLICATE("-",130)+"|"
+	@ ++LI,00 PSAY "| " + STR0094 + TRANS(TOTVENC,cPict1)
+	@ LI,44 PSAY STR0095 +TRANS(TOTDESC,cPict1)
+	@ LI,88 PSAY STR0096 +TRANS((TOTVENC-TOTDESC),cPict1)
+	@ LI,131 PSAY "|"
+	@ ++LI,00 PSAY "|" + REPLICATE("-",130)+"|"
+	Li ++
+	@ Li,00 PSAY STR0079 + MesExtenso(MONTH(dDataRef)) + STR0080 + STR(YEAR(dDataRef),4)
+	@ LI,131 PSAY "|"
+	@ ++LI,00 PSAY "|" + REPLICATE("-",130) + "|"
+	@ ++Li,00 PSAY STR0081 +EXTENSO(TOTVENC-TOTDESC,,,"-")+REPLICATE("*",95-LEN(EXTENSO(TOTVENC-TOTDESC,,,"-")))
+	@ LI,131 PSAY "|"
+	@ ++Li,00 PSAY STR0082
+	@ LI,131 PSAY "|"
+	@ ++Li,00 PSAY STR0083
+	@ LI,131 PSAY "|"
+	@ ++Li,00 PSAY "|"
+	@ LI,131 PSAY "|"
+	@ ++Li,00 PSAY STR0084 + StrZero(Day(dDataRef),2) + STR0080 + MesExtenso(MONTH(dDataRef)) + STR0080+STR(YEAR(dDataRef),4)
+	@ Li,070 PSAY + REPLICATE("_",40)
+	@ LI,131 PSAY "|"
+	@ ++Li,00 PSAY STR0085 + TRANS((TOTVENC-TOTDESC),cPict1)
+	@ LI,131 PSAY "|"
+	@ ++Li,00 PSAY STR0086
+	@ LI,131 PSAY "|"
+	@ ++Li,00 PSAY "|"
+	@ LI,131 PSAY "|"
+	@ ++LI,00 PSAY "*"+REPLICATE("-",130)+"*"
+
+Return Nil
+
+/*
+********************
+Static Function PerSemana() // Pesquisa datas referentes a semana.
+********************
+Local cChaveSem	:= ""
+
+dbSelectArea( "RCF" )
+
+If !Empty(Semana)
+
+cChaveSem := StrZero(Year(dDataRef),4)+StrZero(Month(dDataRef),2)+SRA->RA_TNOTRAB
+
+If !dbSeek(xFilial("RCF") + cChaveSem + Semana, .T. )
+cChaveSem := StrZero(Year(dDataRef),4)+StrZero(Month(dDataRef),2)+"   "
+If !dbSeek(xFilial("RCF") + cChaveSem + Semana  )
+HELP( " ",1,"GPCALEND",  )						//--Nao existe periodo cadastrado
+Return(NIL)
+Endif
+Endif
+cSem_De  := DtoC(RCF->RCF_DTINI,'DDMMYY')
+cSem_Ate := DtoC(RCF->RCF_DTFIM,'DDMMYY')
+EndIf
+
+Return Nil
+*/
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o    ³fSomaPdRec³ Autor ³ R.H. - Mauro          ³ Data ³ 24.09.95 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Somar as Verbas no Array                                   ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe   ³ fSomaPdRec(Tipo,Verba,Horas,Valor)                         ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³                                                            ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß*/
+User Function EfSomaPdRec(cTipo,cPd,nHoras,nValor)
+	Local Desc_paga
+
+	Static lAglutPd // Sera utilizada em todas as chamadas da funcao fSomaPdRec()
+
+	If lAglutPd == Nil
+		lAglutPd := ( GetMv("MV_AGLUTPD",,"1") == "1" ) // 1-Aglutina verbas   2-Nao Aglutina
+	EndIf
+
+	Desc_paga := DescPd(cPd,Sra->Ra_Filial)  // mostra como pagto
+
+	If cTipo # 'B'
+		//--Array para Recibo Pre-Impresso
+		nPos := Ascan(aLanca,{ |X| X[2] = cPd })
+		If nPos == 0 .Or. !lAglutPd
+			Aadd(aLanca,{cTipo,cPd,Desc_Paga,nHoras,nValor})
+		Else
+			aLanca[nPos,4] += nHoras
+			aLanca[nPos,5] += nValor
+		Endif
+	Endif
+
+	//--Array para o Recibo Pre-Impresso
+	If cTipo = 'P'
+		cArray := "aProve"
+	Elseif cTipo = 'D'
+		cArray := "aDesco"
+	Elseif cTipo = 'B'
+		cArray := "aBases"
+	Endif
+
+	nPos := Ascan(&cArray,{ |X| X[1] = cPd })
+	If nPos == 0 .Or. !lAglutPd
+		If cPd == fGetCodFol("0066")// .And. .F.
+			nIvaF := GetAdvFVal("SRR","RR_VALOR",XFILIAL("SRR")+SRA->RA_MAT+cPeriodo+"FIN01"+fGetCodFol("0066"),4,"")
+			If !Empty(nIvaF)
+				nValor := nValor-nIvaF
+				Aadd(&cArray,{cPd+" "+AllTrim(Desc_Paga)+"-FIN",nHoras,nIvaF })
+			EndIf
+		EndIf
+		Aadd(&cArray,{cPd+" "+Desc_Paga,nHoras,nValor })
+	Else
+		&cArray[nPos,2] += nHoras
+		&cArray[nPos,3] += nValor
+	Endif
+Return
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³fImpTeste ºAutor  ³R.H. - Natie        º Data ³  11/29/01   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³Testa impressao de Formulario Teste                         º±±
+±±º          ³                                                            º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ AP5                                                        º±±
+±±ÈÍÍÍÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+Static function fImpTeste(cString,nTipoRel)
+
+	//--Comando para nao saltar folha apos o MsFlush.
+	SetPgEject(.F.)
+
+	@ PROW(),PCOL() PSAY ""
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Descarrega teste de impressao                                ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	MS_Flush()
+	fInicia(cString,nTipoRel)
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define o Li com a a linha de impressão correten para não saltar linhas no teste  ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	li := _Prow()
+
+	If nTipoRel == 2
+		@ LI,00 PSAY AvalImp(Limite)
+	Endif
+
+	lRetCanc	:= Pergunte("GPR30A",.T.)
+
+	Vez := If(nTipRel = 1,1,0)
+
+Return Vez
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³fInicia   ºAutor  ³Natie               º Data ³  04/12/01   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³Inicializa parametros para impressao                        º±±
+±±º          ³                                                            º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ AP5                                                        º±±
+±±ÈÍÍÍÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+Static Function  fInicia(cString,nTipoRel)
+
+	If LastKey() = 27 .Or. nLastKey = 27
+		Return  .F.
+	Endif
+
+	If nTipoRel# 3
+		SetDefault(aReturn,cString)
+	Endif
+
+	If LastKey() = 27 .OR. nLastKey = 27
+		Return .F.
+	Endif
+
+Return .T.
+
+/*
+ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿
+³Fun‡…o	   ³fMontaDtTcf 	³Autor³Ricardo Duarte     ³ Data ³13/08/2004³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´
+³Descri‡…o ³Retorna a data valida para a consulta do Terminal Consulta  ³
+³          ³do Funcionario                                         		³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+³Sintaxe   ³<Vide Parametros Formais>									³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+³Parametros³<Vide Parametros Formais>									³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+³Retorno   ³cHtml  														³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+³Uso	   ³GPER030       										    	³
+ÀÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ*/
+Static Function fMontaDtTcf(cMesAno,nDia)
+
+	Local dDataValida
+	Default nDia := 0
+
+	dDataValida := stod(right(cMesAno,4)+left(cMesAno,2)+"01")
+	dDataValida := stod(right(cMesAno,4)+left(cMesAno,2)+strzero(f_UltDia(dDataValida),2))+nDia
+
+return(dDataValida)
+
+Static Function CabBolPag(nLinB, cFLogo, cFLogo2, aDatos)
+
+	Local nTermina  := 0
+	Local nCont     := 0
+	Local nCont1    := 0
+	Local nValidos  := 0
+	Local dFechPago := RCH->RCH_DTPAGO
+	Local cDescRot	:= PosAlias("SRY", cRoteiro, SRA->RA_FILIAL, "RY_DESC")
+
+	Local cFecVen := ""
+
+	//oPrint:StartPage()
+	//cFechaPed := If(!Empty(aMaestro[15]),DTOC(Posicione("SC5",1,xFilial("SC5")+aMaestro[15],"C5_EMISSAO")),"") //fecha pedido
+
+	oPrint:Say(nLinB + 150, 850 ,"BOTELA DE PAGO"  ,oFont24N)
+	oPrint:Say(nLinB + 230,1050, MesExtenso(Month(dFechPago)) + ", " + cValtoChar(Year(dFechPago)) ,oFont20N)
+	oPrint:Say(nLinB + 300, 1050 ,"EN BOLIVIANOS"  ,oFont13N)
+	
+	oPrint:SayBitmap(nLinB + 230, 1870, cFLogo2,500,170)
+	
+	//oPrint:Say( 150, 1100 ,"BOTELA DE PAGO"  ,oFont12N)
+	//oPrint:Say( 150, 1100 ,"BOTELA DE PAGO"  ,oFont12N)
+
+	oPrint:Box(nLinB + 100 , 50 , nLinB + 500 , 2500) // cuadro
+	oPrint:Box(nLinB + 100 , 800, nLinB + 500 , 800) // line
+	oPrint:Box(nLinB + 100 , 1700,nLinB + 500 , 1700) // line
+
+	//cuadros
+	oPrint:Box(nLinB + 600, 50 , nLinB + 680 , 2500) //empleado / ingreso /descuento
+	oPrint:Box(nLinB + 680, 50 , nLinB + 1330 , 2500)
+	//line
+	oPrint:Box(nLinB +600 , 1100, nLinB + 1320 , 1100)
+	oPrint:Box(nLinB +600 , 1700, nLinB + 1320 , 1700)
+
+	//line horizontal
+	oPrint:Box(nLinB +1240 , 1100,nLinB + 1240, 2500)
+	oPrint:Box(nLinB +1100 , 50 ,nLinB + 1100 , 1100)
+	oPrint:Box(nLinB +1220 , 50 ,nLinB + 1220 , 1100)
+
+	oPrint:Say(nLinB + 180, 80 ,"Industrias Belen Srl." ,oFont09)
+	cNit := posicione("RCC",1,xFilial("RCC") + "S007","RCC_CONTEU")
+	cNit := SubStr(cNit,30,10)
+	oPrint:Say(nLinB + 230, 80 ,"NIT :  " + Alltrim(cNit),oFont09)
+
+	cNrEmplea := posicione("RCC",1,xFilial("RCC") + "S007","RCC_CONTEU")
+	cNrEmplea := SubStr(cNrEmplea,11,10)
+	oPrint:Say(nLinB + 280, 80 ,"Nro. Patronal :  "+ Alltrim(cNrEmplea) ,oFont09)
+	oPrint:Say(nLinB + 330, 80 ,"SANTA CRUZ" ,oFont09)
+
+	oPrint:Say(nLinB + 620, 500 ,"EMPLEADO"  ,oFont10N)
+	oPrint:Say(nLinB + 620, 1300 ,"INGRESOS"   ,oFont10N)
+	oPrint:Say(nLinB + 620, 2000 ,"DESCUENTOS" ,oFont10N)
+
+	oPrint:Say(nLinB + 700, 80 ,"Apellidos y Nombres :" ,oFont08)
+	oPrint:Say(nLinB + 700, 380 ,SRA->RA_NOME ,oFont08N)
+
+	cFecAdmi := DTOC(SRA->RA_ADMISSA)
+	cSalariB := SRA->RA_SALARIO
+	QRYSR9 := "QSR9"
+	//RS
+	cQuery := "SELECT * FROM " + RetSqlName("SR9") + " WHERE R_E_C_N_O_ IN ( "
+	cQuery += "IsNull((SELECT MAX(R_E_C_N_O_) FROM " + RetSqlName("SR9") + " SR9 "
+	cQuery += "WHERE SR9.D_E_L_E_T_ = ' ' AND R9_CAMPO = 'RA_ADMISSA' AND R9_MAT = '" + SRA->RA_MAT + "'"
+	cQuery += "AND SUBSTRING(R9_DESC,7,4)+SUBSTRING(R9_DESC,4,2) <= '" + cPeriodo + "' ), "
+	cQuery += "(SELECT MIN(R_E_C_N_O_) FROM " + RetSqlName("SR9") + " SR9 "
+	cQuery += "WHERE SR9.D_E_L_E_T_ = ' ' AND R9_CAMPO = 'RA_ADMISSA' AND R9_MAT = '" + SRA->RA_MAT + "')))"
+
+	cQuery := ChangeQuery(cQuery)
+	dbUseArea(.T., "TOPCONN", TCGenQry(,,cQuery), QRYSR9, .F., .T.)
+
+	dbSelectArea(QRYSR9)
+	cFecAdmi	:= if(!Empty((QRYSR9)->R9_DESC),(QRYSR9)->R9_DESC,cFecAdmi)
+	nAntig		:= DateDiffYear( CTOD(cFecAdmi), DATE() ) 
+	//cCCosto := TRIM(posicione("CTT",1,xFilial("CTT") + SRA->RA_CC, "CTT_DESC01"))
+
+	(QRYSR9)->( dbCloseArea() )
+
+	QRYSR9 := "QSR9"
+	//RS
+	cQuery := "SELECT * FROM " + RetSqlName("SR3") + " WHERE R_E_C_N_O_ IN ( "
+	cQuery += "SELECT MAX(R_E_C_N_O_) FROM " + RetSqlName("SR3")+ " SR3 "
+	cQuery += "WHERE SR3.D_E_L_E_T_ = ' ' AND R3_MAT = '" + SRA->RA_MAT
+	cQuery += "' AND SUBSTRING(R3_DATA,1,6) <= '" + cPeriodo + "' )"
+
+	cQuery := ChangeQuery(cQuery)
+	dbUseArea(.T., "TOPCONN", TCGenQry(,,cQuery), QRYSR9, .F., .T.)
+
+	dbSelectArea(QRYSR9)
+	cSalariB := if(!Empty((QRYSR9)->R3_VALOR),(QRYSR9)->R3_VALOR,cSalariB)
+	(QRYSR9)->( dbCloseArea() )
+
+	oPrint:Say(nLinB + 750, 80 ,"Código: " + SRA->RA_MAT ,oFont08)
+	oPrint:Say(nLinB + 750, 700 ,"Matricula: " + SRA->RA_SEGUROS ,oFont08)
+	oPrint:Say(nLinB + 800, 80 ,"Sección: " + aDatos[NSECCION],oFont08)
+	oPrint:Say(nLinB + 850, 80 ,"Cargo:  " + Alltrim(fDesc("SRJ",SRA->RA_CODFUNC,"RJ_DESC")) ,oFont08)
+	oPrint:Say(nLinB + 900, 80 ,"Fecha de Ingreso: " + cFecAdmi, oFont08)
+	oPrint:Say(nLinB + 900, 700 ,"CI: " + SRA->RA_CIC ,oFont08)
+	oPrint:Say(nLinB + 950, 80 ,"Básico: "+ Alltrim(Transform(cSalariB,"999999.99")),oFont08)
+	oPrint:Say(nLinB + 950, 700 ,"Antiguedad: " + cValToChar(nAntig) + " Años",oFont08)
+	oPrint:Say(nLinB + 1000, 80 ,"Dias trabajados: " + cValToChar(aDatos[NDIASTRAB]), oFont08)
+	oPrint:Say(nLinB + 1000, 500 ,"Domingos: " + cValToChar(aDatos[NDOMINICAL]),oFont08)
+	oPrint:Say(nLinB + 1000, 800 ,"Hrs. Noc: " + cValToChar(aDatos[NRN]),oFont08)
+	oPrint:Say(nLinB + 1050, 80 ,"Hrs. Ext: " + cValToChar(aDatos[NHE]),oFont08)
+
+	oPrint:Say(nLinB + 1120, 80 ,"IVA ",oFont08)
+	oPrint:Say(nLinB + 1170, 80 ,"Sal.Ant: " + Alltrim(Transform(aDatos[NIVAANT],"999999.99")),oFont08)
+	oPrint:Say(nLinB + 1170, 400 ,"CR: " + Alltrim(Transform(aDatos[NIVACR],"999999.99")) ,oFont08)
+	oPrint:Say(nLinB + 1170, 800 ,"SAl.Act: "  + Alltrim(Transform(aDatos[NIVAACT],"999999.99")),oFont08)
+	
+	oPrint:Say(nLinB + 1230, 80 ,"Total Cotizable: " + TRANS(aDatos[NAFPBASE],cPict1),oFont08)
+	//oPrint:Say( 1230, 500 ,"LIQUIDO PAGABLE:" ,oFont08)
+	oPrint:Say(nLinB + 1280, 120 ,"Son: " + NumToLiteral(TOTVENC-TOTDESC) + " Bolivianos",oFont08N)
+
+	nTermina := 12
+	For nCont := 1 To nTermina
+		nColsB:= 650+(50*nCont)
+		IF nCont <= LEN(aProve)
+			oPrint:Say(nLinB+nColsB,1100, "   " + aProve[nCont,1],oFont08)  //Detalle Ingresos
+			//oPrint:Say(nLinB+nColsB,615, TRANSFORM(aProve[nCont,2],'999.99'),oArial08N) //Detalle Ingresos
+			oPrint:Say(nLinB+nColsB,1600 , TRANSFORM(aProve[nCont,3], cPict3),oFont08,,,,2) //Detalle Ingresos
+		ENDIF
+		IF nCont <= LEN(aDesco)
+			oPrint:Say(nLinB+nColsB,1710, "   " + aDesco[nCont,1] /*+ " " + TRANSFORM(aDesco[nCont,2],'999.99')+" %"*/ , oFont08)
+			//oPrint:Say(nLinB+nColsB,1825, TRANSFORM(aDesco[nCont,2],'999.99'))
+			oPrint:Say(nLinB+nColsB,2350, TRANSFORM(aDesco[nCont,3],cPict3),oFont08,,,,2)
+		ENDIF
+
+		//---- Soma 1 nos nValidos e Linha
+		nValidos ++
+		//	Li ++
+
+		If nValidos = 12
+
+			/*oPrint:Box (nLinB+1470,0050, nLinB+1390, 2500) //Recuadro*/
+			oPrint:Say(nLinB+nColsB+20, 1110,  "TOTAL INGRESOS:",oFont08) //"| TOTAL INGRESOS" + SPACE(10)
+			oPrint:Say(nLinB+nColsB+20, 1500, TRANS(TOTVENC, cPict1))
+
+			//oPrint:Say(nLinB+nColsB+20,1730, STR0126 + SPACE(10),oFont08) //" TOTAL EGRESOS"
+			oPrint:Say(nLinB+nColsB+20,1730, "TOTAL DESCUENTOS:" ,oFont08) //" TOTAL DESCUENTOS"
+			oPrint:Say(nLinB+nColsB+20,2250, TRANS(TOTDESC, cPict1))
+
+			//oPrint:Say(nLinB+nColsB+150,25, DESC_MSG1)
+			oPrint:Say(nLinB+nColsB-20, 500, "LIQUIDO PAGABLE" + SPACE(1) + TRANS((TOTVENC-TOTDESC),cPict1), oFont08N) //"LIQUIDO PAGABLE: "
+			//oPrint:Say(nLinB+nColsB+150,1950, STR0136) //"BOLIVIANOS"
+
+			//oPrint:SayBitmap(nLinB+nColsB+180,500, cFLogo2,500,170)
+
+			//oPrint:Say(nLinB+nColsB+200,25, DESC_MSG2)
+			//oPrint:Say(nLinB+nColsB+250,25, DESC_MSG3)
+			//oPrint:Say(nLinB+nColsB+160,0070, REPLICATE("_",140))
+			oPrint:Say(nLinB+nColsB+230,100,"SANTA CRUZ, " + cValtoChar(Day(dFechPago)) + STR0080 + MesExtenso(Month(dFechPago)) + STR0080 + cValtoChar(Year(dFechPago)) + ".")
+
+			oPrint:Say(nLinB + 1600 , 1200 ,"FIRMA" ,oFont09)
+			oPrint:Box(nLinB +1590 , 1100  ,nLinB + 1590 , 1400)
+
+			//oPrint:Say(nLinB+nColsB+210,1830, "RECIBI CONFORME",oArial08N)
+			//oPrint:Say(nLinB+nColsB+210,0300, "VoBo",oArial08N)
+
+		Endif
+
+	Next nCont
+
+	//oPrint:Say( 1270 , 1110 ,"TOTAL INGRESOS :" ,oFont08)
+	//oPrint:Say( 1270 , 1710 ,"TOTAL DESCUENTOS :" ,oFont08)
+
+Return Nil
+
+Static Function NumToLiteral(nValor)
+	Local lQuantid 	:= .F.
+	Local nMoeda 	:= 1	//Identifica em que moeda se dara o retorno.(1 moneda local)
+	Local cIdioma	:= "2"	//.(1=Port.2=Espa.3=Ingl)
+	Local lCent		:= .T.
+	Local lFrac		:= .T.
+	Local cRet		:= ""
+
+	If INT(nValor) == nValor
+		lFrac := .F.
+	EndIf
+
+	cNumLit	:= Extenso(nValor,lQuantid,nMoeda,,cIdioma,lCent,lFrac)
+	
+	cRet:= Left(cNumLit, 2) + LOWER(Right(cNumLit, len(cNumLit)-2))
+
+Return(cRet)
