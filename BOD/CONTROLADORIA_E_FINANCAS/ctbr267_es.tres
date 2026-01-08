@@ -1,0 +1,19 @@
+0001#STR0001#ALL#Este programa imprimira el Comparativo de cuentas contables.
+0002#STR0002#ALL#Los valores son ref. al movimiento del periodo solicitado. 
+0003#STR0003#ALL#Cuenta contable
+0004#STR0004#ALL#CONCEPTO
+0005#STR0005#ALL#Descripc.
+0006#STR0006#ALL#Si no actual. los saldos  basicos  en la
+0007#STR0007#ALL#digitac. de los registros (MV_ATUSAL='N'),
+0008#STR0008#ALL#ejecutar la rutina de actual. de saldos 
+0009#STR0009#ALL#para todos los periodos solic. en este 
+0010#STR0010#ALL#informe.
+0011#STR0011#ALL# ATENCION
+0012#STR0012#ALL# EN 
+0013#STR0013#ALL#Por favor, verif. si el calend. contable y el vinculo moneda/calendario 
+0014#STR0014#ALL#se registraron correctamente...
+0015#STR0015#ALL#DE COMPARATIVO 
+0016#STR0016#ALL# A 
+0017#STR0017#ALL#Creando archivo temporal...
+0018#STR0018#ALL#Comparativo de cuentas contables
+0019#STR0019#ALL#CALCULO DE PAGOS PROVISIONALES DE ISR

@@ -1,0 +1,15 @@
+0001#STR0001#ALL#Relatorio disponivel somente para ambientes TOPCONN/DBACESS
+0002#STR0002#ALL#Relatorio não disponivel para esta localização
+0003#STR0003#ALL#Guia de Abate
+0004#STR0004#ALL#Este programa ir  emitir a relação dos Bens que foram baixador por Extravio/Obsolência
+0005#STR0005#ALL#ATFR262
+0006#STR0006#ALL#Numero Documento
+0007#STR0007#ALL#Código do Bem
+0008#STR0008#ALL#Descrição
+0009#STR0009#ALL#Quantidade
+0010#STR0010#ALL#Valor Unitário
+0011#STR0011#ALL#Sub-Total
+0012#STR0012#ALL#Total Geral
+0013#STR0013#ALL#Aviso
+0014#STR0014#ALL#Função disponível apenas em TReport
+0015#STR0015#ALL#Dt. Abate

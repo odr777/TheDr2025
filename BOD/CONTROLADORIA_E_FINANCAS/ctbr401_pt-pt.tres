@@ -1,0 +1,32 @@
+0001#STR0001#ALL#Este Programa Irá Imprimir A Conta,
+0002#STR0002#ALL#Capital de aportação actualizada de acordo com os 
+0003#STR0003#ALL#Parâmetros pedidos pelo utilizador.
+0004#STR0004#ALL#Emissão Da Conta Capital
+0005#STR0005#ALL#Conta 
+0006#STR0006#ALL#Descrição
+0008#STR0008#ALL#Movimentos
+0009#STR0009#ALL#Data
+0010#STR0010#ALL#Diminuição
+0011#STR0011#ALL#Ipc
+0012#STR0012#ALL#Ipc Do
+0013#STR0013#ALL#  Mês
+0014#STR0014#ALL#último Ipc
+0015#STR0015#ALL#     Act.
+0016#STR0016#ALL#    Factor
+0017#STR0017#ALL#Actualização
+0018#STR0018#ALL#    Saldo
+0019#STR0019#ALL#Actualizado
+0021#STR0021#ALL#Aumento
+0022#STR0022#ALL#Saldo Actual
+0024#STR0024#ALL#Conta de capital de aportação (cuca)
+0025#STR0025#ALL#A Criar Ficheiro Temporário...
+0026#STR0026#ALL#Emissão Do Cuca
+0027#STR0027#ALL#Atenção
+0028#STR0028#ALL#Não existem dados para os parâmetros especificados.
+0029#STR0029#ALL#A Transportar
+0030#STR0030#ALL#De transporte : 
+0031#STR0031#ALL#Saldo anterior: 
+0032#STR0032#ALL# o plano de gestão não está disponível neste relatório. 
+0033#STR0033#ALL#A Seleccionar Registos...
+0034#STR0034#ALL#Conta Sem Movimento No Período
+0035#STR0035#ALL#Sem Movimento No Período

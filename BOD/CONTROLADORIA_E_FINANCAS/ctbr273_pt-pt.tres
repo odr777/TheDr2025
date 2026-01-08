@@ -1,0 +1,28 @@
+0001#STR0001#ALL#Este programa irá imprimir a actualização das partidas do estado de resultado.
+0002#STR0002#ALL#Os valores são ref. ao movimento do período pedido. 
+0003#STR0003#ALL#Conta Contabil.
+0004#STR0004#ALL#Conceito
+0005#STR0005#ALL#Descrição
+0006#STR0006#ALL#Total
+0007#STR0007#ALL#Caso não actualize os saldos  básicos  na
+0008#STR0008#ALL#Escrita dos movimentos (mv_atusal='n')
+0009#STR0009#ALL#Correr o procedimento  de actualização de saldos 
+0010#STR0010#ALL#Para todos os períodos solicitados no 
+0011#STR0011#ALL#Relatório.
+0012#STR0012#ALL# em 
+0013#STR0013#ALL#Por favor, verifique se o calend.contabilístico e a associação moeda/calendário 
+0014#STR0014#ALL#Foram registados correctamente...
+0015#STR0015#ALL#Comparativo de 
+0016#STR0016#ALL# até 
+0017#STR0017#ALL# em 
+0018#STR0018#ALL#A Criar Ficheiro Temporário...
+0019#STR0019#ALL#Resultado Da Posição Monetária
+0020#STR0020#ALL#Factor Mensal
+0021#STR0021#ALL#Resultado Por Posição Monetária
+0022#STR0022#ALL#Exercício: 
+0023#STR0023#ALL#Factor De Actualização
+0024#STR0024#ALL#Factor Actualização
+0025#STR0025#ALL# atenção 
+0026#STR0026#ALL#Efectivo Do Mês
+0027#STR0027#ALL#A pergunta exercício contabilístico não pode ficar em branco...
+0028#STR0028#ALL#Factor De Encerramento

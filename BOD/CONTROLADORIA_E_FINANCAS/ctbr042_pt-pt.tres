@@ -1,0 +1,14 @@
+0001#STR0001#ALL#Este programa ira imprimir o balancete de escrituração  (modo paisagem), a 
+0002#STR0002#ALL#Conta e impressa limitando-se a 20 caracteres e sua descrição  40 caracteres, 
+0003#STR0003#ALL#Balancete de escrituração
+0004#STR0004#ALL#Listagem  impresso somente em modo grafico
+0005#STR0005#ALL# de 
+0006#STR0006#ALL# até 
+0008#STR0008#ALL#Descrição Da Conta
+0009#STR0009#ALL#Mov.do mês
+0015#STR0015#ALL#Totais do período: 
+0016#STR0016#ALL#T o t a i s  d o  g r u p o (
+0017#STR0017#ALL#Favor preencher os parâmetros grupos receitas/despesas e data sld ant. receitas/despesas ou
+0018#STR0018#ALL#Deixar o parâmetro ignora sl ant.rec/des = não 
+0019#STR0019#ALL#A Seleccionar Registos...
+0020#STR0020#ALL#A Criar Ficheiro Temporário...

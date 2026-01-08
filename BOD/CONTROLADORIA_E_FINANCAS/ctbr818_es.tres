@@ -1,0 +1,32 @@
+0001#STR0001#ALL#ESTADO DE ORIGENES E INVERSIONES DE RECURSOS
+0002#STR0002#ALL#Generando informe, espere...
+0003#STR0003#ALL#Origenes e inversiones de recursos
+0004#STR0004#ALL#Creando Archivo Temporal...
+0005#STR0005#ALL#Responsables...
+0006#STR0006#ALL#(En 
+0007#STR0007#ALL#Este programa imprimira el Estado de Origen y Aplicaciones 
+0008#STR0008#ALL#de Recursos, de acuerdo con los parametros informados por el usuario. 
+0009#STR0009#ALL#Impresion concluida satisfactoriamente
+0010#STR0010#ALL#No hay datos que cumplan la condicion
+0011#STR0011#ALL#Nom. Emp
+0012#STR0012#ALL#Reg. Pat
+0013#STR0013#ALL#Titulo
+0014#STR0014#ALL#Imagen
+0015#STR0015#ALL#Fcha Emi
+0016#STR0016#ALL#Fcha Ref
+0017#STR0017#ALL#Titl Con
+0018#STR0018#ALL#Titl Act
+0019#STR0019#ALL#Titl Ant
+0020#STR0020#ALL#Desc Con
+0021#STR0021#ALL#Val. Act
+0022#STR0022#ALL#Val. Ant
+0023#STR0023#ALL#Archivo
+0024#STR0024#ALL#Si
+0025#STR0025#ALL#No
+0026#STR0026#ALL#Num. Pag
+0027#STR0027#ALL#Proceso anulado por el operador
+0028#STR0028#ALL#Imp. Term. Aux. Anulado
+0029#STR0029#ALL#El archivo de Terminos Auxiliares (.TRM) a imprimir es mayor a 2,000 caracteres, por favor edite el archivo o cree uno nuevo.
+0030#STR0030#ALL#Imp. Terminos Auxiliares
+0031#STR0031#ALL#Esta rutina se descontinuará y tendrá su mantenimiento finalizado el 01/10/2022. Su utilización se bloqueará a partir de esta fecha en el release 12.1.2210.
+0032#STR0032#ALL#Ciclo de vida de software

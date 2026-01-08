@@ -1,0 +1,35 @@
+0001#STR0001#ALL#Por favor, aguarde...
+0002#STR0002#ALL#Demonstrativo de Resultado
+0003#STR0003#ALL#Gerando relatório.
+0004#STR0004#ALL#mil
+0005#STR0005#ALL#milhão
+0006#STR0006#ALL#Criando arquivo temporário...
+0007#STR0007#ALL#Mês 
+0008#STR0008#ALL#% Tot Per
+0009#STR0009#ALL#Acumulado
+0010#STR0010#ALL#Balanço Patrimonial
+0011#STR0011#ALL# ao 
+0012#STR0012#ALL# do 
+0013#STR0013#ALL#Período
+0014#STR0014#ALL# % Per
+0015#STR0015#ALL#Responsáveis...
+0016#STR0016#ALL#Este programa imprimirá o Demonstrativo de Lucros 
+0017#STR0017#ALL#segundo os parâmetros informados pelo usuário.       
+0018#STR0018#ALL#Detalhamento
+0019#STR0019#ALL#Conta
+0020#STR0020#ALL#Os demonstrativos contábeis dever ter, obrigatoriamente, um plano gerencial associado ao livro. Verifique a configuração de livros selecionada!
+0021#STR0021#ALL#Emissão de Análise Vertical 
+0022#STR0022#ALL#Não existem dados que satisfazem a condição de seleção.
+0023#STR0023#ALL#Liv.Fiscais
+0024#STR0024#ALL#% Tot Acum
+0025#STR0025#ALL# % Acum 
+0026#STR0026#ALL#Detalhamento de arquivo Auxiliar da Análise Vertical
+0027#STR0027#ALL#Este programa imprimirá o detalhamento do Arquivo Auxiliar selecionado. 
+0028#STR0028#ALL#Info Aux.
+0029#STR0029#ALL#Emissão :
+0030#STR0030#ALL#Processo finalizado
+0031#STR0031#ALL#Relatório Análise Vertical
+0032#STR0032#ALL#Página :
+0033#STR0033#ALL#Hora...:
+0034#STR0034#ALL#Esta rotina será descontinuada e terá sua manutenção encerrada em 01/10/2022 e sua utilização será bloqueada a partir desta data no release 12.1.2210.
+0035#STR0035#ALL#Ciclo de Vida de Software

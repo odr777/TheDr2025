@@ -1,0 +1,26 @@
+0001#STR0001#ALL#Resultado por posse de activos não monetários
+0003#STR0003#ALL#Este programa irá emitir a relação dos valores para cada artigo
+0004#STR0004#ALL# por 
+0005#STR0005#ALL#Exercício 
+0007#STR0007#ALL#C.custo
+0008#STR0008#ALL#Dados Da Entidade
+0009#STR0009#ALL#Dados Do Bem
+0010#STR0010#ALL#Activo Fixo
+0011#STR0011#ALL#Data
+0012#STR0012#ALL#Aquisição
+0013#STR0013#ALL#Moi
+0014#STR0014#ALL#Taxa De
+0015#STR0015#ALL#Deprec.
+0016#STR0016#ALL#Meses
+0017#STR0017#ALL#De
+0018#STR0018#ALL#Utilização
+0019#STR0019#ALL#Ipc
+0020#STR0020#ALL#Factor
+0021#STR0021#ALL#Actualização
+0022#STR0022#ALL#Actualizado
+0024#STR0024#ALL#Mês
+0025#STR0025#ALL#Acumulada
+0026#STR0026#ALL#Valor Líquido
+0027#STR0027#ALL#Total da conta: 
+0028#STR0028#ALL#Total do centro de custo: 
+0029#STR0029#ALL#Ipc data: 

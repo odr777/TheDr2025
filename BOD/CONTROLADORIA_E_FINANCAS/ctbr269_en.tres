@@ -1,0 +1,21 @@
+0001#STR0001#ALL#This program prints the average balance of the financial assets and deductible debts
+0002#STR0002#ALL#Values refer to transactions in the requested period.     
+0003#STR0003#ALL#Ledger Account 
+0004#STR0004#ALL#CONCEPT 
+0005#STR0005#ALL#Descript.
+0006#STR0006#ALL#If you do not update basic balances when
+0007#STR0007#ALL#typing entries (MV_ATUSAL='N'),           
+0008#STR0008#ALL#run the update routine for balances     
+0009#STR0009#ALL#for all the periods requested in this    
+0010#STR0010#ALL#report.   
+0011#STR0011#ALL# ATTENTION 
+0012#STR0012#ALL# ON 
+0013#STR0013#ALL#Please, check if the accounting schedule and the currency/schedule link  
+0014#STR0014#ALL#were registered correctly ...    
+0015#STR0015#ALL#COMPARISON OF  
+0016#STR0016#ALL# TO  
+0017#STR0017#ALL#Creating temporary file ...  
+0018#STR0018#ALL#Comparison of ledger accounts  
+0019#STR0019#ALL#AVERAGE BALANCES OF FINANCIAL ASSETS AND DEDUCTIBLE DEBTS
+0020#STR0020#ALL#CALCULATION OF PROVISIONAL PAYMENTS OF AV.
+0021#STR0021#ALL#Report available in letter-sized paper only

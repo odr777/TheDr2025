@@ -1,0 +1,27 @@
+0001#STR0001#ALL#Informe de auditoria.
+0002#STR0002#ALL#Disponible solamente en la version TReport.
+0003#STR0003#ALL#Funcion disponible solamente para entorno Top Conect.
+0004#STR0004#ALL#Sucursal 
+0005#STR0005#ALL#Total de 
+0006#STR0006#ALL#Moneda
+0007#STR0007#ALL#Debitos
+0008#STR0008#ALL#Creditos
+0009#STR0009#ALL#Total de la sucursal: 
+0010#STR0010#ALL#TOTAL GENERAL
+0011#STR0011#ALL#Entidad contable. 
+0012#STR0012#ALL#Contabilidad de Gestion.
+0013#STR0013#ALL#Contabilidad
+0014#STR0014#ALL#Arch.
+0015#STR0015#ALL#Documento
+0016#STR0016#ALL#Valor doc.
+0017#STR0017#ALL#Cuenta debito.
+0018#STR0018#ALL#Cuenta credito.
+0019#STR0019#ALL#Fecha
+0020#STR0020#ALL#Saldo
+0021#STR0021#ALL#Lote/SubLote/Doc/Linea
+0022#STR0022#ALL#Valor
+0023#STR0023#ALL#Estatus
+0024#STR0024#ALL#OK
+0025#STR0025#ALL#Desbalanceado
+0026#STR0026#ALL#No verificado
+0027#STR0027#ALL#Verificado

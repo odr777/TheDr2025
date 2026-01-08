@@ -1,0 +1,25 @@
+0001#STR0001#ALL#Este programa imprimira la actual. de las partidas del estado de resultado.
+0002#STR0002#ALL#Los valores se ref. al movimiento del periodo solicitado. 
+0003#STR0003#ALL#Cta. ContaAble
+0004#STR0004#ALL#CONCEPTO
+0005#STR0005#ALL#Descripc.
+0006#STR0006#ALL#TOTAL
+0007#STR0007#ALL#Si no se actual. los sdos. basicos en la
+0008#STR0008#ALL#digitacion de los asiento (MV_ATUSAL='N')
+0009#STR0009#ALL#ejecutar la rutina de actual. de saldos 
+0010#STR0010#ALL#a todos los periodos solicitados en este 
+0011#STR0011#ALL#informe.
+0012#STR0012#ALL# EN 
+0013#STR0013#ALL#Por favor, verif. si el calend. contable y la vincul. moneda/calendario 
+0014#STR0014#ALL#se registraron correctamente...
+0015#STR0015#ALL#COMPARATIVO DE 
+0016#STR0016#ALL# A 
+0017#STR0017#ALL# EN 
+0018#STR0018#ALL#Creando Archivo Temporal...
+0019#STR0019#ALL#3er Documento
+0020#STR0020#ALL#FACTOR MENS.
+0021#STR0021#ALL#3er DOCUMENTO DE ACTUAL. DE LAS PARTIDAS DEL ESTADO DE RESULTADO
+0022#STR0022#ALL#EJERCICIO: 
+0023#STR0023#ALL#FACTOR DE ACTUALIZ.
+0024#STR0024#ALL#Factor Actualiz.
+0025#STR0025#ALL# ATENCION

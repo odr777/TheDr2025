@@ -1,0 +1,19 @@
+0001#STR0001#ALL#CASH FLOW STATEMENT
+0002#STR0002#ALL#Execute routine UPDCTB to create standard query SX5SL.
+0003#STR0003#ALL#This program will print the Cash Flow Statement  
+0004#STR0004#ALL#according to parameters configured by the user.
+0005#STR0005#ALL#You must enter reference date!
+0006#STR0006#ALL#Parameter considers the same as Period.
+0007#STR0007#ALL#Date is not in calendar!
+0008#STR0008#ALL#Reference date.
+0009#STR0009#ALL#Generating report, wait...
+0010#STR0010#ALL#Creating temporary file...
+0011#STR0011#ALL#Responsible People
+0012#STR0012#ALL#Variation
+0013#STR0013#ALL#Accounting Balances
+0014#STR0014#ALL#Previous Year
+0015#STR0015#ALL#Current year:
+0016#STR0016#ALL#Year Variation
+0017#STR0017#ALL#Operational Activities
+0018#STR0018#ALL#Net Profit of the Year
+0019#STR0019#ALL# Branches: 

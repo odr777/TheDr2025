@@ -1,0 +1,20 @@
+0001#STR0001#ALL#Relação analitica de depositos em dinheiro do periodo
+0002#STR0002#ALL#até
+0003#STR0003#ALL#Banco: 
+0004#STR0004#ALL#Periodo: 
+0005#STR0005#ALL#Data
+0006#STR0006#ALL#Operação
+0007#STR0007#ALL#Documento
+0008#STR0008#ALL#Pref./Titulo
+0009#STR0009#ALL#Entradas
+0010#STR0010#ALL#Conta:
+0011#STR0011#ALL#Subtotal da conta
+0012#STR0012#ALL#Total do banco
+0013#STR0013#ALL#Resumo global de operações
+0014#STR0014#ALL#Total de depositos em dinheiro no periodo
+0015#STR0015#ALL#Limite IDE
+0016#STR0016#ALL#Base IDE
+0017#STR0017#ALL#Taxa do imposto
+0018#STR0018#ALL#Imposto causado no periodo
+0019#STR0019#ALL#Zebrado
+0020#STR0020#ALL#Administração

@@ -1,0 +1,52 @@
+0001#STR0001#ALL#MAPA
+0002#STR0002#ALL#MODELO
+0003#STR0003#ALL#A imprimir mapa...
+0004#STR0004#ALL#Seleccionando los datos para la impresion del mapa
+0005#STR0005#ALL#Anulado por el operador
+0006#STR0006#ALL#Totales de la cuenta
+0007#STR0007#ALL#Periodo de tributacion
+0008#STR0008#ALL#Incluyendo los adquiridos en estado de uso
+0009#STR0009#ALL#Fijo Corpóreo
+0010#STR0010#ALL#Fijo Incorpóreo
+0011#STR0011#ALL#Elementos descontados en el ejercicio
+0012#STR0012#ALL#Numero de Identificacion Fiscal
+0013#STR0013#ALL#Actividad principal
+0014#STR0014#ALL#Codigo CAE
+0015#STR0015#ALL#Descripcion de los elementos del activo
+0016#STR0016#ALL#Numero de Identificacion Fiscal
+0017#STR0017#ALL#Gastos Fiscales
+0018#STR0018#ALL#Perdidas por imapridad aceptadas en el periodo (art. 38º CIRC)
+0019#STR0019#ALL#Depreciaciones / amortizaciones y perdidas por imparidad no aceptadas como gastos
+0020#STR0020#ALL#Tasa %
+0021#STR0021#ALL#Tasa corregida %
+0022#STR0022#ALL#Ano
+0023#STR0023#ALL#Mes
+0024#STR0024#ALL#Ejercicio de
+0025#STR0025#ALL#Adquisicion
+0026#STR0026#ALL#Fecha
+0027#STR0027#ALL#Total general o a transportar
+0028#STR0028#ALL#Documento emitido por computadora
+0029#STR0029#ALL#Del ejercicio
+0030#STR0030#ALL#Actualizando preguntas del informe
+0031#STR0031#ALL#MAPA DE DEPRECIACIONES Y AMORTIZACIONES
+0032#STR0032#ALL#elementos del activo no reevaluados
+0033#STR0033#ALL#Codigo de acuerdo con la tabla adjunta al DR nº 25/2009
+0034#STR0034#ALL#Inicio de utilizacion
+0035#STR0035#ALL#Valor contable registrado
+0036#STR0036#ALL#Ano util.
+0037#STR0037#ALL#Depreciaciones / amortizaciones y perdidas por imparidad contabilizadas en el periodo
+0038#STR0038#ALL#Depreciaciones y amortizaciones aceptadas en periodos anteriores
+0039#STR0039#ALL#Depreciaciones y amortizaciones
+0040#STR0040#ALL#Tasa perdida acumul.
+0041#STR0041#ALL#Activos
+0042#STR0042#ALL#Valor de adquisicion o produccion para efectos fiscales
+0043#STR0043#ALL#Limite fiscal del periodo período
+0044#STR0044#ALL#Depreciaciones / amortizaciones y perdidas por imparidad recuperadas en el periodo
+0045#STR0045#ALL#NATURALEZA DE LOS ACTIVOS
+0046#STR0046#ALL#ACTIVOS FIJOS TANGIBLES
+0047#STR0047#ALL#ACTIVOS FIJOS INTANGIBLES
+0048#STR0048#ALL#PROPIEDADES DE INVERSION
+0049#STR0049#ALL#METODO UTILIZADO
+0050#STR0050#ALL#CUOTAS CONSTANTES
+0051#STR0051#ALL#CUOTAS DECRECIENTES
+0052#STR0052#ALL#OTRO

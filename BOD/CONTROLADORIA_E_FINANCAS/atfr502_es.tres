@@ -1,0 +1,39 @@
+0001#STR0001#ARG#RT 6/84 Ajuste por Inflacion de Activo Fijo
+0002#STR0002#ARG#Grupo
+0003#STR0003#ARG#Activo Fijo
+0004#STR0004#ARG#Fecha
+0005#STR0005#ARG#Cuenta
+0006#STR0006#ARG#Origen
+0007#STR0007#ARG#Revalúo
+0008#STR0008#ARG#Diferencia
+0009#STR0009#ARG#Código
+0010#STR0010#ARG#Descripción
+0011#STR0011#ARG#Estado
+0012#STR0012#ARG#Adquisición
+0013#STR0013#ARG#Baja
+0014#STR0014#ARG#Acumulada
+0015#STR0015#ARG#Dep. Mensual
+0016#STR0016#ARG#Centro de Costo
+0017#STR0017#ARG#Correc Dep.
+0018#STR0018#ARG#Correc Bien
+0019#STR0019#ARG#Valor
+0020#STR0020#ARG#Ejercicio
+0021#STR0021#ARG#Acumulada
+0022#STR0022#ARG#Valor Residual
+0023#STR0023#ARG#Este informe imprimira el Ajuste por Inflación.
+0024#STR0024#ARG#Atención
+0025#STR0025#ARG#Ok
+0026#STR0026#ARG#Se debe informar un Rango de Periodos.
+0027#STR0027#ARG#Se debe informar un Rango de Grupo de Bienes.
+0028#STR0028#ARG#El Periodo de Inicio debe ser menor al Final.
+0029#STR0029#ARG#Indique la posición.
+0030#STR0030#ARG#Bienes
+0031#STR0031#ARG#Transferencias
+0032#STR0032#ARG#Baja
+0033#STR0033#ARG#Activo
+0034#STR0034#ARG#Amortizado
+0035#STR0035#ARG#Vendido
+0036#STR0036#ARG#Bien
+0037#STR0037#ARG#Imputación contable bien transferido
+0038#STR0038#ARG#Valores Históricos
+0039#STR0039#ARG#Valores Ajustados

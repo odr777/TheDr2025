@@ -1,0 +1,23 @@
+0001#STR0001#ALL#This program prints the Comparison of Ledger Accounts.
+0002#STR0002#ALL#The amounts refer to the transcations in the period requested. 
+0003#STR0003#ALL#Ledger Account
+0004#STR0004#ALL#Description
+0005#STR0005#ALL#OPENING BALANCE
+0006#STR0006#ALL#CLOSING BALANCE
+0007#STR0007#ALL#AVERAGE
+0008#STR0008#ALL#If you do not update the basic balances
+0009#STR0009#ALL#while typing the entries (MV_ATUSAL='N'),
+0010#STR0010#ALL#run the balance update routine 
+0011#STR0011#ALL#for all the periods requested in this 
+0012#STR0012#ALL#report.
+0013#STR0013#ALL# NOTE 
+0014#STR0014#ALL#The Accounting Year cannot be blank
+0015#STR0015#ALL#Year
+0016#STR0016#ALL#Please check if the accounting year and the currency/calendar binding 
+0017#STR0017#ALL#were registered correctly...
+0018#STR0018#ALL#COMPARISON OF 
+0019#STR0019#ALL# TO 
+0020#STR0020#ALL# ON 
+0021#STR0021#ALL#Creating Temporary File...
+0022#STR0022#ALL#Average Balances
+0023#STR0023#ALL#AVERAGE STOCKA BALANCES

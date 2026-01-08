@@ -1,0 +1,15 @@
+0001#STR0001#ALL#Report available to TOPCONN/DBACESS environments only
+0002#STR0002#ALL#Report not available to this location
+0003#STR0003#ALL#Slaughter Form
+0004#STR0004#ALL#This program issues a listing of Assets written off due to Loss/Obsolescence
+0005#STR0005#ALL#ATFR262
+0006#STR0006#ALL#Document Number
+0007#STR0007#ALL#Asset code
+0008#STR0008#ALL#Description
+0009#STR0009#ALL#Amount
+0010#STR0010#ALL#Unit value
+0011#STR0011#ALL#Subtotal
+0012#STR0012#ALL#Grand Total
+0013#STR0013#ALL#Warning
+0014#STR0014#ALL#Function available only in TReport
+0015#STR0015#ALL#Deduction Date

@@ -1,0 +1,23 @@
+0001#STR0001#ALL#Este programa imprimira el Comparativo de Ctas. Contables.
+0002#STR0002#ALL#Los valores se refieren al movimiento del per. solicitado.
+0003#STR0003#ALL#Cta. Contable
+0004#STR0004#ALL#Descrip.
+0005#STR0005#ALL#SALDO INICIAL
+0006#STR0006#ALL#SALDO FINAL
+0007#STR0007#ALL#PROM.
+0008#STR0008#ALL#Si no actualiza los sdos. basicos  en la
+0009#STR0009#ALL#digitacion de los regist. (MV_ATUSAL='N'),
+0010#STR0010#ALL#ejecute la rutina de actual. de saldos 
+0011#STR0011#ALL#para todos los per. solicit. en este 
+0012#STR0012#ALL#informe.
+0013#STR0013#ALL#ATENCION 
+0014#STR0014#ALL#El Ejercio Contable no puede quedar vacio
+0015#STR0015#ALL#Ejercicio
+0016#STR0016#ALL#Por favor, verif. si el calend. cont. y la vincul. moneda/calendario 
+0017#STR0017#ALL#se registraron correctamente...
+0018#STR0018#ALL#COMPARATIVO DE 
+0019#STR0019#ALL# A 
+0020#STR0020#ALL# EN 
+0021#STR0021#ALL#Creando Archivo Temporal...
+0022#STR0022#ALL#Saldos Medios
+0023#STR0023#ALL#SALDOS MEDIOS DE INVENTARIOS

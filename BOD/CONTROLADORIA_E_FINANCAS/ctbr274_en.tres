@@ -1,0 +1,30 @@
+0001#STR0001#ALL#This program prints the upgrade of accounting capital.
+0002#STR0002#ALL#The amounts refer to transaction of the period required. 
+0003#STR0003#ALL#Ledger Account
+0004#STR0004#ALL#CONCEPT
+0005#STR0005#ALL#Description
+0006#STR0006#ALL#TOTAL
+0007#STR0007#ALL#If basic balances are not updated in
+0008#STR0008#ALL#entry typing (MV_ATUSAL='N')
+0009#STR0009#ALL#run balance upgrade routine 
+0010#STR0010#ALL#for all periods required in this 
+0011#STR0011#ALL#report.
+0012#STR0012#ALL# AT 
+0013#STR0013#ALL#Please check if the accounting calendar and the currency/calendar binding 
+0014#STR0014#ALL#were properly registered...
+0015#STR0015#ALL#Capital Account Upgrade  
+0016#STR0016#ALL# TO 
+0017#STR0017#ALL# AT 
+0018#STR0018#ALL#Creating Temporary File...
+0019#STR0019#ALL#Accounting Capital Upgrade
+0020#STR0020#ALL#MONTHLY FACTOR
+0021#STR0021#ALL#ACCOUNTING CAPITAL UPGRADE
+0022#STR0022#ALL#FINANCIAL YEAR: 
+0023#STR0023#ALL#UPGRADE FACTOR
+0024#STR0024#ALL#Upgrade Factor
+0025#STR0025#ALL# ATTENTION 
+0026#STR0026#ALL#EFFECTIVE OF THE MONTH
+0027#STR0027#ALL#The question about Accounting Year cannot be blank...
+0028#STR0028#ALL#Upgrade
+0029#STR0029#ALL#TOTAL AMOUNT UPDATED
+0030#STR0030#ALL#EFFECTIVE OF THE MONTH

@@ -1,0 +1,20 @@
+0001#STR0001#ALL#Analytical relation of cash deposits in the period
+0002#STR0002#ALL#until
+0003#STR0003#ALL#Bank: 
+0004#STR0004#ALL#Period: 
+0005#STR0005#ALL#Date
+0006#STR0006#ALL#Operation
+0007#STR0007#ALL#Document
+0008#STR0008#ALL#Pref./Bill
+0009#STR0009#ALL#Entries
+0010#STR0010#ALL#Account.:
+0011#STR0011#ALL#Account subtotal
+0012#STR0012#ALL#Bank total
+0013#STR0013#ALL#Operations global summary
+0014#STR0014#ALL#Total of cash deposits in the period
+0015#STR0015#ALL#IDE Limit
+0016#STR0016#ALL#IDE Base
+0017#STR0017#ALL#Tax rate
+0018#STR0018#ALL#Tax applied to the period
+0019#STR0019#ALL#Z form
+0020#STR0020#ALL#Administration

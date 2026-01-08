@@ -1,0 +1,21 @@
+0001#STR0001#ALL#Função disponível apenas em TReport
+0002#STR0002#ALL#Rotina disponível apenas para ambientes TopConnect
+0003#STR0003#ALL#Deve ser selecionado no máximo 5 moedas
+0004#STR0004#ALL#Livro de Ativos Depreciáveis
+0005#STR0005#ALL#Numero de Inventario
+0006#STR0006#ALL#Moeda
+0007#STR0007#ALL#Valor Original
+0008#STR0008#ALL#Metodo Depreciacao
+0009#STR0009#ALL#Tx.Deprec. %
+0010#STR0010#ALL#Cota Deprec.
+0011#STR0011#ALL#Dep. Acumulada
+0012#STR0012#ALL#Valor Residual
+0013#STR0013#ALL#Criando Arquivo Temporário...
+0014#STR0014#ALL#Demonstrativo de Ativos Reavaliados
+0015#STR0015#ALL#Sub Total do Bem: 
+0016#STR0016#ALL#Sub Total do Grupo: 
+0017#STR0017#ALL#Sub Total do Centro de Custo: 
+0018#STR0018#ALL#Sub Total da Filial: 
+0019#STR0019#ALL#Total Geral 
+0020#STR0020#ALL#Tipo
+0021#STR0021#ALL# - Data Ref.: 

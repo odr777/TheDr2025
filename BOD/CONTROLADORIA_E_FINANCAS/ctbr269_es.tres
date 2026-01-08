@@ -1,0 +1,21 @@
+0001#STR0001#ALL#Este programa imprimira el Sdo. Medio del Activo Financiero y Deudas Descontables.
+0002#STR0002#ALL#Los valores se refieren al movimiento del per. solicitado.
+0003#STR0003#ALL#Cta. ContaAble
+0004#STR0004#ALL#CONCEPTO
+0005#STR0005#ALL#Descripc.
+0006#STR0006#ALL#Si no se actual. los sdos.  bas. en la
+0007#STR0007#ALL#digitac. de los asientos (MV_ATUSAL='N'),
+0008#STR0008#ALL#ejecutar la rutina de actual. de saldos 
+0009#STR0009#ALL#para todos los per. solicitados en este 
+0010#STR0010#ALL#informe.
+0011#STR0011#ALL# ATENC. 
+0012#STR0012#ALL# En 
+0013#STR0013#ALL#Por favor, verif. si el calend. contable y la vinculac. moneda/calendario
+0014#STR0014#ALL#se registraron correctamente...
+0015#STR0015#ALL#COMPARATIVO DE 
+0016#STR0016#ALL# A 
+0017#STR0017#ALL#Creando Archivo Temporal...
+0018#STR0018#ALL#Comparativo de Ctas. Contables
+0019#STR0019#ALL#SALDOS MEDIOS DE ACTIVO FINANC. Y DEUDAS DESCONTABLES
+0020#STR0020#ALL#CALCULO DE PAGOS PROVISORIOS DE PROMEDIO
+0021#STR0021#ALL#Informe solo disponible en papel oficio

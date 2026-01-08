@@ -1,0 +1,78 @@
+0001#STR0001#ALL#Este programa imprimira la Cuadratura Contable
+0002#STR0002#ALL#con Analisis de Divergencias.
+0003#STR0003#ALL#Cuadratura contable con Analisis de Divergencias
+0004#STR0004#ALL#A rayas
+0005#STR0005#ALL#Administracion
+0006#STR0006#ALL#FECHA    SUBLOTE   DOC      CUENTA                                     DOC. FISCAL                                  VALOR DEB             VALOR CRED   HP    HISTORICO
+0006#STR0006#ANG#FCHA     SUBLOTE   POL      CTA.                                       POL. FISCAL                                  VALOR CRG             VALOR ABN    HP    HISTORIAL
+0006#STR0006#EQU#FCHA     SUBLOTE   POL      CTA.                                       POL. FISCAL                                  VALOR CRG             VALOR ABN    HP    HISTORIAL
+0006#STR0006#HAI#FCHA     SUBLOTE   POL      CTA.                                       POL. FISCAL                                  VALOR CRG             VALOR ABN    HP    HISTORIAL
+0006#STR0006#MEX#FCHA     SUBLOTE   DOC      CTA.                                       DOC. FISCAL                                  VALOR CRG             VALOR ABN    HP    HISTORIAL
+0006#STR0006#PTG#FCHA     SUBLOTE   POL      CTA.                                       POL. FISCAL                                  VALOR CRG             VALOR ABN    HP    HISTORIAL
+0007#STR0007#ALL#Emision del Informe de Cuadratura Contable
+0008#STR0008#ALL#Creando archivo temporal...
+0009#STR0009#ALL#***** ANULADO POR EL OPERADOR *****
+0010#STR0010#ALL#DIFERENCIA
+0011#STR0011#ALL#TOTAL LOTE: 
+0012#STR0012#ALL#INFORMADO
+0013#STR0013#ALL#DIGITADO
+0014#STR0014#ALL#T O T A L  G E N E R A L ==> 
+0015#STR0015#ALL#SUBLOTE: 
+0016#STR0016#ALL#Seleccionando registros...
+0017#STR0017#ALL#FECHA: 
+0018#STR0018#ALL#LOTE: 
+0019#STR0019#ALL#TOTAL DOCUMENTO: 
+0020#STR0020#ALL#TOTAL : 
+0021#STR0021#ALL# en 
+0022#STR0022#ALL# de 
+0023#STR0023#ALL# a 
+0024#STR0024#ALL#Este informe requiere el campo CT2_KEY. Por favor, creelo con tipo caracter de 100
+0025#STR0025#ALL#DIVERGENCIA:
+0026#STR0026#ALL#DOCUMENTO FISCAL                        TIPO DOCUMENTO                                                              VALOR DEB             VALOR CRED            DIVERGENCIA 
+0026#STR0026#ANG#POLIZA FISCAL                           TIPO POLIZA                                                                 VALOR CRG.            VALOR ABN.            DIVERGENCIA 
+0026#STR0026#EQU#POLIZA FISCAL                           TIPO POLIZA                                                                 VALOR CRG.            VALOR ABN.            DIVERGENCIA 
+0026#STR0026#HAI#POLIZA FISCAL                           TIPO POLIZA                                                                 VALOR CRG.            VALOR ABN.            DIVERGENCIA 
+0026#STR0026#MEX#DOCUMENTO FISCAL                        TIPO DOCUMENTO                                                              VALOR CRG.            VALOR ABN.            DIVERGENCIA 
+0026#STR0026#PTG#POLIZA FISCAL                           TIPO POLIZA                                                                 VALOR CRG.            VALOR ABN.            DIVERGENCIA 
+0027#STR0027#ALL#Tipo de Operacion: 
+0028#STR0028#ALL#FECHA    SUBLOTE   DOC      CUENTA                                     DOC. FISCAL                                  VALOR DEB             VALOR CRED   HP    HISTORICO                                  CORRELATIVO      
+0028#STR0028#ANG#FCHA     SUBLOTE   POL      CTA.                                       POL. FISCAL                                  VALOR CRG             VALOR ABN.   HP    HISTORIAL                                  CORRELATIVO      
+0028#STR0028#EQU#FCHA     SUBLOTE   POL      CTA.                                       POL. FISCAL                                  VALOR CRG             VALOR ABN.   HP    HISTORIAL                                  CORRELATIVO      
+0028#STR0028#HAI#FCHA     SUBLOTE   POL      CTA.                                       POL. FISCAL                                  VALOR CRG             VALOR ABN.   HP    HISTORIAL                                  CORRELATIVO      
+0028#STR0028#MEX#FCHA     SUBLOTE   DOC      CTA.                                       DOC. FISCAL                                  VALOR CRG.            VALOR ABN.   HP    HISTORIAL                                  CORRELATIVO      
+0028#STR0028#PTG#FCHA     SUBLOTE   POL      CTA.                                       POL. FISCAL                                  VALOR CRG             VALOR ABN.   HP    HISTORIAL                                  CORRELATIVO      
+0029#STR0029#ALL#Factura de Entrada
+0030#STR0030#ALL#Factura de Salida
+0031#STR0031#ALL#Nota de Credito del Cliente
+0032#STR0032#ALL#Nota de Debito del Cliente
+0033#STR0033#ALL#Nota de Credito del Proveedor
+0034#STR0034#ALL#Nota de Debito del Proveedor
+0035#STR0035#ALL#Compensacion Cobrar
+0036#STR0036#ALL#Compensacion Pagar
+0037#STR0037#ALL#Anulacion Comp.Cobrar    
+0038#STR0038#ALL#Anulacion Comp.Pagar     
+0039#STR0039#ALL#Compensacion de Carteras
+0040#STR0040#ALL#Anulacion Orden de Pago
+0041#STR0041#ALL#Anulacion de Recibo
+0042#STR0042#ALL#Anulacion de Bordero
+0043#STR0043#ALL#Bordero
+0044#STR0044#ALL#Anulacion de Cobranzas
+0045#STR0045#ALL#Anulacion de C. Pagar
+0046#STR0046#ALL#/AE 
+0047#STR0047#ALL#Acreditacion de Cheques
+0048#STR0048#ALL#Rechazo de Cheques
+0049#STR0049#ALL# de Salida
+0050#STR0050#ALL# de Entrada
+0051#STR0051#ALL# de Transferencia
+0052#STR0052#ALL#FCH.
+0053#STR0053#ALL#SUBLOTE
+0054#STR0054#ALL#DOC
+0055#STR0055#ALL#CTA
+0056#STR0056#ALL#DOC. FISCAL
+0057#STR0057#ALL#VALOR DEB
+0057#STR0057#MEX#VAL.CARGO
+0058#STR0058#ALL#VALOR CRED
+0058#STR0058#MEX#VAL. ABONO
+0059#STR0059#ALL#HP
+0060#STR0060#ALL#HISTORIAL
+0061#STR0061#ALL#CORRELATIVO

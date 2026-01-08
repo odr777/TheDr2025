@@ -1,0 +1,29 @@
+0001#STR0001#ALL#STATEMENT OF CHANGES IN THE NET EQUITY
+0002#STR0002#ALL#This program will print the Statement of Changes in the Net Equity
+0003#STR0003#ALL#It is printed according to the parameters requested by the user.
+0004#STR0004#ALL#There are no data to display
+0005#STR0005#ALL#Running query
+0006#STR0006#ALL#Selecting entries...
+0007#STR0007#ALL#Account
+0008#STR0008#ALL#Total
+0009#STR0009#ALL#AL
+0010#STR0010#ALL#Expressed in
+0011#STR0011#ALL#MANAGER
+0012#STR0012#ALL#ACCOUNTANT
+0013#STR0013#ALL#Management Plan not associated to record. Check configuration selected to record! 
+0014#STR0014#ALL#Management Plan not correclty registered. Check it 
+0015#STR0015#ALL#January
+0016#STR0016#ALL#February
+0017#STR0017#ALL#March
+0018#STR0018#ALL#April
+0019#STR0019#ALL#May
+0020#STR0020#ALL#June
+0021#STR0021#ALL#July
+0022#STR0022#ALL#August
+0023#STR0023#ALL#September
+0024#STR0024#ALL#October
+0025#STR0025#ALL#November
+0026#STR0026#ALL#December
+0027#STR0027#ALL#Balance on
+0028#STR0028#ALL#from
+0029#STR0029#ALL#from

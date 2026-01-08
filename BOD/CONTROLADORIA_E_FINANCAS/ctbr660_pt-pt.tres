@@ -1,0 +1,76 @@
+0001#STR0001#ALL#Este Programa Irá Imprimir A área Contabilística
+0002#STR0002#ALL#Com Análise De Divergências.
+0003#STR0003#ALL#área Contabilística Com Análise De Divergências
+0004#STR0004#ALL#Código de barras
+0005#STR0005#ALL#Administração
+0006#STR0006#ALL#Data     Sublote   Doc      Conta                                      Doc. Fiscal                                  Valor Déb             Valor Créd   Hp    Histórico
+0006#STR0006#ANG#DATA     SUBLOTE   DOC      CONTA                                      DOC. FISCAL                                  VALOR DÉB             VALOR CRÉD   HP    HISTÓRICO
+0006#STR0006#EQU#DATA     SUBLOTE   DOC      CONTA                                      DOC. FISCAL                                  VALOR DÉB             VALOR CRÉD   HP    HISTÓRICO
+0006#STR0006#HAI#DATA     SUBLOTE   DOC      CONTA                                      DOC. FISCAL                                  VALOR DÉB             VALOR CRÉD   HP    HISTÓRICO
+0006#STR0006#MEX#DATA     SUBLOTE   DOC      CONTA                                      DOC. FISCAL                                  VALOR DÉB             VALOR CRÉD.  HP    HISTÓRICO
+0006#STR0006#PTG#Data     Sublote   Doc      Conta                                      Doc. Fiscal                                  Valor Déb             Valor Créd   Hp    Histórico
+0007#STR0007#ALL#Emissão Da Listagem Da área Contabilística
+0008#STR0008#ALL#A Criar Ficheiro Temporário...
+0009#STR0009#ALL#***** cancelado pelo operador *****
+0010#STR0010#ALL#Diferença
+0011#STR0011#ALL#Total do lote: 
+0012#STR0012#ALL#Introduzido
+0013#STR0013#ALL#Introduzido
+0014#STR0014#ALL#T o t a l  g e r a l ==> 
+0015#STR0015#ALL#Sub-lote: 
+0016#STR0016#ALL#A Seleccionar Registos...
+0017#STR0017#ALL#Data: 
+0018#STR0018#ALL#Lote: 
+0019#STR0019#ALL#Total do documento: 
+0020#STR0020#ALL#Total do sub-lote: 
+0023#STR0023#ALL# até 
+0024#STR0024#ALL#Esta listagem necessita do campo ct2_key. Dever criá-lo com tipo caracter de 100
+0025#STR0025#ALL#Divergência : 
+0026#STR0026#ALL#Documento fiscal                        tipo documento                                                              valor déb             valor créd            divergência 
+0026#STR0026#ANG#DOCUMENTO FISCAL                        TIPO DOCUMENTO                                                              VALOR DÉB             VALOR CRÉD            DIVERGÊNCIA 
+0026#STR0026#EQU#DOCUMENTO FISCAL                        TIPO DOCUMENTO                                                              VALOR DÉB             VALOR CRÉD            DIVERGÊNCIA 
+0026#STR0026#HAI#DOCUMENTO FISCAL                        TIPO DOCUMENTO                                                              VALOR DÉB             VALOR CRÉD            DIVERGÊNCIA 
+0026#STR0026#MEX#Documento fiscal                        tipo documento                                                              valor déb             valor créd            divergência 
+0026#STR0026#PTG#Documento fiscal                        tipo documento                                                              valor déb             valor créd            divergência 
+0027#STR0027#ALL#Tipo de operação: 
+0028#STR0028#ALL#Data     sublote   doc      conta                                      doc. fiscal                                  valor déb             valor créd   hp    histórico                                  correlativo      
+0028#STR0028#ANG#DATA     SUBLOTE   DOC      CONTA                                      DOC. FISCAL                                  VALOR DÉB             VALOR CRÉD   HP    HISTÓRICO                                  CORRELATIVO      
+0028#STR0028#EQU#DATA     SUBLOTE   DOC      CONTA                                      DOC. FISCAL                                  VALOR DÉB             VALOR CRÉD   HP    HISTÓRICO                                  CORRELATIVO      
+0028#STR0028#HAI#DATA     SUBLOTE   DOC      CONTA                                      DOC. FISCAL                                  VALOR DÉB             VALOR CRÉD   HP    HISTÓRICO                                  CORRELATIVO      
+0028#STR0028#MEX#Data     sublote   doc      conta                                      doc. fiscal                                  valor déb             valor créd   hp    histórico                                  correlativo      
+0028#STR0028#PTG#Data     sublote   doc      conta                                      doc. fiscal                                  valor déb             valor créd   hp    histórico                                  correlativo      
+0029#STR0029#ALL#Factura De Entrada
+0030#STR0030#ALL#Factura De Saída
+0031#STR0031#ALL#Nota De Crédito Do Cliente
+0032#STR0032#ALL#Nota De Débito Do Cliente
+0033#STR0033#ALL#Nota De Crédito Do Fornecedor
+0034#STR0034#ALL#Nota De Débito Do Fornecedor
+0035#STR0035#ALL#Compensação A Receber
+0036#STR0036#ALL#Compensação A Pagar
+0037#STR0037#ALL#Anulação Da Compensação A Receber
+0038#STR0038#ALL#Anulação Da Compensação A Pagar
+0039#STR0039#ALL#Compensação De Carteiras
+0040#STR0040#ALL#Anulação Da Ordem De Pagamento
+0041#STR0041#ALL#Anulação De Recibo
+0042#STR0042#ALL#Cancelamento De Borderaux
+0043#STR0043#ALL#Borderaux 
+0044#STR0044#ALL#Anulação De C. Receber
+0045#STR0045#ALL#Anulação Da C. Pagar
+0046#STR0046#ALL#/lp 
+0047#STR0047#ALL#Recebimento De Cheques
+0048#STR0048#ALL#Devolução De Cheques
+0049#STR0049#ALL# De Saida
+0050#STR0050#ALL# De Entrada
+0051#STR0051#ALL# De Transferência
+0052#STR0052#ALL#Data
+0053#STR0053#ALL#Sublote
+0054#STR0054#ALL#Doc
+0055#STR0055#ALL#Conta
+0056#STR0056#ALL#Doc. Fiscal
+0057#STR0057#ALL#Valor Déb.
+0057#STR0057#MEX#VALOR DÉB
+0058#STR0058#ALL#Valor Créd.
+0058#STR0058#MEX#VALOR CRÉD
+0059#STR0059#ALL#Hp
+0060#STR0060#ALL#Histórico
+0061#STR0061#ALL#Correlativo

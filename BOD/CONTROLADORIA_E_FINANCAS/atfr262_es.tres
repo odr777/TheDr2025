@@ -1,0 +1,15 @@
+0001#STR0001#ALL#Informe disponible solamente para entornos TOPCONN/DBACESS
+0002#STR0002#ALL#Informe no disponible para esta localización
+0003#STR0003#ALL#Formulario de descuento
+0004#STR0004#ALL#Este programa emitirá la lista de los bienes que se bajaron por Extravío/Obsolescencia
+0005#STR0005#ALL#ATFR262
+0006#STR0006#ALL#Número del documento
+0007#STR0007#ALL#Código del bien
+0008#STR0008#ALL#Descripción
+0009#STR0009#ALL#Cantidad
+0010#STR0010#ALL#Valor unitario
+0011#STR0011#ALL#Subtotal
+0012#STR0012#ALL#Total general
+0013#STR0013#ALL#Aviso
+0014#STR0014#ALL#Función disponible solamente en TReport
+0015#STR0015#ALL#Fch. Descuento

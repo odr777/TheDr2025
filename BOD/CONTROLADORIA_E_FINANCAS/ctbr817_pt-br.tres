@@ -1,0 +1,54 @@
+0001#STR0001#ALL#Impressão concluída satisfatoriamente
+0002#STR0002#ALL#DEMONSTRATIVO DO FLUXO DE CAIXA
+0003#STR0003#ALL#Execute a rotina UPDCTB para criar a consulta padrão SX5SL
+0004#STR0004#ALL#Imprimirá o Demonstrativo do fluxo de caica de acordo com os parâmetros informados pelo usuário.
+0005#STR0005#ALL# É necessário informar a data de referência!
+0006#STR0006#ALL#Parâmetro considera igual a período.
+0007#STR0007#ALL#Data fora do calendário!
+0008#STR0008#ALL#Data de referência.
+0009#STR0009#ALL#Gerando relatório. Aguarde...
+0010#STR0010#ALL#Criando arquivo temporário...
+0011#STR0011#ALL#Responsáveis...
+0012#STR0012#ALL#Variação
+0013#STR0013#ALL#Saldos contábeis
+0014#STR0014#ALL#Ano Fiscal Anterior
+0015#STR0015#ALL#Ano Fiscal Atual
+0016#STR0016#ALL#Ano Fiscal Variação
+0017#STR0017#ALL#Atividades Operativas
+0018#STR0018#ALL#Lucro Líquido do Ano Fiscal
+0019#STR0019#ALL#Filiais:
+0020#STR0020#ALL#Não há dados que atendam a condição
+0021#STR0021#ALL#Emissão: 
+0022#STR0022#ALL#Sim
+0023#STR0023#ALL#Não
+0024#STR0024#ALL#NOME EMP
+0025#STR0025#ALL#REG PATRONAL
+0026#STR0026#ALL#TÍTULO
+0027#STR0027#ALL#ANO FISCAL ANT
+0028#STR0028#ALL#ANO FISCAL ATUAL
+0029#STR0029#ALL#ANO FISCAL VAR
+0030#STR0030#ALL#AT. OPERACIONAL
+0031#STR0031#ALL#LUCRO LÍQUIDO ANO
+0032#STR0032#ALL#IDENTIFICADOR
+0033#STR0033#ALL#VERBA
+0034#STR0034#ALL#ANO ATUAL
+0035#STR0035#ALL#ANO ANTERIOR
+0036#STR0036#ALL#VARIAÇÃO
+0037#STR0037#ALL#DESCRIÇÃO
+0038#STR0038#ALL#VAL ANO AT
+0039#STR0039#ALL#VAL ANO ANT
+0040#STR0040#ALL#VAL VARIAÇÃO
+0041#STR0041#ALL#VAL ANO FIS ANT
+0042#STR0042#ALL#VAL ANO FIS ATUAL
+0043#STR0043#ALL#VAL ANO FIS VAR
+0044#STR0044#ALL#ARQUIVO
+0045#STR0045#ALL#IMAGEM
+0046#STR0046#ALL#NUM. PÁG.
+0047#STR0047#ALL#Campo vazio!
+0048#STR0048#ALL#Selecione um Arquivo de Termo Auxiliar.
+0049#STR0049#ALL# - Variação: SIM
+0050#STR0050#ALL# - Variação: NÃO
+0051#STR0051#ALL# - Método: Direto
+0052#STR0052#ALL# - Método: Indireto
+0053#STR0053#ALL#Esta rotina será descontinuada e terá sua manutenção encerrada em 01/10/2022 e sua utilização será bloqueada a partir desta data no release 12.1.2210. 
+0054#STR0054#ALL#Ciclo de Vida de Software

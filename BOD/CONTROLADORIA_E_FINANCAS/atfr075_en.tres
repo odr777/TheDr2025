@@ -1,0 +1,21 @@
+0001#STR0001#ALL#Function available only in TReport
+0002#STR0002#ALL#Routine available only to TopConnect environments.
+0003#STR0003#ALL#No more than 5 currencies must be selected
+0004#STR0004#ALL#Book of Depreciable Assets
+0005#STR0005#ALL#Inventory Number
+0006#STR0006#ALL#Currency
+0007#STR0007#ALL#Original Value
+0008#STR0008#ALL#Depreciation Method
+0009#STR0009#ALL#Depreciation Rate %
+0010#STR0010#ALL#Depreciation Quota
+0011#STR0011#ALL#Depr. Accrued
+0012#STR0012#ALL#Residual Value
+0013#STR0013#ALL#Creating temporary file...
+0014#STR0014#ALL#Statement of Reevaluated Assets
+0015#STR0015#ALL#Asset Subtotal: 
+0016#STR0016#ALL#Group Subtotal: 
+0017#STR0017#ALL#Cost Center Subtotal: 
+0018#STR0018#ALL#Branch Subtotal: 
+0019#STR0019#ALL#Grand Total 
+0020#STR0020#ALL#Type
+0021#STR0021#ALL# - Ref. Date: 

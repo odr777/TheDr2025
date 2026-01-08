@@ -1,0 +1,32 @@
+0001#STR0001#ALL#STATEMENT OF RESOURCES SOURCES AND INVESTMENTS
+0002#STR0002#ALL#Generating report. Wait...
+0003#STR0003#ALL#Resources sources and investments
+0004#STR0004#ALL#Creating temporary file...
+0005#STR0005#ALL#Responsible People
+0006#STR0006#ALL#(In 
+0007#STR0007#ALL#This program prints Application and Source Statement
+0008#STR0008#ALL#of Resources, in accordance with the parameters entered by the user. 
+0009#STR0009#ALL#Printing concluded
+0010#STR0010#ALL#No data meeting condition
+0011#STR0011#ALL#Comp Name
+0012#STR0012#ALL#Equit Rec
+0013#STR0013#ALL#Bill
+0014#STR0014#ALL#Image
+0015#STR0015#ALL#Issue Date
+0016#STR0016#ALL#Ref.Date
+0017#STR0017#ALL#Bill Con
+0018#STR0018#ALL#At Bill
+0019#STR0019#ALL#Prev Bill
+0020#STR0020#ALL#Desc. Con
+0021#STR0021#ALL#At. Vl.
+0022#STR0022#ALL#Prev. Vl.
+0023#STR0023#ALL#File
+0024#STR0024#ALL#Yes
+0025#STR0025#ALL#No
+0026#STR0026#ALL#Page No.
+0027#STR0027#ALL#Process canceled by operator
+0028#STR0028#ALL#Tax Aux Term Canceled
+0029#STR0029#ALL#The Auxiliary Terms file (.TRM) that will be printed is greater than 2.000 characters, edit the file or create a new one.
+0030#STR0030#ALL#Tax Auxiliary Terms
+0031#STR0031#ALL#This routine will be discontinued and its maintenance closed on 10/1/2022. Its use will be blocked as of 1/10/2022, from release 12.1.210,
+0032#STR0032#ALL#Software Lifecycle

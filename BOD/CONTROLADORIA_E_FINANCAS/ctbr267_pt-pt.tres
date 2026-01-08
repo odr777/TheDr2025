@@ -1,0 +1,19 @@
+0001#STR0001#ALL#Este Programa Irá Imprimir O Comparativo De Contas Contabilísticas.
+0002#STR0002#ALL#Os valores são ref. ao movimento do período pedido. 
+0003#STR0003#ALL#Conta Contabil.
+0004#STR0004#ALL#Conceito
+0005#STR0005#ALL#Descrição
+0006#STR0006#ALL#Caso não actualize os saldos  básicos  na
+0007#STR0007#ALL#Digitação dos movimentos (mv_atusal='n'),
+0008#STR0008#ALL#Correr o procedimento  de actualização de saldos 
+0009#STR0009#ALL#Para todos os períodos solicitados no 
+0010#STR0010#ALL#Relatório.
+0011#STR0011#ALL# atenção 
+0012#STR0012#ALL# em 
+0013#STR0013#ALL#Por favor, verifique se o calend.contabilístico e a associação moeda/calendário 
+0014#STR0014#ALL#Foram registados correctamente...
+0015#STR0015#ALL#Comparativo de 
+0016#STR0016#ALL# até 
+0017#STR0017#ALL#A Criar Ficheiro Temporário...
+0018#STR0018#ALL#Comparativo De Contas Contabilísticas
+0019#STR0019#ALL#Cálculo De Pagamentos Provisórios De Isr

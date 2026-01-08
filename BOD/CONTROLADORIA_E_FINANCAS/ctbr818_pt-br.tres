@@ -1,0 +1,32 @@
+0001#STR0001#ALL#DEMONSTRATIVO DE ORIGENS E INVESTIMENTOS DE RECURSOS
+0002#STR0002#ALL#Gerando relatório. Aguarde...
+0003#STR0003#ALL#Origens e investimentos de recursos
+0004#STR0004#ALL#Criando arquivo temporário...
+0005#STR0005#ALL#Responsáveis...
+0006#STR0006#ALL#(Em 
+0007#STR0007#ALL#Este programa imprimirá o Demonstrativo de Origen e Aplicativos
+0008#STR0008#ALL#de Recursos, de acordo com os parâmetros informados pelo usuário. 
+0009#STR0009#ALL#Impressão concluída satisfatoriamente
+0010#STR0010#ALL#Não há dados que atendam à condição
+0011#STR0011#ALL#Nome Emp
+0012#STR0012#ALL#Reg. Pat
+0013#STR0013#ALL#Título
+0014#STR0014#ALL#Imagem
+0015#STR0015#ALL#Data Emis
+0016#STR0016#ALL#Data Ref
+0017#STR0017#ALL#Tít. Con
+0018#STR0018#ALL#Tít. At.
+0019#STR0019#ALL#Tít. Ant
+0020#STR0020#ALL#Desc. Con
+0021#STR0021#ALL#Vlr. At.
+0022#STR0022#ALL#Vlr. Ant
+0023#STR0023#ALL#Arquivo
+0024#STR0024#ALL#Sim
+0025#STR0025#ALL#Não
+0026#STR0026#ALL#Núm. Pag.
+0027#STR0027#ALL#Processo cancelado pelo operador
+0028#STR0028#ALL#Imp. Term. Aux. Cancelado
+0029#STR0029#ALL#O arquivo de Termos Auxiliares (.TRM) que se imprimirá é maior que 2,000 caracteres, por favor, edite o arquivo ou crie um novo.
+0030#STR0030#ALL#Imp. Termos Auxiliares
+0031#STR0031#ALL#Esta rotina será descontinuada e terá sua manutenção encerrada em 01/10/2022 e sua utilização será bloqueada a partir desta data no release 12.1.2210. 
+0032#STR0032#ALL#Ciclo de Vida de Software

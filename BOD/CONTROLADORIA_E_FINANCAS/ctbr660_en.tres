@@ -1,0 +1,78 @@
+0001#STR0001#ALL#This program will print the Accounting Adjustment
+0002#STR0002#ALL#under the Analysis of Dicrepancies.
+0003#STR0003#ALL#Accounting Adjustment under Analysis of Discrepancies
+0004#STR0004#ALL#Z. Form
+0005#STR0005#ALL#Management
+0006#STR0006#ALL#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY
+0006#STR0006#ANG#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY  
+0006#STR0006#EQU#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY  
+0006#STR0006#HAI#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY  
+0006#STR0006#MEX#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY  
+0006#STR0006#PTG#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY  
+0007#STR0007#ALL#Issuance of the Accounting Adjustment Report
+0008#STR0008#ALL#Creating Temporary File...
+0009#STR0009#ALL#***** CANCELLED BY OPERATOR *****
+0010#STR0010#ALL#DIFFERENCE
+0011#STR0011#ALL#LOT TOTAL: 
+0012#STR0012#ALL#INFORMED
+0013#STR0013#ALL#ENTERED
+0014#STR0014#ALL#G R A N D  T O T A L ==> 
+0015#STR0015#ALL#SUB-LOT: 
+0016#STR0016#ALL#Selecting Records...
+0017#STR0017#ALL#DATE: 
+0018#STR0018#ALL#LOT: 
+0019#STR0019#ALL#DOCUMENT TOTAL: 
+0020#STR0020#ALL#SUBLOT TOTAL: 
+0021#STR0021#ALL# in 
+0022#STR0022#ALL# from 
+0023#STR0023#ALL# to 
+0024#STR0024#ALL#This report needs the field CT2_KEY. Create it with character type 100
+0025#STR0025#ALL#DIVERGENCE : 
+0026#STR0026#ALL#FISCAL DOCUMENT                         TYPE DOCUMENT                                                               VALUE DEB             VALUE CRED            DISCREPANCY 
+0026#STR0026#ANG#FISCAL DOCUMENT                         DOCUMENT TYPE                                                               DEB VALUE             CRED VALUE            DIVERGENCE  
+0026#STR0026#EQU#FISCAL DOCUMENT                         DOCUMENT TYPE                                                               DEB VALUE             CRED VALUE            DIVERGENCE  
+0026#STR0026#HAI#FISCAL DOCUMENT                         DOCUMENT TYPE                                                               DEB VALUE             CRED VALUE            DIVERGENCE  
+0026#STR0026#MEX#FISCAL DOCUMENT                         DOCUMENT TYPE                                                               DEB VALUE             CRED VALUE            DIVERGENCE  
+0026#STR0026#PTG#FISCAL DOCUMENT                         DOCUMENT TYPE                                                               DEB VALUE             CRED VALUE            DIVERGENCE  
+0027#STR0027#ALL#Operation Type: 
+0028#STR0028#ALL#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  VALUE DEB             VALUE CRED   HP    HISTORY                                    CORRELATIVE      
+0028#STR0028#ANG#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY                                    CORRELATIVE      
+0028#STR0028#EQU#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY                                    CORRELATIVE      
+0028#STR0028#HAI#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY                                    CORRELATIVE      
+0028#STR0028#MEX#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY                                    CORRELATIVE      
+0028#STR0028#PTG#DATE     SUBLOT    DOC      ACCOUNT                                    FISCAL DOC.                                  DEB VALUE             CRED VALUE   HP    HISTORY                                    CORRELATIVE      
+0029#STR0029#ALL#Inflow Invoice
+0030#STR0030#ALL#Outflow Invoice
+0031#STR0031#ALL#Customer큦 Credit Note
+0032#STR0032#ALL#Customer큦 Debit Note
+0033#STR0033#ALL#Supplier큦 Credit Note
+0034#STR0034#ALL#Supplier큦 Debit Note
+0035#STR0035#ALL#Clearing Receivable
+0036#STR0036#ALL#Clearing Payable
+0037#STR0037#ALL#Clear. Receivable Cancellation
+0038#STR0038#ALL#Clear. Payable Cancellation
+0039#STR0039#ALL#Portfolio Clearing
+0040#STR0040#ALL#Payment Order Cancellation
+0041#STR0041#ALL#Receipt Cancellation
+0042#STR0042#ALL#Bordereau Cancellation
+0043#STR0043#ALL#Bordereau
+0044#STR0044#ALL#C. Receivable Cancellation
+0045#STR0045#ALL#C. Payable Cancellation
+0046#STR0046#ALL#/AE 
+0047#STR0047#ALL#Checks Receiving
+0048#STR0048#ALL#Checks Return
+0049#STR0049#ALL# of Outflow
+0050#STR0050#ALL# of Inflow
+0051#STR0051#ALL# of Transfer
+0052#STR0052#ALL#DATE
+0053#STR0053#ALL#SUB-LOT
+0054#STR0054#ALL#DOC
+0055#STR0055#ALL#ACCT.
+0056#STR0056#ALL#TAX DOCUMENT
+0057#STR0057#ALL#DEB. AMNT
+0057#STR0057#MEX#DEB AMT
+0058#STR0058#ALL#CRED AMNT.
+0058#STR0058#MEX#CRED AMT
+0059#STR0059#ALL#HP
+0060#STR0060#ALL#HISTORY  
+0061#STR0061#ALL#CORRELATIVE

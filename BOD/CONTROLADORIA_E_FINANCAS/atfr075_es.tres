@@ -1,0 +1,21 @@
+0001#STR0001#ALL#Función disponible solamente en TReport
+0002#STR0002#ALL#Rutina disponible solamente para entornos TopConnect
+0003#STR0003#ALL#Deben seleccionarse como máximo 5 monedas
+0004#STR0004#ALL#Libro de activos depreciables
+0005#STR0005#ALL#Número de inventario
+0006#STR0006#ALL#Moneda
+0007#STR0007#ALL#Valor original
+0008#STR0008#ALL#Método de depreciación
+0009#STR0009#ALL#Ts.Deprec. %
+0010#STR0010#ALL#Cuota Deprec.
+0011#STR0011#ALL#Dep. Acumulada
+0012#STR0012#ALL#Valor residual
+0013#STR0013#ALL#Creando archivo temporal...
+0014#STR0014#ALL#Estado demostrativo de activos revaluados
+0015#STR0015#ALL#Subtotal del bien: 
+0016#STR0016#ALL#Subtotal del grupo: 
+0017#STR0017#ALL#Subtotal del centro de costo: 
+0018#STR0018#ALL#Subtotal de la sucursal: 
+0019#STR0019#ALL#Total general 
+0020#STR0020#ALL#Tipo
+0021#STR0021#ALL# - Fecha Ref.: 

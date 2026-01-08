@@ -1,0 +1,13 @@
+0001#STR0001#ALL#This program prints a fee record book 
+0002#STR0002#ALL#according to the parameters informed by the user.
+0003#STR0003#ALL#Z-Form
+0004#STR0004#ALL#Administration
+0005#STR0005#ALL#Fee Record Book - 
+0006#STR0006#ALL#Name
+0007#STR0007#ALL#Ticket No
+0008#STR0008#ALL#Fee
+0009#STR0009#ALL#Withhold Amount
+0010#STR0010#ALL#Net Amount
+0011#STR0011#ALL#Selecting Records ...
+0012#STR0012#ALL#*** CANCELLED BY OPERATOR ***
+0013#STR0013#ALL#Totals

@@ -1,0 +1,39 @@
+0001#STR0001#ARG#RT 6/84 Adjustment by Inflation of Fixed Asset
+0002#STR0002#ARG#Group
+0003#STR0003#ARG#Fixed Asset
+0004#STR0004#ARG#Date
+0005#STR0005#ARG#Account
+0006#STR0006#ARG#Origin
+0007#STR0007#ARG#Revaluation
+0008#STR0008#ARG#Difference
+0009#STR0009#ARG#Code
+0010#STR0010#ARG#Description
+0011#STR0011#ARG#State
+0012#STR0012#ARG#Acquisition
+0013#STR0013#ARG#Posting Payment
+0014#STR0014#ARG#Accrued
+0015#STR0015#ARG#Monthly Exp.
+0016#STR0016#ARG#Cost Center
+0017#STR0017#ARG#Exp. Adjustment
+0018#STR0018#ARG#Asset Adjustment
+0019#STR0019#ARG#Value
+0020#STR0020#ARG#Year
+0021#STR0021#ARG#Accrued
+0022#STR0022#ARG#Residual Value
+0023#STR0023#ARG#This report prints the Adjustment per Inflation.
+0024#STR0024#ARG#Attention
+0025#STR0025#ARG#Ok
+0026#STR0026#ARG#Enter Periods Interval.
+0027#STR0027#ARG#Enter Assets Group Interval.
+0028#STR0028#ARG#Start Period must be earlier than the End Period.
+0029#STR0029#ARG#Enter position.
+0030#STR0030#ARG#Assets
+0031#STR0031#ARG#Transfers
+0032#STR0032#ARG#Posting Payment
+0033#STR0033#ARG#Asset
+0034#STR0034#ARG#Amortized
+0035#STR0035#ARG#Sold
+0036#STR0036#ARG#Asset
+0037#STR0037#ARG#Accounting taxation asset transfered
+0038#STR0038#ARG#History Values
+0039#STR0039#ARG#Adjusted Values

@@ -1,0 +1,29 @@
+0001#STR0001#ALL#DEMONSTRAÇÃO DAS MUTAÇÕES DO PATRIMÔNIO LÍQUIDO
+0002#STR0002#ALL#Este programa imprimirá o Demonstrativo de Alterações no Patrimônio Líquido
+0003#STR0003#ALL#Será impresso conforme os Parâmetros solicitados pelo usuário.
+0004#STR0004#ALL#Não existem dados a exibir
+0005#STR0005#ALL#Executando consulta
+0006#STR0006#ALL#Selecionando lançamentos...
+0007#STR0007#ALL#Conta
+0008#STR0008#ALL#Total
+0009#STR0009#ALL#AL
+0010#STR0010#ALL#Expresso em
+0011#STR0011#ALL#GERENTE
+0012#STR0012#ALL#CONTADOR
+0013#STR0013#ALL#Plano Gerencial não associado ao livro. Verifique a configuracion selecionada para o livro! 
+0014#STR0014#ALL#Plano Gerencial não registrado corretamente. Verifique 
+0015#STR0015#ALL#Janeiro
+0016#STR0016#ALL#Fevereiro
+0017#STR0017#ALL#Março
+0018#STR0018#ALL#Abril
+0019#STR0019#ALL#Maio
+0020#STR0020#ALL#Junho
+0021#STR0021#ALL#Julho
+0022#STR0022#ALL#Agosto
+0023#STR0023#ALL#Setembro
+0024#STR0024#ALL#Outubro
+0025#STR0025#ALL#Novembro
+0026#STR0026#ALL#Dezembro
+0027#STR0027#ALL#Saldo em
+0028#STR0028#ALL#de
+0029#STR0029#ALL#de

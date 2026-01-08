@@ -1,0 +1,20 @@
+0001#STR0001#ALL#This program will print the Booking Trial Balance (LANDSCAPE MODE). The 
+0002#STR0002#ALL#account is printed being limited to 20 characters and its description with 40 characters. 
+0003#STR0003#ALL#BOOKING TRIAL BALANCE
+0004#STR0004#ALL#Report printed only in graphic mode
+0005#STR0005#ALL# FROM 
+0006#STR0006#ALL# TO 
+0007#STR0007#ALL#Account
+0008#STR0008#ALL#Account Description
+0009#STR0009#ALL#Month Trans.
+0010#STR0010#ALL#Previous Trans.
+0011#STR0011#ALL#Gen. Trans.
+0012#STR0012#ALL#Balance
+0013#STR0013#ALL#Debit
+0014#STR0014#ALL#Credit
+0015#STR0015#ALL#T O T A L S  O F  P E R I O D :  
+0016#STR0016#ALL#T O T A L S  O F  G R O U P (
+0017#STR0017#ALL#Please, enter the parameters Revenue/Expenses Groups and Previous Bal. of Revenue/Expenses or
+0018#STR0018#ALL#set the parameter Ignore Prev. Bal. of Rev/Exp to No 
+0019#STR0019#ALL#Selecting Records...
+0020#STR0020#ALL#Creating Temporary File...
