@@ -1,0 +1,4 @@
+S4Import_ArticleFilter
+    Se necesitan definir dos campos en el maestro de almacenes
+        1. Campo si el almacen se integra a SLIM
+        2. Campo de nombre de integración

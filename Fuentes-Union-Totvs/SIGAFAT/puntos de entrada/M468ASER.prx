@@ -1,0 +1,32 @@
+#INCLUDE "RWMAKE.CH"
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+ฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑ
+ฑฑษออออออออออัออออออออออหอออออออัออออออออออออออออออออหออออออัอออออออออออออปฑฑ
+ฑฑบPrograma  ณM468ASER  บAutor  ณEDUAR ANDIA         บFecha ณ  12/10/12   บฑฑ
+ฑฑฬออออออออออุออออออออออสอออออออฯออออออออออออออออออออสออออออฯอออออออออออออนฑฑ
+ฑฑบDesc.     ณ Gatilla la serie en facturacion automatica MATA468N.       บฑฑ
+ฑฑบ          ณ                                                            บฑฑ
+ฑฑฬออออออออออุออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออนฑฑ
+ฑฑบUso       ณ Union Agronegocios                                         บฑฑ
+ฑฑศออออออออออฯออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผฑฑ
+ฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑฑ
+฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿฿
+*/
+
+
+
+User Function M468ASER
+
+Local _xcSerie  := ""
+
+	aVendedor := u_obteVend(RetCodUsr()) // obtengo el cobrador
+	if Type("aVendedor[2]") <> "U" // existe Cobrador
+		_xcSerie := aVendedor[3] // obtengo la serie
+	else
+		lMSAuto := .F. // caso no facture directamente.
+	endif
+
+Return(_xcSerie)
+

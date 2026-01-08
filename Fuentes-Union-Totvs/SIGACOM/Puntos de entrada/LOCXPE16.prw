@@ -1,0 +1,148 @@
+#Include "Protheus.ch"
+#Include "Topconn.ch"
+#DEFINE CRLF Chr(13)+Chr(10)
+
+/*/
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Funcion   ³ LocxPe16 ³ Autor ³ TdeP               ³ Fecha³ 30/09/2017  ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descrip.  ³ Punto de Entrada paga validar en OK rutinas LocxNF         ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxis  ³ LocxPe16( void )                                           ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Retorno   ³ .T. o .F.                                                  ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³ Uso      ³ MP12BIB                                                    ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Parametros³ Ninguno                                                    ³±±
+±±ÀÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+/*/
+
+User Function LOCXPE16()
+Local _lRet  	:= .T.
+Local nValor 	:= 0
+Local nPosTes	:= 0
+Local nPosCta	:= 0
+Local nPosCc	:= 0
+Local nPosRateio:= 0
+Local nPosItem	:= 0
+Local aItCC		:= {}
+Local cItCC		:= ""
+
+
+//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+//³ Valida Centro de Custo Obrigatorio 							³
+//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+If Alltrim(FunName()) $ "MATA101N" 
+	nPosTes  	:= Ascan( aHeader, { |x| Alltrim( x[2] ) == "D1_TES"    } )
+	nPosCta  	:= Ascan( aHeader, { |x| Alltrim( x[2] ) == "D1_CONTA"  } )
+	nPosCc  	:= Ascan( aHeader, { |x| Alltrim( x[2] ) == "D1_CC"   	} )
+	nPosRateio  := Ascan( aHeader, { |x| Alltrim( x[2] ) == "D1_RATEIO"	} )
+	nPosItem    := Ascan( aHeader, { |x| Alltrim( x[2] ) == "D1_ITEM"	} )
+	
+	For nX := 1 To Len(aCols)
+		If !aCols[n,Len(aHeader)+1]
+			
+			If GetNewPar("MV_XOBRGCC",.T.)
+				If aCols[nX][nPosRateio]=="1"	//Item com Reteio CC
+					If Len(aRatCC) > 0
+						
+						For nRt := 1 To Len(aRatCC)
+							If aRatCC[nRt][1]== aCols[nX][nPosItem]
+								aItCC := aRatCC[nRt][2]
+								
+								For nIt := 1 To Len(aItCC)
+									cItCC := aItCC[nIt][3]
+									If Empty(cItCC)
+										_lRet := .F.
+										Aviso("AVISO -LOCXPE16","Falta digitar el Centro de Costo / Item: " +aCols[nX][nPosItem]+CRLF+"Prorrateo Item: "+aItCC[nIt][1],{"OK"})
+										Exit
+									Endif
+								Next nIt
+							Endif
+						Next nRt
+						//_lRet := .T.
+					Endif
+				Else
+					If Empty(aCols[nX][nPosCc])
+						_lRet := .F.
+						Aviso("AVISO -LOCXPE16","Falta digitar el Centro de Costo / Item: " +aCols[nX][nPosItem],{"OK"})
+						Exit
+					Endif
+				Endif
+			Endif
+		Endif
+	Next nX
+	
+	//Aviso("Array > aRatCC",u_zArrToTxt(aRatCC, .T.),{"Ok"},,,,,.T.)
+	//Return(.F.)//<--------------------------
+Endif
+
+//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+//³ Valida que el Valor registro en Caja Chica sea igual al 	³
+//³ Valor de la Factura de Entrada                   			³
+//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+If Alltrim(FunName()) $ "MATA101N" 
+	nPosTes  	:= Ascan( aHeader, { |x| Alltrim( x[2] ) == 'D1_TES'     } )
+	nPosTotal  	:= Ascan( aHeader, { |x| Alltrim( x[2] ) == 'D1_TOTAL'   } )
+	nPosDesc  	:= Ascan( aHeader, { |x| Alltrim( x[2] ) == 'D1_VALDESC' } )
+  //nPosImp  	:= Ascan( aHeader, { |x| Alltrim( x[2] ) == 'D1_UIMPEXE' } )
+	
+	If AllTrim(Upper(M->F1_SERIE)) $ GetNewPar("MV_XSERCCH","CCH")
+		nValor:= 0
+		For nX := 1 To LEN(aCols)
+			
+			If 	SF4->(FieldPos("F4_XCCH")) > 0				
+				If GETADVFVAL("SF4","F4_XCCH",xFilial("SF4")+aCols[nX][nPosTes],1,"N")=="S"				
+					nValor:= nValor +aCols[nX][nPosTotal] - aCols[nX][nPosDesc]
+				Endif
+			Else
+				nValor:= nValor +aCols[nX][nPosTotal] - aCols[nX][nPosDesc]
+			Endif
+			
+		Next nX
+		
+		If nValor<> nCxValor 
+			Alert("El Valor de la Caja Chica NO es igual a la Factura")
+			_lRet:= .F.
+		EndIf
+		
+		
+	End
+
+	If U_ValidaPag()
+		Alert("La factura tiene pagos o compensaciones, por tanto no se puede borrar")
+		_lRet:= .F.
+		//MT103EXC - Valida exclusão do documento de entrada.
+	ENDIF
+End
+
+Return _lRet
+
+//+---------------------------------------------------------------------+
+//|Valida la Tes Utilizada en Factura de Entrada para Caja Chica 		|
+//+---------------------------------------------------------------------+
+User Function ValItCx
+Local lRet := .T.
+
+If AllTrim(Upper(M->F1_SERIE)) $ GetNewPar("MV_XSERCCH","CCH")		
+	
+	If 	SF4->(FieldPos("F4_XCCH")) > 0
+		lRet := GETADVFVAL("SF4","F4_XCCH",xFilial("SF4")+M->D1_TES,1,"N")=="S"
+	
+		If !lRet
+			If Aviso("MENSAJE","La TES utilizada no es de Caja Chica, desea continuar?",{"Si","No"})==1
+				Aviso("MENSAJE","Este Ítem generará una CXP",{"Ok"})
+				lRet := .T.
+			Else
+				lRet := .F.
+			Endif
+		Endif
+	Endif
+Endif
+Return(lRet)
