@@ -1,0 +1,3 @@
+Crear el indice por el configurador.
+
+R8_FILIAL+R8_MAT+R8_TIPOAFA

@@ -1,0 +1,1224 @@
+#include "SIGAWIN.CH"        // incluido pelo assistente de conversao do AP5 IDE em 09/09/99
+#include "FINR899.CH"
+#include "TOTVS.CH"
+#include "PROTHEUS.CH"
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³FINR899   ºAutor  ³Bruno Sobieski      º Data ³  21/12/98   º±±
+±±								 André Kraus						2019  ¹±±
+±±								 Nahim Terrazas							   ±±
+±±ºDesc.     ³ Reporte Financiero de Cobranzas Realizadas belén			  º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ Generico                                                   º±±
+±±ÀÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+Function u_Finr899()        // incluido pelo assistente de conversao do AP5 IDE em 09/09/99
+	Local oReport
+
+	If TRepInUse()
+		//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+		//³Interface de impressao                                                  ³
+		//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+		oReport	:= ReportDef()
+		oReport:PrintDialog()
+	Else
+		FINR899R3()
+	EndIf
+
+	If Select("TRB") > 0
+		DbSelectArea("TRB")
+		DbCloseArea()
+	EndIf
+
+Return
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³ReportDef ºAutor  ³Paulo Augusto       º Data ³  21/07/06   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³ Tratamanto release 04                                      º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ Generico                                                   º±±
+±±ÀÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+
+Static Function ReportDef()
+
+	Local oReport,oSection1,oSection2,oSection3,oSection4
+	Local cReport := "FINR899"
+	Local cDescri := STR0001 + STR0002
+	Local lVersao 	:= .F.
+	Local cPerg		:= ""
+
+	If cPaisLoc == "ARG"
+		DbSelectArea("SEL")
+		lVersao := .T.
+		cPerg := "FIR899A"
+	Else
+		cPerg := "FIR899"
+	EndIf
+
+	oReport  := TReport():New( cReport, STR0009, cPerg , { |oReport| ReportPrint( oReport, "SEL" ) }, cDescri )
+
+	oSection1 := TRSection():New( oReport,STR0060, {"SEL"}, )
+	TRCell():New( oSection1, "A1_COD" 	,"SA1",/*X3Titulo*/	,/*Picture*/,,/*lPixel*/,{||SA1->A1_COD + "-" + SA1->A1_LOJA})
+	TRCell():New( oSection1, "A1_NOME"	,"SA1",/*X3Titulo*/	,/*Picture*/,20/*Tamanho*/,/*lPixel*/,)
+
+	oSection2 := TRSection():New( oSection1,STR0061, {"SEL"} )
+	TRCell():New( oSection2, "CODIGO" 	,"",OemToAnsi(STR0044)/*X3Titulo*/	,/*Picture*/,TamSX3("A1_COD")[1]/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "LOJA" 	,"",OemToAnsi(STR0045)/*X3Titulo*/	,/*Picture*/,TamSX3("A1_LOJA")[1]/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "NOME"		,"",OemToAnsi(STR0046)/*X3Titulo*/	,/*Picture*/,20/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "EL_RECIBO"	,"SEL",/*X3Titulo*/	,/*Picture*/,TamSX3("EL_RECIBO")[1]/*Tamanho*/,/*lPixel*/,)
+	If lVersao
+		TRCell():New( oSection2, "EL_VERSAO" ,"SEL",/*X3Titulo*/,/*Picture*/,TamSX3("EL_VERSAO")[1]/*Tamanho*/,/*lPixel*/,)
+	EndIf
+	TRCell():New( oSection2, "EL_DTDIGIT" 	,"SEL",/*X3Titulo*/	,/*Picture*/,8/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "NVALBX","",OemToAnsi(STR0047)+ CHR(13)+CHR(10) + OemToAnsi(STR0048)/*X3Titulo*/		,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	//TRCell():New( oSection2, "NVALDN"	,"",OemToAnsi(STR0049)+ CHR(13)+CHR(10) + OemToAnsi(STR0050)/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "NVALBS"	,"","Efectivo"+ CHR(13)+CHR(10) +"Bs."/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "NVALDL"	,"","Efectivo"+ CHR(13)+CHR(10) +"Us."/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "NVALCHE"	,"","Cheques"/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "NVALDEP"	,"",OemToAnsi(STR0051) + CHR(13)+CHR(10) + OemToAnsi(STR0052)/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "NVALRA" 	,"",OemToAnsi(STR0053)+ CHR(13)+CHR(10) +OemToAnsi(STR0059) /*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	//TRCell():New( oSection2, "NVALRET"	,"",OemToAnsi(STR0055)/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	//TRCell():New( oSection2, "NVALNCC"	,"",OemToAnsi(STR0056) + CHR(13)+CHR(10) +OemToAnsi(STR0056)/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "NVALCOMP"	,"",OemToAnsi(STR0057)/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,13/*Tamanho*/,/*lPixel*/,)
+	TRCell():New( oSection2, "NVALDESC","",OemToAnsi(STR0058)/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,8/*Tamanho*/,/*lPixel*/,)
+//	TRCell():New( oSection2, "NVALCAMBBS","","Camb. Bs"/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,8/*Tamanho*/,/*lPixel*/,)
+//	TRCell():New( oSection2, "NVALCAMBDL","","Camb. Sus"/*X3Titulo*/	,PesqPict("SEL","EL_VALOR")/*Picture*/,8/*Tamanho*/,/*lPixel*/,)
+
+
+	
+
+	oSection3 := TRSection():New(oReport,"Cheques rechazados", {"SE1"})
+	TRCell():New(oSection3,"RAZON_SOCIAL"	,"SEL", "Cheques rechazados", /*Picture*/, 40)
+	TRCell():New(oSection3,"EL_RECIBO"		,"SEL", "Nro.de recib")
+	TRCell():New(oSection3,"EL_DTDIGIT"		,"SEL", "Fch,.Digitac")
+	TRCell():New(oSection3,"EL_VALOR"		,"SEL", "Valor Total", /*Picture*/, /*Tamanho*/, /*lPixel*/, {|| xMoeda(CHQR->EL_VALOR,val(CHQR->EL_MOEDA),MV_PAR08,DDATABASE) })
+	TRCell():New(oSection3,"EL_NUMERO"		,"SEL", "Nro. de cheque")
+	
+Return oReport
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºPrograma  ³ReportPrintºAutor  ³Paulo Augusto       º Data ³  21/07/06   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³Rotina de impressao                                          º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ SIGAFIN                                                     º±±
+±±ÈÍÍÍÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+
+Static Function ReportPrint( oReport )
+	Local oSection1 := oReport:Section(1)
+	Local oSection2 := oSection1:Section(1)
+	Local oSection3 := oReport:Section(2)
+	Local oBreak
+	Local nX := 1
+	Local nOrder	:=oReport:Section(1):GetOrder()
+	Local cPictSEL  := ""
+	Local lConvert := .F.
+	Local cCLIENTE:= ""
+	Local nDecs :=2
+	Local lImprimio:=.F.
+	Local nOrdProv:=0
+	Local nTotProv1:= 0
+	Local nTotProv2:= 0
+	Local nTotProv3:= 0
+	Local nTotProv4:= 0
+	Local nTotProv5:= 0
+	Local nTotProv6:= 0
+	Local nTotProv7:= 0
+	Local nTotProv8:= 0
+	Local nRetGral 	:= 0
+	Local nTotBajado:= 0
+	Local nTotDesc 	:= 0
+	Local nTotCambBS := 0 // Nahim
+	Local nTotCambDL := 0 // Nahim
+	Local nTotComp	:=	0
+	Local nPrGral	:= 0
+	Local nDepGral	:= 0
+	Local nTotAnt	:= 0
+	Local nTotChDia	:= 0
+	Local nTotBs	:= 0
+	Local nTotDl	:= 0
+	Local nTotChe	:= 0
+	Local nTotChAde	:= 0
+	Local nTotDin	:= 0
+	Local nTotCC	:= 0
+	Local nOrdenes := 0
+	Local lPrim:=.t.
+	Local cDescCli :=""
+	Local nRecOld, nRecNew
+	Local cFilterUser := ""
+	Local lVersao 	:= .F.
+	Local cVersao 	:= ""
+	Local cVerDe	:= ""
+	Local cVerAte	:= ""
+	Local dDtIni	:= dDataBase
+	Local dDtFim	:= dDataBase
+	Local nMoeInf	:= 1
+	Local cSerDe	:= ""
+	Local cSerAte	:= ""
+	Local nOutMoe	:= 0
+
+	If !Empty(oReport:uParam)
+		Pergunte(oReport:uParam,.F.)
+	EndIf
+
+	cVerDe   := MV_PAR06
+	cVerAte  := MV_PAR07
+	dDtIni   := Iif(cPaisLoc == "ARG",MV_PAR08,MV_PAR06)
+	dDtFim   := Iif(cPaisLoc == "ARG",MV_PAR09,MV_PAR07)
+	nMoeInf  := Iif(cPaisLoc == "ARG",MV_PAR10,MV_PAR08)
+	cSerDe   := Iif(cPaisLoc == "ARG",MV_PAR11,MV_PAR09)
+	cSerAte  := Iif(cPaisLoc == "ARG",MV_PAR12,MV_PAR10)
+	nOutMoe  := Iif(cPaisLoc == "ARG",MV_PAR13,MV_PAR11)
+
+	If cPaisLoc $ "ARG"
+		DbSelectArea("SEL")
+		lVersao := .T.
+	EndIf
+
+	lConvert := ( nOutMoe == 1 )
+
+	oReport:SetTitle( oReport:Title() +;
+	If(Mv_Par01==1,STR0010,If(mv_par01==2,STR0011,If(mv_par01==3,STR0012,STR0036))) +;
+	STR0039 + GetMv("MV_MOEDA"+alltrim(STR(nMoeInf))) )	// " - Por Cliente")
+
+	Do Case
+		Case Mv_Par01	==	1
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cKey   := "EL_FILIAL+EL_SERIE+EL_RECIBO+EL_VERSAO+EL_TIPODOC"
+			cOrdem := "EL_SERIE+EL_RECIBO+EL_VERSAO"
+		Else
+			cKey   := "EL_FILIAL+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+			cOrdem := "EL_SERIE+EL_RECIBO"
+		EndIf
+		nCount := Val(mv_par05)-Val(mv_par04)
+		Case mv_par01 	==	2
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+			cOrdem := "EL_CLIORIG+EL_LOJORIG"
+		Else
+			cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+			cOrdem := "EL_CLIORIG+EL_LOJORIG"
+		EndIf
+		nCount := Val(mv_par03)-Val(mv_par02)
+		Case mv_par01 	==	3
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_VERSAO+EL_TIPODOC"
+			cOrdem := "EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_VERSAO"
+		Else
+			cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+			cOrdem := "EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO"
+		EndIf
+		nCount := Val(mv_par05)-Val(mv_par04)
+		Case Mv_Par01	==	4
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cKey   := "EL_FILIAL+Dtos(EL_DTDIGIT)+EL_SERIE+EL_RECIBO+EL_VERSAO+EL_TIPODOC"
+			cOrdem := "EL_SERIE+EL_RECIBO+EL_VERSAO"
+		Else
+			cKey   := "EL_FILIAL+Dtos(EL_DTDIGIT)+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+			cOrdem := "EL_SERIE+EL_RECIBO"
+		EndIf
+		nCount := Val(mv_par05)-Val(mv_par04)
+	ENDCASE
+
+	cCondicao	:= 	' EL_CLIORIG >= "'+mv_par02+'" .And. EL_CLIORIG <= "'+mv_par03+'"'
+	cCondicao	+=	'.and.EL_RECIBO >= "'+mv_par04+'" .And. EL_RECIBO <= "'+mv_par05+'"'
+	cCondicao	+=	'.and.EL_SERIE >="'+cSerDe+'".And.EL_SERIE <="'+cSerAte+'"'
+	cCondicao	+=	'.AND.DTOS(EL_DTDIGIT)>="'+DTOS(dDtIni)+'".and.DTOS(EL_DTDIGIT)<="'+DTOS(dDtFim)+'" .AND. EL_FILIAL=="'+xFilial("SEL")+'"'
+	If cPaisLoc $ "ARG" .AND. lVersao
+		cCondicao += ' .AND. EL_VERSAO >= "' + cVerDe + '" .AND. EL_VERSAO <= "' + cVerAte + '" '
+	EndIf
+
+	If !lConvert
+		cCondicao += '.And.  ( EL_MOEDA == "'+Alltrim(Str(nMoeInf))+'"'
+		If ( Len( Alltrim(Str(nMoeInf)) ) = 1   )
+			cCondicao += '.Or. EL_MOEDA == "0'+Alltrim(Str(nMoeInf))+'"'
+			cCondicao += '.Or. EL_MOEDA ==  "'+Alltrim(Str(nMoeInf))+' "'
+			cCondicao += '.Or. EL_MOEDA == " '+Alltrim(Str(nMoeInf))+'"'
+		Endif
+		cCondicao += ')'
+	Endif
+
+	cFilterUser := oSection1:GetADVPLExp("SEL")
+	If !Empty(cFilterUser)
+		cCondicao += '.And. '+cFilterUser
+	EndIf
+
+	cArqTrab	:=	CriaTrab(Nil,.F.)
+//	Aviso("query",cvaltochar(cCondicao),{"si"},,,,,.T.)
+	IndRegua("SEL",cArqTrab,cKey,,cCondicao,OemToAnsi(STR0013))  //"Filtrando registros..."
+
+	nIndexSEL := RetIndex("SEL")
+	#IFNDEF TOP
+	dbSetIndex(cArqTrab+OrdBagExt())
+	#ENDIF
+	dbSetOrder(nIndexSEL+1)
+	DbGoTOp()
+
+	oReport:SetMeter(Reccount())
+
+	If mv_par01==3
+
+		oBreak:= TRBreak():New(oSection2,{||.T.},OemToAnsi(STR0016))
+
+		TRFunction():New(oSection2:Cell("NVALBX")	, , "SUM" ,oBreak , , , ,.f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALDN")	, , "SUM" ,oBreak , , , , .f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALDEP")	, , "SUM" , oBreak, , , ,.f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALRA")	, , "SUM" ,oBreak, , , ,.f. ,.F. )
+		If cPaisLoc <> "BRA"
+			//	TRFunction():New(oSection2:Cell("NVALRET")	, , "SUM" ,oBreak , , , ,.f. ,.F. )
+			//	TRFunction():New(oSection2:Cell("NVALNCC"), , "SUM" ,oBreak , , , , .f. ,.F. )
+		EndIf
+		TRFunction():New(oSection2:Cell("NVALDEP")	, , "SUM" ,oBreak, , , ,.f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALCOMP"), , "SUM" ,oBreak, , , ,.f. ,.F. )
+		TRFunction():New(oSection2:Cell("NVALDESC"), , "SUM" ,oBreak, , , ,.f. ,.F. )
+//		TRFunction():New(oSection2:Cell("NVALCAMBBS"), , "SUM" ,oBreak, , , ,.f. ,.F. )
+//		TRFunction():New(oSection2:Cell("NVALCAMBDL"), , "SUM" ,oBreak, , , ,.f. ,.F. )
+
+		//TRFunction():New(oABCOrdem2:Cell("AF3_CUSTD"),"NCUSTOTSK" ,"SUM",oBreak2,/*cTitle*/,/*cPicture*/,/*uFormula*/,.F./*lEndSection*/,.F./*lEndReport*/,.F./*lEndPage*/)
+	EndIf
+
+	//oReport:EndReport(.F.)
+
+	While  !Eof() .and. EL_FILIAL == xFilial("SEL")
+
+		If EL_CANCEL
+			DbSkip()
+			Loop
+		Endif
+
+		If mv_par01==3
+			If (Substr(SEL->EL_TIPODOC,1,2) == "TJ")
+				DbSkip()
+				Loop
+			EndIf
+		EndIf
+
+		cOrdAnt	:=	&cOrdem
+		cRecibo	:=	SEL->EL_RECIBO
+		cSerie  :=  SEL->EL_SERIE
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cVersao := SEL->EL_VERSAO
+		EndIf
+		dAntDtDigit	:=	SEL->EL_DTDIGIT
+		SA1->(DbSetOrder(1))
+		SA1->(DbSeek(xFilial("SA1")+SEL->EL_CLIORIG+SEL->EL_LOJORIG))
+		If MV_PAR01==3
+			lPrim	:=	Iif(cCLIENTE==SEL->EL_CLIORIG+"-"+SEL->EL_LOJORIG,.F.,.T.)
+		EndIf
+
+		cCLIENTE	:= SEL->EL_CLIORIG+"-"+SEL->EL_LOJORIG
+		cNomeClie	:=	SA1->A1_NOME
+		nValBaj	:=	0.00
+		nValCredit	:=	0.00 // nahim Valor Crédito 26/09/2019
+		nValContado	:=	0.00 // Nahim Valor Contado 26/09/2019
+		nValDesc	:=	0.00
+		nValCambBS := 0.00
+		nValCambDL := 0.00
+		nValRa 	:=	0.00
+		nValRet	:=	0.00
+		nValDep	:=	0.00
+		nValPr	:=	0.00
+		nValPaNc	:=	0.00
+		nCheqd	:= 0.00
+		nChead	:= 0.00
+		nDin		:= 0.00
+		nCC 		:= 0.00
+		nValBs  := 0.00
+		nValDl  := 0.00
+		nValChe := 0.00
+		DbSelectArea("SEL")
+
+		If	lPrim   .And. Mv_Par01==3
+			oSection1:Init()
+			oSection1 :PrintLine()
+			oSection1 :Finish()
+		Endif
+
+		If 	lPrim
+			lPrim	:=	.F.
+			oSection2:Init()
+		EndIf
+
+		nRecOld := Recno()
+
+		While cOrdAnt == &cOrdem .And. !Eof() .And. xFilial("SEL")==EL_FILIAL
+
+			If ( Substr(SEL->EL_TIPODOC,1,2) $ "RG|RI|RB|RS")
+				//			nValRet  := nValRet  +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) == "TB")
+				If !(SEL->EL_TIPO $ MV_CRNEG+"|"+MVRECANT)  //Tratamento para NCCs e RAs
+					nValBaj  := nValBaj  +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					nValDesc := nValDesc +  Round(xMoeda(EL_DESCONT,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR),nDecs)
+				Else
+					nValPaNc := nValPaNc +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					nValDesc := nValDesc -  Round(xMoeda(EL_DESCONT,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR),nDecs)
+				EndIf
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) == "TF")
+				nValDep  := nValDep  +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) == "TJ")
+				nCC      := nCC      +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				//Elseif	(Substr(SEL->EL_TIPODOC,1,2) $ "CH|EF")
+				// André Kraüss 12/04/2019 Separando variables de dolares, bolivianos y cheques
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) $ "CH")
+				nValPr   := nValPr   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				nValChe   := nValChe   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				If Substr(SEL->EL_TIPODOC,1,2) == "CH"
+					If SEL->EL_EMISSAO< SEL->EL_DTVCTO
+						nChead:= nChead + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					Else
+						nCheqd:= nCheqd + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					Endif
+				Else
+					nDin:= nDin + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				Endif
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) $ "EF")
+				nValPr   := nValPr   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				If Val(EL_MOEDA) == 1
+					nValBs   := nValBs  + EL_VLMOED1 //+  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					NVALCAMBBS := NVALCAMBBS +  Round(xMoeda(EL_UCAMBIO,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_UCAMBIO),nDecs)
+				Else
+					nValDl   := nValDl   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					//			NVALCAMBDL := NVALCAMBDL +  Round(xMoeda(EL_UCAMBIO,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_UCAMBIO),nDecs)
+					NVALCAMBDL := NVALCAMBDL +  Round(xMoeda(EL_UCAMBIO,Val(EL_MOEDA),nMoeInf,EL_DTDIGIT,nDecs+1),nDecs) // Nahim
+				Endif
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) == "RA")
+				nValRa   := nValRa   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			ElseIf (SEL->EL_TIPODOC$(GetSESTipos({|| ES_RCOPGER == "2"},"1")))
+				nValPr   := nValPr   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				nDin:= nDin + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			ElseIf  (SEL->EL_TIPODOC$(GetSESTipos({|| ES_RCOPGER == "1"},"1")))
+				nValPr   := nValPr   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				nChead:= nChead + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			EndIf
+			DbSkip()
+
+			nRecNew := Recno()
+		EndDo
+		dbSelectArea("SEL")
+		dbGoTo(nRecOld)
+
+		If mv_par01 == 1 .Or. mv_par01 == 4
+			oSection2:Cell("CODIGO"):Disable()
+			oSection2:Cell("LOJA"):Disable()
+			oSection2:Cell("EL_RECIBO"):SetBlock({||IIf(Empty(cSerie),"    ",alltrim(cSerie)+"-")+cRecibo})	///Tipo
+			If cPaisLoc $ "ARG" .AND. lVersao
+				oSection2:Cell("EL_VERSAO"):SetBlock({|| cVersao })	///Revisão do Recibo
+			EndIf
+			cDescCli:= Alltrim(cCLIENTE+" "+Substr(cNomeClie,1,30))
+			oSection2:Cell("NOME"):SetBlock({||cDescCli})	//Ag
+			oSection2:Cell("EL_DTDIGIT"):SetBlock({||dAntDtDigit})	//Ag
+		Elseif mv_par01==2
+			oSection2:Cell("CODIGO"):Disable()
+			oSection2:Cell("LOJA"):Disable()
+			oSection2:Cell("EL_RECIBO"):Disable()
+			If cPaisLoc $ "ARG" .AND. lVersao
+				oSection2:Cell("EL_VERSAO"):Disable()
+			EndIf
+			oSection2:Cell("EL_DTDIGIT"):Disable()
+			cDescCli:= Alltrim(cCLIENTE+" "+Substr(cNomeClie,1,30))
+			oSection2:Cell("NOME"):SetBlock({||cDescCli})	//Ag
+		Else
+			oSection2:Cell("CODIGO"):Disable()
+			oSection2:Cell("LOJA"):Disable()
+			oSection2:Cell("NOME"):Disable()
+			oSection2:Cell("EL_RECIBO"):SetBlock({||IIf(Empty(cSerie),"    ",cSerie+"-")+cRecibo})	///Tipo
+			If cPaisLoc $ "ARG" .AND. lVersao
+				oSection2:Cell("EL_RECIBO"):SetBlock({|| cVersao })	///Tipo
+			EndIf
+			oSection2:Cell("EL_DTDIGIT"):SetBlock({||dAntDtDigit})	//Ag
+			If nCC = 0
+				BuscaCC(@nCC)
+			EndIf
+		Endif
+
+		//	oSection2:Cell("NVALBX"):SetBlock({||nValBaj/EL_TXMOE02})	///Tipo
+		oSection2:Cell("NVALBX"):SetBlock({||nValBaj})	///Tipo
+		//oSection2:Cell("NVALDN"):SetBlock({||nValPr})	//Ag
+		oSection2:Cell("NVALBS"):SetBlock({||nValBs})	//Bs
+		//	oSection2:Cell("NVALDL"):SetBlock({||nValDl/EL_TXMOE02})	//Dl
+		oSection2:Cell("NVALDL"):SetBlock({||nValDl})	//Dl
+		oSection2:Cell("NVALCHE"):SetBlock({||nValChe})	//Cheque
+		oSection2:Cell("NVALDEP"):SetBlock({||nValDep})	//Serie
+		oSection2:Cell("NVALRA"):SetBlock({||nValRA})	//Parcela
+		If cPaisLoc <> "BRA"
+			//		oSection2:Cell("NVALRET"):SetBlock({||nValRet})	//Serie
+			//		oSection2:Cell("NVALNCC"):SetBlock({||nCC})	//Emissao
+		EndIf
+		oSection2:Cell("NVALCOMP"):SetBlock({||nValPaNc})	//Vencto
+		oSection2:Cell("NVALDESC"):SetBlock({||nValDesc})//Valor
+//		oSection2:Cell("NVALCAMBBS"):SetBlock({||NVALCAMBBS})//Valor
+//		oSection2:Cell("NVALCAMBDL"):SetBlock({||NVALCAMBDL})//Valor
+
+		oSection2:PrintLine()
+
+		//	nRetGral 	:= nRetGral 	+ 	nValRet
+		nTotBajado	:= nTotBajado	+	nValBaj
+		nTotDesc   	:= nTotDesc   +	nValDesc
+		nTotCambBS  := nTotCambBS + NVALCAMBBS
+		nTotCambDL  := nTotCambDL + NVALCAMBDL
+		nTotComp		:=	nTotComp	+	nValPaNc
+		nPrGral		:= nPrGral + nValPr
+		nDepGral	:= nDepGral +	nValDep
+		nTotAnt		:= nTotAnt + nValRa
+		nTotChDia	:= nTotChDia + nCheqd
+		nTotBs := nTotBs + nValBs
+		nTotDl := nTotDl + nValDl
+		nTotChe := nTotChe + nValChe
+		nTotChAde	:= nTotChAde + nChead
+		nTotDin		:= nTotdin + nDin
+		nTotCC		:= nTotCC + nCC
+		dbSelectArea("SEL")		// voltar para alias existente, se nao, nao funciona
+		nOrdenes    := nOrdenes + 1
+		If(cCLIENTE<>SEL->EL_CLIORIG+"-"+SEL->EL_LOJORIG) .And. Mv_Par01==3
+			oSection2 :Finish()
+		EndIf
+
+		dbGoTo(nRecNew)
+	Enddo
+	If Mv_Par01<>3 .and. !lPrim
+		oSection2 :Finish()
+	EndIf
+	
+	
+
+	oSection3:BeginQuery()
+	
+	BeginSql alias "CHQR"
+	
+		SELECT CONCAT(EL_CLIORIG, '-', EL_LOJORIG, ' ', A1_NOME) 'RAZON_SOCIAL',  
+			EL_RECIBO, 
+			EL_DTDIGIT, 
+			EL_NUMERO,
+			EL_MOEDA, 
+			EL_VALOR 
+		FROM %Table:SEL% SEL 
+		JOIN %Table:SE1% SE1 ON EL_NUMERO = E1_NUM AND EL_PARCELA = E1_PARCELA 
+		LEFT JOIN %Table:SA1% SA1 ON EL_CLIORIG = A1_COD AND EL_LOJORIG = A1_LOJA AND SA1.D_E_L_E_T_ = '' 
+		WHERE SEL.D_E_L_E_T_ = ''
+		AND SE1.D_E_L_E_T_ = ''
+		AND EL_CLIORIG BETWEEN %exp:MV_PAR02% AND %exp:MV_PAR03% 
+		AND EL_RECIBO BETWEEN %exp:MV_PAR04% AND %exp:MV_PAR05% 
+		AND EL_DTDIGIT BETWEEN %exp:DTOS(MV_PAR06)% AND %exp:DTOS(MV_PAR07)% 
+		AND EL_SERIE BETWEEN %exp:MV_PAR09% AND %exp:MV_PAR10%
+		AND E1_TIPO = 'CHR' 
+	
+	EndSql
+
+//	cQuery := GetLastQuery()
+//	Aviso("query", cvaltochar(cQuery[2]`````), {"si"})
+
+	oSection3:EndQuery()
+	
+	oReport:endpage()
+	oSection3:Print()
+	
+	
+	
+	If nOrdenes > 0
+		//Imprimir Totales
+		oReport:SkipLine()
+		oReport:endpage()
+		//    oReport:StartPage()
+		nTotNetoGral	:=	nTotBajado - nRetGral - nTotComp + nTotAnt
+		If (mv_par01<>2)
+			oReport:PrintText(OemToAnsi(STR0017) + TransForm(nOrdenes,"@R 999,999"))  //"Recibos emitidos  -> "
+		Endif
+		//	nTotDl := nTotDl/(Posicione("SM2", 1, DTOS(DDATABASE), "SM2->M2_MOEDA" + cValToChar(nMoeInf))) Nahim 18/04
+		//nTotDl := nTotDl/EL_TXMOE02
+		//oReport:PrintText(OemToAnsi(STR0019) + TransForm(nTotDin,tm(nTotDin,15,nDecs)))//"TOTAL DINHEIRO       ----> "
+		oReport:PrintText(OemToAnsi(STR0037) + TransForm(nTotChDia,tm(nTotChDia,15,nDecs)))  //"TOTAL CHEQ AL DIA. ----> "
+		oReport:PrintText(OemToAnsi("TOTAL EFECTIVO BS ----->") + TransForm(nTotBs,tm(nTotBs,15,nDecs)))  //"TOTAL BS AL DIA. ----> "
+		oReport:PrintText(OemToAnsi("TOTAL EFECTIVO US ----->") + TransForm(nTotDl,tm(nTotDl,15,nDecs)))
+		oReport:PrintText(If (cPaisLoc<>"CHI",OemToAnsi(STR0038),OemToAnsi(STR0041)) + TransForm(nTotChAde,tm(nTotChAde,15,nDecs)))  //"TOTAL CHEQ ADELANTADO ----> "
+		oReport:PrintText(OemToAnsi(STR0020) + TransForm(nDepGral,tm(nDepGral,15,nDecs)))  //"TOTAL DEPOSITADO  ----> "
+
+		If cPaisLoc <> "BRA"
+			//		oReport:PrintText(OemToAnsi(STR0022) + TransForm(nRetGral,tm(nRetGral,15,nDecs)))  //"TOTAL RETENCIONES ----> "
+			//		oReport:PrintText(OemToAnsi(STR0040) + TransForm(nTotCC,tm(nTotCC,15,nDecs)))  //"TOTAL CARTAO CREDITO ----> "
+		Endif
+		oReport:PrintText(OemToAnsi(STR0018) + TransForm(nTotBajado,tm(nTotBajado,15,nDecs)))//"TOTAL BRUTO       ----> "
+		oReport:PrintText(OemToAnsi(STR0043) + TransForm(nTotComp,tm(nTotComp,15,nDecs)))  //"TOTAL COMPENSADO      ----> "
+		oReport:PrintText(OemToAnsi(STR0021) + TransForm(nTotAnt,tm(nTotAnt,15,nDecs)))  //"TOTAL ANTICIPO    ----> "
+		oReport:PrintText(OemToAnsi(STR0042)+" "+ TransForm(nTotDesc,tm(nTotDesc,15,nDecs)))  //"TOTAL DESCONTADO  ----> "
+//		oReport:PrintText(OemToAnsi("TOTAL CAMBIO BS  ----> ")+ TransForm(nTotCambBS,tm(nTotCambBS,15,nDecs)))  //"TOTAL Cambio  ----> "
+//		oReport:PrintText(OemToAnsi("TOTAL CAMBIO SUS  ----> ")+ TransForm(nTotCambDL,tm(nTotCambDL,15,nDecs)))  //"TOTAL Cambio  ----> "
+		cQuery := GetLastQuery()
+		//	Aviso("query",cvaltochar(cQuery[2]`````),{"si"},,,,,.T.)
+	
+		// nahim 04/10/2019
+		QVWF2	:= GetNextAlias()
+		BeginSql Alias QVWF2
+			SELECT * FROM
+			(SELECT sum(isnull(SEL.EL_VLMOED1,0)) CONTADO FROM SEL010 SEL
+			JOIN SF2010 SF2 ON SF2.F2_DOC = EL_NUMERO AND SF2.F2_SERIE = EL_PREFIXO
+			AND SF2.F2_COND = '002' AND SF2.D_E_L_E_T_ LIKE ''
+			WHERE 
+			0 <> (SELECT count(*) isRA  FROM SEL010 SEL2 WHERE SEL.EL_RECIBO = SEL2.EL_RECIBO AND SEL.EL_SERIE = SEL2.EL_SERIE AND SEL2.D_E_L_E_T_ LIKE '' AND EL_TIPODOC <> 'TB' AND SEL.EL_CLIENTE = SEL2.EL_CLIENTE)
+			AND SEL.D_E_L_E_T_ LIKE ''
+			AND	SEL.EL_CLIORIG >= %exp:MV_PAR02% AND   SEL.EL_CLIORIG <= %exp:MV_PAR03%
+			AND	SEL.EL_RECIBO  >= %exp:MV_PAR04%  AND   SEL.EL_RECIBO <= %exp:MV_PAR05%
+			AND	SEL.EL_SERIE   >= %exp:MV_PAR09%  AND  SEL.EL_SERIE   <= %exp:MV_PAR10%
+			AND	SEL.EL_DTDIGIT >= %exp:MV_PAR06%  AND  SEL.EL_DTDIGIT <= %exp:MV_PAR07%) CONTADO,
+			(SELECT sum(isnull(SEL.EL_VLMOED1,0)) RAS FROM SEL010 SEL
+			WHERE EL_TIPODOC LIKE 'RA'
+			AND	SEL.EL_CLIORIG >= %exp:MV_PAR02% AND   SEL.EL_CLIORIG <= %exp:MV_PAR03%
+			AND	SEL.EL_RECIBO  >= %exp:MV_PAR04%  AND   SEL.EL_RECIBO <= %exp:MV_PAR05%
+			AND	SEL.EL_DTDIGIT >= %exp:MV_PAR06%  AND  SEL.EL_DTDIGIT <= %exp:MV_PAR07%
+			AND	SEL.EL_SERIE >= %exp:MV_PAR09%  AND  SEL.EL_SERIE <= %exp:MV_PAR10%
+			AND SEL.D_E_L_E_T_ LIKE '') RAS,
+			(SELECT sum(isnull(SEL.EL_VLMOED1,0)) CREDITO FROM SEL010 SEL
+			JOIN SF2010 SF2 ON SF2.F2_DOC = EL_NUMERO AND SF2.F2_SERIE = EL_PREFIXO
+			AND SF2.F2_COND <> '002' AND SF2.D_E_L_E_T_ LIKE ''
+			WHERE EL_TIPODOC LIKE 'TB' 
+			AND 0 <> (SELECT count(*) isRA  FROM SEL010 SEL2 WHERE SEL.EL_RECIBO = SEL2.EL_RECIBO AND SEL.EL_SERIE = SEL2.EL_SERIE AND SEL2.D_E_L_E_T_ LIKE '' AND EL_TIPODOC <> 'TB' AND SEL.EL_CLIENTE = SEL2.EL_CLIENTE)
+			AND	SEL.EL_CLIORIG >= %exp:MV_PAR02% AND   SEL.EL_CLIORIG <= %exp:MV_PAR03%
+			AND	SEL.EL_RECIBO  >= %exp:MV_PAR04%  AND   SEL.EL_RECIBO <= %exp:MV_PAR05%
+			AND	SEL.EL_DTDIGIT >= %exp:MV_PAR06%  AND  SEL.EL_DTDIGIT <= %exp:MV_PAR07%
+			AND	SEL.EL_SERIE >= %exp:MV_PAR09%  AND  SEL.EL_SERIE <= %exp:MV_PAR10%
+			AND SEL.EL_TIPO = 'NF' AND SEL.D_E_L_E_T_ LIKE '') credito,
+			(SELECT sum(isnull(SEL.EL_VLMOED1,0)) MIGRAD FROM SEL010 SEL
+			LEFT join SF2010 SF2 ON SF2.F2_DOC = EL_NUMERO AND SF2.F2_SERIE = EL_PREFIXO
+			AND SF2.D_E_L_E_T_ LIKE ''
+			WHERE EL_TIPODOC LIKE 'TB' 
+			AND 0 <> (SELECT count(*) isRA  FROM SEL010 SEL2 WHERE SEL.EL_RECIBO = SEL2.EL_RECIBO AND SEL.EL_SERIE = SEL2.EL_SERIE AND SEL2.D_E_L_E_T_ LIKE '' AND EL_TIPODOC <> 'TB' AND SEL.EL_CLIENTE = SEL2.EL_CLIENTE)
+			AND SF2.F2_DOC IS NULL
+			AND SEL.D_E_L_E_T_ LIKE ''
+			AND	SEL.EL_CLIORIG >= %exp:MV_PAR02% AND   SEL.EL_CLIORIG <= %exp:MV_PAR03%
+			AND	SEL.EL_RECIBO  >= %exp:MV_PAR04%  AND   SEL.EL_RECIBO <= %exp:MV_PAR05%
+			AND	SEL.EL_DTDIGIT >= %exp:MV_PAR06%  AND  SEL.EL_DTDIGIT <= %exp:MV_PAR07%
+			AND	SEL.EL_SERIE >= %exp:MV_PAR09%  AND  SEL.EL_SERIE <= %exp:MV_PAR10%
+			AND SEL.EL_TIPO = 'NF'
+			) MIGRAD
+		EndSql
+		//QUERY
+		cQuery := GetLastQuery()
+//		Aviso("query",cvaltochar(cQuery[2]`````),{"si"},,,,,.T.)
+		
+		DbSelectArea(QVWF2)
+		
+		
+		oReport:PrintText(OemToAnsi(STR0023) + TransForm(nTotNetoGral,tm(nTotNetoGral,15,nDecs)))  //"TOTAL RECIBIDO    ----> "
+		oReport:PrintText(OemToAnsi("TOTAL CRÉDITO    ----> ") + TransForm(xMoeda((QVWF2)->CREDITO+(QVWF2)->RAS,1,nMoeInf) ,tm((QVWF2)->CONTADO +(QVWF2)->RAS ,15,nDecs)))  //"TOTAL RECIBIDO    ----> "
+		oReport:PrintText(OemToAnsi("TOTAL CONTADO    ----> ") + TransForm(xMoeda((QVWF2)->CONTADO +(QVWF2)->MIGRAD,1,nMoeInf) ,tm((QVWF2)->CONTADO +(QVWF2)->RAS ,15,nDecs)))  //"TOTAL RECIBIDO    ----> "
+		
+		
+		
+		QTOTCHR	:= GetNextAlias()
+		BeginSql Alias QTOTCHR
+
+			SELECT SUM(SEL.EL_VLMOED1) CHECK_TOTAL 
+			FROM %Table:SEL% SEL 
+			JOIN %Table:SE1% SE1 ON EL_NUMERO = E1_NUM AND EL_PARCELA = E1_PARCELA  
+			WHERE SEL.D_E_L_E_T_ = ''
+				AND SE1.D_E_L_E_T_ = ''
+				AND EL_CLIORIG BETWEEN %exp:MV_PAR02% AND %exp:MV_PAR03% 
+				AND EL_RECIBO BETWEEN %exp:MV_PAR04% AND %exp:MV_PAR05% 
+				AND EL_DTDIGIT BETWEEN %exp:DTOS(MV_PAR06)% AND %exp:DTOS(MV_PAR07)% 
+				AND EL_SERIE BETWEEN %exp:MV_PAR09% AND %exp:MV_PAR10%
+				AND E1_TIPO = 'CHR' 
+				
+		EndSql
+		
+		cQuery := GetLastQuery()
+		DbSelectArea(QTOTCHR) 
+		
+		oReport:PrintText(OemToAnsi("TOTAL CH RECHAZADOS -> ") + TransForm(xMoeda((QTOTCHR)->CHECK_TOTAL, 1, nMoeInf), tm((QTOTCHR)->CHECK_TOTAL, 15, nDecs)))
+	Endif
+	
+	
+	// oReport:EndPage(.T.)
+	
+Return
+
+/*
+---------------------------------------------------------- RELEASE 3 ---------------------------------------------
+*/
+
+User Function FINR899R3()
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Declaracao de variaveis utilizadas no programa atraves da funcao    ³
+	//³ SetPrvt, que criara somente as variaveis definidas pelo usuario,    ³
+	//³ identificando as variaveis publicas do sistema utilizadas no codigo ³
+	//³ Incluido pelo assistente de conversao do AP5 IDE                    ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+	SetPrvt("NTOTGER,NRETENCGER,NTOTPROV1,NTOTPROV2,NTOTPROV3,NTOTPROV4")
+	SetPrvt("NTOTPROV5,LEND,CDESC1,CDESC2,CDESC3")
+	SetPrvt("CSTRING,CABEC1,CABEC2,ALINHA,ARETURN,CPERG")
+	SetPrvt("NJUROS,NLASTKEY,NOMEPROG,TAMANHO,TITULO,WNREL")
+	SetPrvt("LIMITE,LCONTINUA,NORDEM,DBAIXA,CBTXT,CBCONT")
+	SetPrvt("LI,M_PAG,CKEY,CORDEM,NCOUNT,CCONDICAO")
+	SetPrvt("CARQTRAB,NTOTNETOGRAL,NRETGRAL,NDEPGRAL,NTOTANT,NPRGRAL")
+	SetPrvt("NTOTDEPGRAL,NTOTCOMP,NTOTBAJADO,NORDENES,CCLIENTE,NORDPROV")
+	SetPrvt("CORDANT,CRECIBO,CSERIE,DANTDTDIGIT,LPRIM,CNOMECLIE,NVALBAJ")
+	SetPrvt("NVALRA,NVALRET,NTOTCHDIA,NTOTCHADE,NTOTDIN,NVALDEP,NVALPR,NCHEQD,NCHEAD,NDIN,NVALPANC,_SALIAS")
+	SetPrvt("AREGS,I,J,")
+	Private nTotCC    := 0
+	Private nCC       := 0
+	Private nTotProv6 := 0
+	Private lConvert
+
+	nTotGer:=0
+	nRetencGer:=0
+	nTotProv1:= 0
+	nTotProv2:= 0
+	nTotProv3:= 0
+	nTotProv4:=	0
+	nTotProv5:=	0
+	nTotProv6:=	0
+	nTotProv7:=	0
+	nTotProv8:=	0
+	lEnd := .F.
+	cDesc1 := OemToAnsi(STR0001)  // "Imprime relatorio dos recibos"
+	cDesc2 := OemToAnsi(STR0002)  // "emitidos, sinteticamente."
+	cDesc3 :=""
+	cString:="SEL"
+
+	cabec1  :=""
+	cabec2  :=""
+	aLinha  :={}
+	aReturn :={ OemToAnsi(STR0003) , 1,OemToAnsi(STR0004), 1, 2, 1, "",1 }  //"Zebrado"###"Administracao"
+	cPerg	:=""
+	nJuros  :=0
+	nLastKey:=0
+	nomeprog:="FINR899"
+	tamanho :="G"
+
+	If cPaisLoc == "ARG"
+		DbSelectArea("SEL")
+		cPerg := "FIR899A"
+	Else
+		cPerg := "FIR899"
+	EndIf
+
+	//+------------------------------------+
+	//¦ Verifica as perguntas selecionadas ¦
+	//+------------------------------------+
+	Pergunte(cPerg,.F.)
+
+	//+-----------------------------------------------------------------------------+
+	//¦ Variaveis utilizadas para parametros 		                                ¦
+	//¦ mv_par01		 // Ordenado Por          ?                                 ¦
+	//¦ mv_par02		 // De Cliente			  ?	                                ¦
+	//¦ mv_par03		 // Hasta Cliente		  ?	                                ¦
+	//¦ mv_par04		 // Do Recibo			  ?	                                ¦
+	//¦ mv_par05		 // Hasta Recibo		  ?	                                ¦
+	//¦ mv_par06		 // De Fecha Emision      ?                                 ¦
+	//¦ mv_par07		 // Hasta Fecha Emision   ?	                                ¦
+	//¦ mv_par08		 // Qual Moneda           ?	                                ¦
+	//¦ mv_par09		 // De Serie del Recibo   ?                                 ¦
+	//¦ mv_par10		 // Hasta Serie del Recibo?                                 ¦
+	//¦ mv_par11		 // Outras Moedas         ?	(1=Converter , 2=Nao Imprimir)	³
+	//+-----------------------------------------------------------------------------+
+
+	If mv_par01	==	1 .Or.  mv_par01 == 4
+		//"Recibo   Codigo-Sc Nombre Cliente             Fecha Emi.    Valor Total   Tot. Cheques      Depositos  Recibos Antic.   Retenciones"
+		//"                                                              Titulos                       Bancarios    Generados                 "
+		cabec1 := OemToAnsi(STR0005)
+		cabec2 := OemToAnsi(STR0006)
+	Elseif mv_par01	==	2
+		//"Codigo-Sc Razon Social Cliente                              Valor Total   Tot. Cheques      Depositos  Recibos Antic.   Retenciones"
+		//"                                                              Titulos                       Bancarios    Generados                 "
+		cabec1 := OemToAnsi(STR0007)
+		cabec2 := OemToAnsi(STR0006)
+	Else
+		//"Codigo-Sc Razon Social Cliente                              Valor Total   Tot. Cheques      Depositos  Recibos Antic.   Retenciones"
+		//"                 Recibo           Fecha Emision               Titulos                       Bancarios    Generados.                "
+		cabec1 := OemToAnsi(STR0007)
+		cabec2 := OemToAnsi(STR0008)
+	Endif
+
+	//							1			 2			  3			4			 5			  6			7			 8			  9		  10			11			 12		  13
+	//			  	  12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Envia controle para a funcao SETPRINT 					     ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	Titulo  := OemToAnsi(STR0009)  // "Informe de Cobranzas"
+	wnrel	:="FINR899"            //Nome Default do relatorio em Disco
+	wnrel	:=SetPrint(cString,wnrel,cPerg,Titulo,cDesc1,cDesc2,cDesc3,.F.,"",.F.,tamanho,,.F.)
+	//" por Recibo"," por Cliente (Sintetico)"," por Cliente (Analitico)"
+	Titulo  := Titulo + IIf(Mv_Par01==1,OemToAnsi(STR0010),IIf(mv_par01==2,OemToAnsi(STR0011),IIf(mv_par01==3,OemToAnsi(STR0012),OemToAnsi(STR0036))))
+	Titulo  := Padc(Titulo,60)
+
+	If nLastKey == 27
+		Return
+	EndIf
+
+	SetDefault(aReturn,cString)
+
+	If nLastKey == 27
+		Return
+	End
+
+	RptStatus({|| RptRec()})
+
+Return
+
+/*/
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o	 ³RptRec    ³ Autor ³                       ³ Data ³ 21.12.98 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Impressao dos dados do recibo 					          ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe	 ³ RptRec() 										          ³±±
+±±ÀÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+/*/
+Static Function RptRec()
+
+	Private lVersao := .F.
+	Private dDtIni	:= Iif(cPaisLoc == "ARG",MV_PAR08,MV_PAR06)
+	Private dDtFim	:= Iif(cPaisLoc == "ARG",MV_PAR09,MV_PAR07)
+	Private nMoeInf	:= Iif(cPaisLoc == "ARG",MV_PAR10,MV_PAR08)
+	Private cSerDe	:= Iif(cPaisLoc == "ARG",MV_PAR11,MV_PAR09)
+	Private cSerAte	:= Iif(cPaisLoc == "ARG",MV_PAR12,MV_PAR10)
+	Private cVerDe	    := MV_PAR06
+	Private cVerAte	:= MV_PAR07
+	Private nOutMoe	:= Iif(cPaisLoc == "ARG",MV_PAR13,MV_PAR11)
+
+	If cPaisLoc $ "ARG"
+		DbSelectArea("SEL")
+		lVersao := .T.
+	EndIf
+
+	lConvert := ( nOutMoe == 1 )
+
+	limite := 132
+	lContinua := .T.
+
+	nOrdem:=aReturn[8]
+
+	dBaixa := dDataBase
+
+	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+	//³ Define cabecalho         								     ³
+	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+	If mv_par01	==	1 .Or. mv_par01 == 4
+		//"Recibo   Codigo-Sc Nombre Cliente             Fecha Emi.    Valor Total   Tot. Cheques      Depositos  Recibos Antic.   Retenciones"
+		//"                                                              Titulos                       Bancarios    Generados                 "
+		cabec1 := OemToAnsi(STR0005)
+		cabec2 := OemToAnsi(STR0006)
+	Elseif mv_par01	==	2
+		//"Codigo-Sc Razon Social Cliente                              Valor Total   Tot. Cheques      Depositos  Recibos Antic.   Retenciones"
+		//"                                                              Titulos                       Bancarios    Generados                 "
+		cabec1 := OemToAnsi(STR0007)
+		cabec2 := OemToAnsi(STR0006)
+	Else
+		//"Codigo-Sc Razon Social Cliente                              Valor Total   Tot. Cheques      Depositos  Recibos Antic.   Retenciones"
+		//"                 Recibo           Fecha Emision               Titulos                       Bancarios    Generados.                "
+		cabec1 := OemToAnsi(STR0007)
+		cabec2 := OemToAnsi(STR0008)
+	Endif
+	//							1			 2			  3			4			 5			  6			7			 8			  9		  10			11			 12		  13
+	//			  	  12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901
+
+	cbtxt 	:= ""
+	cbcont	:= 1
+	li 		:= 80
+	m_pag 	:= 1
+	Do Case
+		Case Mv_Par01	==	1
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cKey   := "EL_FILIAL+EL_SERIE+EL_RECIBO+EL_VERSAO+EL_TIPODOC"
+			cOrdem := "EL_SERIE+EL_RECIBO+EL_VERSAO"
+		Else
+			cKey   := "EL_FILIAL+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+			cOrdem := "EL_SERIE+EL_RECIBO"
+		EndIf
+		nCount := Val(mv_par05)-Val(mv_par04)
+		Case mv_par01 	==	2
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_VERSAO+EL_TIPODOC"
+		Else
+			cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_VERSAO+EL_TIPODOC"
+		EndIf
+		cOrdem := "EL_CLIORIG+EL_LOJORIG"
+		nCount := Val(mv_par03)-Val(mv_par02)
+		Case mv_par01 	==	3
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_VERSAO+EL_TIPODOC"
+			cOrdem := "EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_VERSAO"
+		Else
+			cKey   := "EL_FILIAL+EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+			cOrdem := "EL_CLIORIG+EL_LOJORIG+EL_SERIE+EL_RECIBO"
+		EndIf
+
+		nCount := Val(mv_par05)-Val(mv_par04)
+		Case Mv_Par01	==	4
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cKey   := "EL_FILIAL+Dtos(EL_DTDIGIT)+EL_SERIE+EL_RECIBO+EL_VERSAO+EL_TIPODOC"
+			cOrdem := "EL_SERIE+EL_RECIBO+EL_VERSAO"
+		Else
+			cKey   := "EL_FILIAL+Dtos(EL_DTDIGIT)+EL_SERIE+EL_RECIBO+EL_TIPODOC"
+			cOrdem := "EL_SERIE+EL_RECIBO"
+		EndIf
+		nCount := Val(mv_par05)-Val(mv_par04)
+	ENDCASE
+
+	cCondicao	:= 	' EL_CLIORIG >= "'+mv_par02+'" .And. EL_CLIORIG <= "'+mv_par03+'"'
+	cCondicao	+=  '.and.EL_RECIBO >= "'+mv_par04+'" .And. EL_RECIBO <= "'+mv_par05+'"'
+	cCondicao	+=	'.and.EL_SERIE >="'+cSerDe+'".And.EL_SERIE <="'+cSerAte+'"'
+	cCondicao	+=	'.AND.DTOS(EL_DTDIGIT)>="'+DTOS(dDtIni)+'".and.DTOS(EL_DTDIGIT)<="'+DTOS(dDtFim)+'" .AND. EL_FILIAL=="'+xFilial("SEL")+'"'
+
+	If cPaisLoc $ "ARG" .AND. lVersao
+		cCondicao	+=	'.AND. EL_VERSAO >="'+cVerDe+'" .AND. EL_VERSAO <= "'+cVerAte+'"'
+	EndIf
+
+	If !lConvert
+		cCondicao += '.And.  ( EL_MOEDA == "'+Alltrim(Str(nMoeInf))+'"'
+		If ( Len( Alltrim(Str(nMoeInf)) ) = 1   )
+			cCondicao += '.Or. EL_MOEDA == "0'+Alltrim(Str(nMoeInf))+'"'
+			cCondicao += '.Or. EL_MOEDA ==  "'+Alltrim(Str(nMoeInf))+' "'
+			cCondicao += '.Or. EL_MOEDA == " '+Alltrim(Str(nMoeInf))+'"'
+		Endif
+		cCondicao += ')'
+	Endif
+
+	cArqTrab	:=	CriaTrab(Nil,.F.)
+
+	IndRegua("SEL",cArqTrab,cKey,,cCondicao,OemToAnsi(STR0013))  //"Filtrando registros..."
+
+	nIndexSEL := RetIndex("SEL")
+	#IFNDEF TOP
+	dbSetIndex(cArqTrab+OrdBagExt())
+	#ENDIF
+	dbSetOrder(nIndexSEL+1)
+	DbGoTOp()
+
+	If !EOF()
+		RptStatus({|| RptDetail()})
+	Endif
+
+	Set Device To Screen
+	dbSelectArea("SEL")
+	dbClearFil()
+	RetIndex( "SEL" )
+	#IFNDEF TOP
+	FErase(cArqTrab+OrdBagExt())
+	#ENDIF
+	dbSetOrder(1)
+	If aReturn[5] == 1
+		Set Printer TO
+		dbCommitAll()
+		Ourspool(wnrel)
+	Endif
+	MS_FLUSH()
+
+Return
+
+/*/
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄ¿±±
+±±³Fun‡…o	 ³RptDetail ³ Autor ³                       ³ Data ³ 21.12.98 ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Descri‡…o ³ Impressao dos dados do recibo 					          ³±±
+±±ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´±±
+±±³Sintaxe	 ³ RptDetail() 										          ³±±
+±±ÀÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+/*/
+Static Function RptDetail()
+
+	Local cDescCli :=""
+	If nCount > 3000
+		SetRegua(RecCount())
+	Else
+		SetRegua(nCount)
+	Endif
+
+	Titulo         := Titulo + OemToAnsi(STR0039)  + GetMv("MV_MOEDA"+alltrim(STR(nMoeInf)))
+	nDecs          := MsDecimais(nMoeInf)
+	nTotNetoGral   := 0.00
+	nRetGral	   := 0.00
+	nDepGral	   := 0.00
+	nTotAnt 	   := 0.00
+	nPrGral    	   := 0.00
+	nTotDepGral	   :=	0.00
+	nTotComp   	   := 0.00
+	nTotBajado 	   := 0.00
+	nTotDesc   	   := 0.00
+	nOrdenes	   := 0
+	cCLIENTE	   :=	""
+	nOrdProv	   :=	0
+	nTotChDia	   :=	0.00
+	nTotChAde  	   := 0.00
+	nTotDin		   :=	0.00
+	nTotCC         := 0
+	DbGoTop()
+	While !Eof()
+		IF	lEnd
+			@PROW()+1,001 PSAY OemToAnsi(STR0014) // "CANCELADO PELO OPERADOR"
+			Exit
+		Endif
+
+		IncRegua()
+
+		If EL_CANCEL
+			DbSkip()
+			Loop
+		Endif
+
+		If mv_par01==3
+			If (Substr(SEL->EL_TIPODOC,1,2) == "TJ")
+				DbSkip()
+				Loop
+			EndIf
+		EndIf
+
+		IF li > 58
+			cabec(titulo,cabec1,cabec2,nomeprog,tamanho,GetMv("MV_COMP"))
+		EndIF
+
+		cOrdAnt	:=	&cOrdem
+		cRecibo	:=	SEL->EL_RECIBO
+		cSerie  :=  SEL->EL_SERIE
+		If cPaisLoc $ "ARG" .AND. lVersao
+			cVersao := SEL->EL_VERSAO
+		EndIf
+		dAntDtDigit	:=	SEL->EL_DTDIGIT
+		SA1->(DbSetOrder(1))
+		SA1->(DbSeek(xFilial("SA1")+SEL->EL_CLIORIG+SEL->EL_LOJORIG))
+		lPrim	:=	Iif(cCLIENTE==SEL->EL_CLIORIG+"-"+SEL->EL_LOJORIG,.F.,.T.)
+		cCLIENTE	:= SEL->EL_CLIORIG+"-"+SEL->EL_LOJORIG
+		cNomeClie	:=	SA1->A1_NOME
+		nValBaj	:=	0.00
+		nValDesc	:=	0.00
+		nValRa 	:=	0.00
+		//	nValRet	:=	0.00
+		nValDep	:=	0.00
+		nValPr	:=	0.00
+		nValPaNc	:=	0.00
+		nCheqd	:= 0.00
+		nChead	:= 0.00
+		nDin		:= 0.00
+		nCC 		:= 0.00
+		DbSelectArea("SEL")
+		While cOrdAnt == &cOrdem .And. !Eof() .And. lContinua .And. xFilial("SEL")==EL_FILIAL
+
+			IF lEnd
+				@PROW()+1,001 PSAY OemToAnsi(STR0014)  // "CANCELADO PELO OPERADOR"
+				lContinua := .F.
+				Exit
+			EndIF
+
+			If ( Substr(SEL->EL_TIPODOC,1,2) $ "RG|RI|RB|RS")
+				//			nValRet  := nValRet  +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) == "TB")
+				If !(SEL->EL_TIPO $ MV_CRNEG+"|"+MVRECANT)  //Tratamento para NCCs e RAs
+					nValBaj  := nValBaj  +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					nValDesc := nValDesc +  Round(xMoeda(EL_DESCONT,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR),nDecs)
+				Else
+					nValPaNc := nValPaNc +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					nValDesc := nValDesc -  Round(xMoeda(EL_DESCONT,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR),nDecs)
+				EndIf
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) == "TF")
+				nValDep  := nValDep  +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) == "TJ")
+				nCC      := nCC      +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) $ "CH|EF")
+				nValPr   := nValPr   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				If Substr(SEL->EL_TIPODOC,1,2) == "CH"
+					If SEL->EL_EMISSAO< SEL->EL_DTVCTO
+						nChead:= nChead + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					Else
+						nCheqd:= nCheqd + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+					Endif
+				Else
+					nDin:= nDin + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				Endif
+			Elseif	(Substr(SEL->EL_TIPODOC,1,2) == "RA")
+				nValRa   := nValRa   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			ElseIf (SEL->EL_TIPODOC$(GetSESTipos({|| ES_RCOPGER == "2"},"1")))
+				nValPr   := nValPr   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				nDin:= nDin + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			ElseIf  (SEL->EL_TIPODOC$(GetSESTipos({|| ES_RCOPGER == "1"},"1")))
+				nValPr   := nValPr   +  Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+				nChead:= nChead + Round(IIf(nMoeInf==1,EL_VLMOED1,xMoeda(EL_VALOR,Max(Val(EL_MOEDA),1),nMoeInf,EL_DTDIGIT,nDecs+1,EL_VLMOED1/EL_VALOR)),nDecs)
+			EndIf
+			DbSkip()
+		EndDo
+		dbSelectArea("SEL")
+		IF li > 58
+			cabec(titulo,cabec1,cabec2,nomeprog,tamanho,GetMv("MV_COMP"))
+		EndIF
+
+		If mv_par01 == 1 .Or. mv_par01 == 4
+			//@li,	001 PSAY IIf(Empty(cSerie),"    ",cSerie+"-")+cRecibo+Iif(AllTrim(cVersao) <> '',"/"+cVersao,"")
+			@li,	001 PSAY cRecibo
+			cDescCli:= Alltrim(cCLIENTE+" "+Substr(cNomeClie,1,30))
+			@li,	014 PSAY Iif(Len(cDescCli)> 41,Subs(cDescCli,1,40),cDescCli)
+			@li,	057 PSAY dAntDtDigit
+		Elseif mv_par01==2
+			@li,	000 PSAY cCLIENTE+" "+Substr(cNomeClie,1,35)
+		Else
+			If	lPrim
+				@li,	000 PSAY cCLIENTE+" "+Substr(cNomeClie,1,35)
+				li:=li+1
+				lPrim	:=	.F.
+			Endif
+			@li,	020 PSAY IIf(Empty(cSerie),"    ",cSerie+"-")+cRecibo+Iif(AllTrim(cVersao) <> '',"/"+cVersao,)
+			@li,	035 PSAY dAntDtDigit
+			If nCC = 0
+				BuscaCC(@nCC)
+			EndIf
+		Endif
+		@li,  066 PSAY nValBaj  PICTURE tm(nValBaj ,14,nDecs)
+		@li,  081 PSAY nValPr   PICTURE tm(nValPr  ,14,nDecs)
+		@li,  096 PSAY nValDep  PICTURE tm(nValDep ,14,nDecs)
+		@li,  111 PSAY nValRa   PICTURE tm(nValBaj ,14,nDecs)
+		If cPaisLoc <> "BRA"
+			@li,  126 PSAY nValRet  PICTURE tm(nValRet ,14,nDecs)
+			@li,  141 PSAY nCC      PICTURE TM(nCC     ,14,nDecs)
+		@li,  156 PSAY nValPaNc PICTURE TM(nValPaNc,14,nDecs)
+		Endif
+		@li,  171 PSAY nValDesc PICTURE TM(nValDesc,14,nDecs)
+
+		nOrdProv:=nOrdProv + 1
+		nTotProv1:=	nTotProv1+nValBaj
+		nTotProv2:=	nTotProv2+nValPr
+		nTotProv3:=	nTotProv3+nValDep
+		nTotProv4:=	nTotProv4+nValRA
+		nTotProv5:=	nTotProv5+nValRet
+		nTotProv6:=	nTotProv6+nCC
+		nTotProv7:=	nTotProv7+nValPaNc
+		nTotProv8:=	nTotProv8+nValDesc
+		li:= li + 1
+		IF li > 58
+			cabec(titulo,cabec1,cabec2,nomeprog,tamanho,GetMv("MV_COMP"))
+		EndIF
+		If mv_par01==3 .And. SEL->EL_CLIORIG+"-"+SEL->EL_LOJORIG#cCLIENTE
+			@li,	005 PSAY OemToAnsi(STR0015) + TransForm(nOrdProv,"@R 999,999")  //"Recibos Cliente    -> "
+			li:=li+1
+			@li,  025 PSAY OemToAnsi(STR0016) // "Totales Cliente --->"
+			@li,  066 PSAY nTotProv1   PICTURE tm(nValBaj ,14,nDecs)
+			@li,  081 PSAY nTotProv2   PICTURE tm(nValPr  ,14,nDecs)
+			@li,  096 PSAY nTotProv3   PICTURE tm(nValDep ,14,nDecs)
+			@li,  111 PSAY nTotProv4   PICTURE tm(nValRa  ,14,nDecs)
+			If cPaisLoc <> "BRA"
+				@li,  126 PSAY nTotProv5   PICTURE tm(nValRet ,14,nDecs)
+				@li,  141 PSAY nTotProv6   PICTURE tm(nCC     ,14,nDecs)
+			Endif
+			@li,  156 PSAY nTotProv7   PICTURE tm(nTotProv7,14,nDecs)
+			@li,  171 PSAY nTotProv8   PICTURE tm(nTotProv8,14,nDecs)
+			nOrdProv  := 0
+			nTotProv1:=  0
+			nTotProv2:=  0
+			nTotProv3:=  0
+			nTotProv4:=	 0
+			nTotProv5:=	 0
+			nTotProv6:=	 0
+			nTotProv7:=	0
+			nTotProv8:=	0
+			Li:=li+1
+		Endif
+		nRetGral 	:= nRetGral 	+ 	nValRet
+		nTotBajado	:= nTotBajado	+	nValBaj
+		nTotDesc   	:= nTotDesc   +	nValDesc
+		nTotComp		:=	nTotComp	+	nValPaNc
+		nPrGral		:= nPrGral + nValPr
+		nDepGral	:= nDepGral +	nValDep
+		nTotAnt		:= nTotAnt + nValRa
+		nTotChDia	:= nTotChDia + nCheqd
+		nTotChAde	:= nTotChAde + nChead
+		nTotDin		:= nTotdin + nDin
+		nTotCC		:= nTotCC + nCC
+		dbSelectArea("SEL")		// voltar para alias existente, se nao, nao funciona
+		nOrdenes    := nOrdenes + 1
+	Enddo
+	If nOrdenes > 0
+		If li > 45
+			cabec(titulo,cabec1,cabec2,nomeprog,tamanho,GetMv("MV_COMP"))
+		Else
+			li := li+1
+		EndIf
+		//Imprimir Totales
+		nTotNetoGral	:=	nTotBajado - nRetGral - nTotComp + nTotAnt
+		If (mv_par01<>2)
+			@li,	005 PSAY OemToAnsi(STR0017) + TransForm(nOrdenes,"@R 999,999")  //"Recibos emitidos  -> "
+			li	:=	Li+2
+		Endif
+		@li,  013 PSAY x(STR0019) + TransForm(nTotDin,tm(nTotDin,19,nDecs))//"TOTAL EFECTIVO    ----> "
+		li:=li +1
+		@li,  013 PSAY OemToAnsi(STR0037) + TransForm(nTotChDia,tm(nTotChDia,19,nDecs))  //"TOTAL CHEQ AL DIA. ----> "
+		li:=li +1
+		@li,  013 PSAY If (cPaisLoc<>"CHI",OemToAnsi(STR0038),OemToAnsi(STR0041)) + TransForm(nTotChAde,tm(nTotChAde,19,nDecs))  //"TOTAL CHEQ ADELANTADO ----> "
+		li:=li +1
+		@li,  013 PSAY OemToAnsi(STR0020) + TransForm(nDepGral,tm(nDepGral,19,nDecs))  //"TOTAL DEPOSITADO  ----> "
+		li:=li +1
+		If cPaisLoc <> "BRA"
+			@li,  013 PSAY OemToAnsi(STR0022) + TransForm(nRetGral,tm(nRetGral,19,nDecs))  //"TOTAL RETENCIONES ----> "
+			li:=li +1
+			@li,  013 PSAY OemToAnsi(STR0040) + TransForm(nTotCC,tm(nTotCC,19,nDecs))//"TOTAL CARTAO CREDITO ----> "
+			li:=li +1
+		Endif
+		@li,  013 PSAY OemToAnsi(STR0018) + TransForm(nTotBajado,tm(nTotBajado,19,nDecs))//"TOTAL BRUTO       ----> "
+		li:=li +1
+		@li,  013 PSAY OemToAnsi(STR0043) + TransForm(nTotComp,tm(nTotComp,19,nDecs))//"TOTAL COMPENSADO  ----> "
+		li:=li +1
+		@li,  013 PSAY OemToAnsi(STR0021) + TransForm(nTotAnt,tm(nTotAnt,19,nDecs))  //"TOTAL ANTICIPO    ----> "
+		li:=li +1
+		@li,  013 PSAY OemToAnsi(STR0042) + TransForm(nTotDesc,tm(nTotDesc,19,nDecs))  //"TOTAL DESCONTADO  ----> "
+		li:=li +1
+		@li,  013 PSAY OemToAnsi(STR0023) + TransForm(nTotNetoGral,tm(nTotNetoGral,19,nDecs))  //"TOTAL RECIBIDO    ----> "
+		li:=li +1
+		@li,  013 PSAY "TOTAL CHEQUES RECHAZADOS" + TransForm(nTotNetoGral,tm(nTotNetoGral,19,nDecs))  //"TOTAL RECIBIDO    ----> "
+		If li != 80
+			Roda(cbcont,cbtxt,tamanho)
+		EndIf
+	Endif
+Return
+
+/*
+ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+±±ÉÍÍÍÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍËÍÍÍÍÍÍÑÍÍÍÍÍÍÍÍÍÍÍÍÍ»±±
+±±ºFuncao    ³BuscaCC   ºAutor  ³Fernando Machima    ºFecha ³  18/09/01   º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÊÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºDesc.     ³Busca registros de cartao de credito no recibo              º±±
+±±ÌÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹±±
+±±ºUso       ³ FINR899                                                    º±±
+±±ÈÍÍÍÍÍÍÍÍÍÍÏÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼±±
+±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+*/
+Static Function BuscaCC(nValCC)
+	LOCAL aArea    := GetArea()
+
+	DbSelectArea("SEL")
+	DbSetOrder(8)
+	If DbSeek(xFilial("SEL")+cSerie+cRecibo+"TJ")
+		While !Eof() .And. xFilial() == SEL->EL_FILIAL .And. cRecibo+"TJ" == SEL->EL_RECIBO + AllTrim(SEL->EL_TIPODOC) .And. cSerie == SEL->EL_SERIE
+			nValCC	+=	SEL->EL_VALOR
+			DbSkip()
+		End
+	EndIf
+	RestArea(aArea)
+
+	Return
+
+Return Nil
